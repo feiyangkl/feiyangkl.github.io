@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[贾帅的技术博客]]></title>
+  <link href="http://feiyangkl.github.io/atom.xml" rel="self"/>
+  <link href="http://feiyangkl.github.io/"/>
+  <updated>2016-03-03T18:43:37+08:00</updated>
+  <id>http://feiyangkl.github.io/</id>
+  <author>
+    <name><![CDATA[贾帅]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cocoa Pods]]></title>
+    <link href="http://feiyangkl.github.io/blog/2016/03/03/cocoa-pods/"/>
+    <updated>2016-03-03T14:32:34+08:00</updated>
+    <id>http://feiyangkl.github.io/blog/2016/03/03/cocoa-pods</id>
+    <content type="html"><![CDATA[<h1>cocoa pods</h1>
+
+<hr />
+
+<ul>
+<li>CocoaPods 是 iOS 最常用最有名的类库管理工具</li>
+<li>作为 iOS 程序员, 掌握 CocoaPods 的使用是必不可少的基本技能</li>
+</ul>
+
+
+<h2>pod 命令汇总</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 第一次使用安装框架
+</span><span class='line'>$ pod install
+</span><span class='line'>
+</span><span class='line'># 今后升级、添加、删除框架，或者框架不好用
+</span><span class='line'>$ pod update
+</span><span class='line'>
+</span><span class='line'># 搜索框架
+</span><span class='line'>$ pod search XXX
+</span><span class='line'>
+</span><span class='line'># 在项目文件夹下创建默认的 Podfile
+</span><span class='line'>$ pod init</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Pod file 格式说明</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 最低支持的 iOS 版本
+</span><span class='line'>platform :ios, '8.0'
+</span><span class='line'>
+</span><span class='line'># Swift 项目需要将框架转换为 frameworks 才能使用
+</span><span class='line'>use_frameworks!
+</span><span class='line'>
+</span><span class='line'># 框架列表
+</span><span class='line'>pod 'AFNetworking'</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Pod 安装</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 添加源
+</span><span class='line'>$ sudo gem sources -a http://ruby.taobao.org/
+</span><span class='line'># 删除源
+</span><span class='line'>$ sudo gem sources -r https://rubygems.org/
+</span><span class='line'># 安装
+</span><span class='line'>$ sudo gem install cocoapods
+</span><span class='line'># 设置
+</span><span class='line'>$ pod setup</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>gem 常用命令</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 查看gem源
+</span><span class='line'>$ gem sources –l
+</span><span class='line'># gem自身升级
+</span><span class='line'>$ sudo gem update --system
+</span><span class='line'># 查看版本
+</span><span class='line'>$ gem --version
+</span><span class='line'># 清除过期的gem
+</span><span class='line'>$ sudo gem cleanup
+</span><span class='line'># 安装包
+</span><span class='line'>$ sudo gem install cocoapods
+</span><span class='line'># 删除包
+</span><span class='line'>$ gem uninstall cocoapods
+</span><span class='line'># 更新包
+</span><span class='line'>$ sudo gem update
+</span><span class='line'># 列出本地安装的包
+</span><span class='line'>$ gem list</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
