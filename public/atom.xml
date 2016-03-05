@@ -4,7 +4,7 @@
   <title><![CDATA[贾帅的技术博客]]></title>
   <link href="http://feiyangkl.github.io/atom.xml" rel="self"/>
   <link href="http://feiyangkl.github.io/"/>
-  <updated>2016-03-03T19:20:36+08:00</updated>
+  <updated>2016-03-05T13:36:35+08:00</updated>
   <id>http://feiyangkl.github.io/</id>
   <author>
     <name><![CDATA[贾帅]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cocoa Pods]]></title>
-    <link href="http://feiyangkl.github.io/blog/2016/03/03/cocoa-pods/"/>
+    <link href="http://feiyangkl.github.io/blog/cocoa-pods.html/"/>
     <updated>2016-03-03T14:32:34+08:00</updated>
-    <id>http://feiyangkl.github.io/blog/2016/03/03/cocoa-pods</id>
+    <id>http://feiyangkl.github.io/blog/cocoa-pods</id>
     <content type="html"><![CDATA[<h1>cocoa pods</h1>
 
 <hr />
