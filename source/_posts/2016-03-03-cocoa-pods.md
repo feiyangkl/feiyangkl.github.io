@@ -4,13 +4,20 @@ title: "cocoa pods"
 date: 2016-03-03 14:32:34 +0800
 comments: true
 categories: 
+
+
 ---
 #   cocoa pods
+
+<!--more-->
 ---
 * CocoaPods 是 iOS 最常用最有名的类库管理工具
 * 作为 iOS 程序员, 掌握 CocoaPods 的使用是必不可少的基本技能
 
+---
+
 ##pod 命令汇总
+
 ```
 # 第一次使用安装框架
 $ pod install
@@ -24,6 +31,7 @@ $ pod search XXX
 # 在项目文件夹下创建默认的 Podfile
 $ pod init
 ```
+
 ##Pod file 格式说明
 
 ```
@@ -48,6 +56,7 @@ $ sudo gem install cocoapods
 # 设置
 $ pod setup
 ```
+
 ##gem 常用命令
 ```
 # 查看gem源
@@ -66,5 +75,10 @@ $ gem uninstall cocoapods
 $ sudo gem update
 # 列出本地安装的包
 $ gem list
+# 更新安装的包
+$ pod install --no-repo-update
 ```
+
+
+
 
