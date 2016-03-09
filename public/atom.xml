@@ -4,7 +4,7 @@
   <title><![CDATA[贾帅的技术博客]]></title>
   <link href="http://feiyangkl.github.io/atom.xml" rel="self"/>
   <link href="http://feiyangkl.github.io/"/>
-  <updated>2016-03-07T21:37:27+08:00</updated>
+  <updated>2016-03-09T09:26:45+08:00</updated>
   <id>http://feiyangkl.github.io/</id>
   <author>
     <name><![CDATA[贾帅]]></name>
@@ -251,9 +251,9 @@
     <link href="http://feiyangkl.github.io/blog/cocoa-pods.html/"/>
     <updated>2016-03-03T14:32:34+08:00</updated>
     <id>http://feiyangkl.github.io/blog/cocoa-pods</id>
-    <content type="html"><![CDATA[<h1 id="cocoa-pods">cocoa pods</h1>
+    <content type="html"><![CDATA[<!--more-->
+<p>#   cocoa pods</p>
 
-<!--more-->
 <hr />
 <ul>
   <li>CocoaPods 是 iOS 最常用最有名的类库管理工具</li>

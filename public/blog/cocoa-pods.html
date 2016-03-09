@@ -9,7 +9,7 @@
   <meta name="author" content="贾帅">
 
   
-  <meta name="description" content="cocoa pods CocoaPods 是 iOS 最常用最有名的类库管理工具 作为 iOS 程序员, 掌握 CocoaPods 的使用是必不可少的基本技能 pod 命令汇总 1
+  <meta name="description" content="# cocoa pods CocoaPods 是 iOS 最常用最有名的类库管理工具 作为 iOS 程序员, 掌握 CocoaPods 的使用是必不可少的基本技能 pod 命令汇总 1
 2
 3
 4
@@ -21,7 +21,7 @@
 10
 11
 # 第一次使用安装框架
-$ pod install # 今后升级、添加、 &hellip;">
+$ pod install # 今后升级、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -38,9 +38,16 @@ $ pod install # 今后升级、添加、 &hellip;">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
+  <script>
+  function addBlankTargetForLinks () {
+    $('a[href^="http"]').each(function(){
+      $(this).attr('target', '_blank');
+    });
+  }
+  $(document).bind('DOMNodeInserted', function(event) {
+    addBlankTargetForLinks();
+  });
+</script>
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     tex2jax: {
@@ -122,9 +129,9 @@ $ pod install # 今后升级、添加、 &hellip;">
   </header>
 
 
-<div class="entry-content"><h1 id="cocoa-pods">cocoa pods</h1>
+<div class="entry-content"><!--more-->
+<p>#   cocoa pods</p>
 
-<!--more-->
 <hr />
 <ul>
   <li>CocoaPods 是 iOS 最常用最有名的类库管理工具</li>
@@ -312,8 +319,8 @@ $ pod install # 今后升级、添加、 &hellip;">
 
 
 
-
-
+<!--
+-->
 
 
 

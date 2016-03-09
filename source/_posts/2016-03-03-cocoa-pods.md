@@ -7,9 +7,10 @@ categories:
 
 
 ---
-#   cocoa pods
 
 <!--more-->
+#   cocoa pods
+
 ---
 * CocoaPods 是 iOS 最常用最有名的类库管理工具
 * 作为 iOS 程序员, 掌握 CocoaPods 的使用是必不可少的基本技能
