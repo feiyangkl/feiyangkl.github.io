@@ -4,7 +4,7 @@
   <title><![CDATA[贾帅的技术博客]]></title>
   <link href="http://feiyangkl.github.io/atom.xml" rel="self"/>
   <link href="http://feiyangkl.github.io/"/>
-  <updated>2016-03-09T09:26:45+08:00</updated>
+  <updated>2016-03-20T09:38:35+08:00</updated>
   <id>http://feiyangkl.github.io/</id>
   <author>
     <name><![CDATA[贾帅]]></name>
@@ -18,11 +18,7 @@
     <link href="http://feiyangkl.github.io/blog/title.html/"/>
     <updated>2016-03-07T20:52:17+08:00</updated>
     <id>http://feiyangkl.github.io/blog/title</id>
-    <content type="html"><![CDATA[<h1 id="ios">iOS类与类之间的三种传值方式</h1>
-
-<!--more-->
-
-<h2 id="section">一代理方式</h2>
+    <content type="html"><![CDATA[<h2 id="section">一代理方式</h2>
 <hr />
 <p>### 什么是代理模式</p>
 
@@ -251,10 +247,7 @@
     <link href="http://feiyangkl.github.io/blog/cocoa-pods.html/"/>
     <updated>2016-03-03T14:32:34+08:00</updated>
     <id>http://feiyangkl.github.io/blog/cocoa-pods</id>
-    <content type="html"><![CDATA[<!--more-->
-<p>#   cocoa pods</p>
-
-<hr />
+    <content type="html"><![CDATA[<hr />
 <ul>
   <li>CocoaPods 是 iOS 最常用最有名的类库管理工具</li>
   <li>作为 iOS 程序员, 掌握 CocoaPods 的使用是必不可少的基本技能</li>
