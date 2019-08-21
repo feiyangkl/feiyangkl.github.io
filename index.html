@@ -5,20 +5,20 @@
   
 
   
-  <title>Hexo</title>
+  <title>贾帅的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="贾帅的博客">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="贾帅的博客">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="贾帅的博客">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/images/default-avatar.webp">
@@ -41,7 +41,7 @@
 <body>
   <div id="fullpage" class="mobile-nav-right">
     
-      <div id="wrapper" title="图片来自网络">
+      <div id="wrapper" style="background-image: url(/images/bg.jpg)" title="背景图片来自网络">
     
     
       <header id="header">
@@ -63,21 +63,21 @@
       <div id="middlecontent" title class="global-width sidebar-right">
         <section id="main">
   
-    <article id="post-hello-world" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-NSRunLoop_Nostop" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/21/hello-world/">Hello World</a>
+      <a class="article-title" href="/2019/08/21/NSRunLoop_Nostop/">IOS 等待条件满足再向下执行但不主卡线程NSRunLoop</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2019/08/21/hello-world/" class="article-date">
-  <time datetime="2019-08-21T00:07:31.089Z" itemprop="datePublished">2019-08-21</time>
+    <a href="/2019/08/21/NSRunLoop_Nostop/" class="article-date">
+  <time datetime="2019-08-21T07:05:04.826Z" itemprop="datePublished">2019-08-21</time>
 </a>
     
     
@@ -88,20 +88,95 @@
     
     <div class="article-content article-content-cloud" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></div>
+        <p>转载至   <a href="https://www.cnblogs.com/iosblogx/p/5567240.html" target="_blank" rel="noopener">https://www.cnblogs.com/iosblogx/p/5567240.html</a></p>
+<p>当我们需要等一个异步的结果才能向下执行代码，写回调又很麻烦，功能相对简单的时候，就可以插入以下的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)start:(id)sender</span><br><span class="line">&#123;</span><br><span class="line">pageStillLoading = YES;</span><br><span class="line">[NSThread detachNewThreadSelector:@selector(loadPageInBackground:)toTarget:self withObject:nil];</span><br><span class="line">[progress setHidden:NO];</span><br><span class="line">while (pageStillLoading) &#123;</span><br><span class="line">[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];</span><br><span class="line">&#125;</span><br><span class="line">[progress setHidden:YES];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2019/08/21/NSRunLoop_Nostop/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+  
+    <article id="post-mac_make" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/21/mac_make/">制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）</a>
+    </h1>
+  
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/21/mac_make/" class="article-date">
+  <time datetime="2019-08-21T07:02:16.665Z" itemprop="datePublished">2019-08-21</time>
+</a>
+    
+    
+  </div>
+  
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="BASH"><figure class="iseeu highlight /bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>制作 <strong>macOS High Sierra</strong> 正式版 <a href="https://www.iplaysoft.com/tag/usb" target="_blank" rel="noopener">USB</a> 启动盘的方法有很多，用户可以选择使用命令行来创建，也可以选择第三方U盘制作工具来制作，大家可以根据自己的喜好选择。<br>本教程首先介绍命令行的方式，因为这是苹果官方系统内置的命令，优点是稳妥而且没有兼容性问题，只是需要通过命令行操作，对新手来说可能看似有点复杂，但其实步骤还是非常简单的。</p>
+        
+          <p class="article-more-link">
+            <a href="/2019/08/21/mac_make/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
 
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+  
+    <article id="post-EncryptUtil" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/21/EncryptUtil/">PHP、JAVA、C#、Object-C 通用的DES加密</a>
+    </h1>
+  
 
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/08/21/EncryptUtil/" class="article-date">
+  <time datetime="2019-08-21T03:12:07.373Z" itemprop="datePublished">2019-08-21</time>
+</a>
+    
+    
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h1 id="EncryptUtil"><a href="#EncryptUtil" class="headerlink" title="EncryptUtil"></a>EncryptUtil</h1><p>一行代码完成DES加密，加密模式 DES + CBC<br>githubDemo:<a href="https://github.com/feiyangkl/EncryptUtil" target="_blank" rel="noopener">https://github.com/feiyangkl/EncryptUtil</a></p>
+<h2 id="DEMO-GIF"><a href="#DEMO-GIF" class="headerlink" title="DEMO GIF"></a>DEMO GIF</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYxMDIxMTgxODA4NDcw" alt="Untitled.gif"></p>
+        
+          <p class="article-more-link">
+            <a href="/2019/08/21/EncryptUtil/#more">阅读全文</a>
+          </p>
+        
       
     </div>
     
@@ -119,14 +194,14 @@
   
     <div class="widget-box">
   <div class="avatar-box">
-    <img class="avatar" src="/images/default-avatar.webp" title="图片来自网络"></img>
+    <img class="avatar" src="/images/code-title.png" title="头像来自网络"></img>
     <h3 class="avatar-name">
       
-        一路烟霞
+        一颗心
       
     </h3>
     <p class="avatar-slogan">
-      特别耐撕的小前端，资深的打酱油攻城狮。
+      iOS开发攻城狮 喜欢玩 喜欢懒 喜欢一切有挑战的事情.
     </p>
   </div>
 </div>
@@ -157,7 +232,15 @@
       <ul>
         
           <li>
-            <a href="/2019/08/21/hello-world/">Hello World</a>
+            <a href="/2019/08/21/NSRunLoop_Nostop/">IOS 等待条件满足再向下执行但不主卡线程NSRunLoop</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/21/mac_make/">制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/21/EncryptUtil/">PHP、JAVA、C#、Object-C 通用的DES加密</a>
           </li>
         
       </ul>
