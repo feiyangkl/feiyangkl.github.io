@@ -63,24 +63,26 @@
       <div id="middlecontent" title class="global-width sidebar-right">
         <section id="main">
   
-    <article id="post-NSRunLoop_Nostop" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-imageChange" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/21/NSRunLoop_Nostop/">IOS 等待条件满足再向下执行但不主卡线程NSRunLoop</a>
+      <a class="article-title" href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2019/08/21/NSRunLoop_Nostop/" class="article-date">
-  <time datetime="2019-08-21T07:05:04.826Z" itemprop="datePublished">2019-08-21</time>
+    <a href="/2019/08/22/imageChange/" class="article-date">
+  <time datetime="2019-08-22T02:29:32.000Z" itemprop="datePublished">2019-08-22</time>
 </a>
     
     
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
   </div>
   
 
@@ -88,12 +90,55 @@
     
     <div class="article-content article-content-cloud" itemprop="articleBody">
       
-        <p>转载至   <a href="https://www.cnblogs.com/iosblogx/p/5567240.html" target="_blank" rel="noopener">https://www.cnblogs.com/iosblogx/p/5567240.html</a></p>
-<p>当我们需要等一个异步的结果才能向下执行代码，写回调又很麻烦，功能相对简单的时候，就可以插入以下的代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (IBAction)start:(id)sender</span><br><span class="line">&#123;</span><br><span class="line">pageStillLoading = YES;</span><br><span class="line">[NSThread detachNewThreadSelector:@selector(loadPageInBackground:)toTarget:self withObject:nil];</span><br><span class="line">[progress setHidden:NO];</span><br><span class="line">while (pageStillLoading) &#123;</span><br><span class="line">[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];</span><br><span class="line">&#125;</span><br><span class="line">[progress setHidden:YES];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <blockquote>
+<p>iOS拍照后图片自动翻转，是Image有一个imageOrientation属性，里面有图片拍照的方法，只要在拍照后的代理方法中，将返回的图片在翻转回来就可以了。</p>
+</blockquote>
+<p>代码如下：</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">// 判断图片是否翻转</span><br><span class="line">- (UIImage *)fixOrientation:(UIImage *)aImage &#123;</span><br><span class="line">    </span><br><span class="line">    // No-op if the orientation is already correct</span><br><span class="line">    if (aImage.imageOrientation == UIImageOrientationUp)</span><br><span class="line">        return aImage;</span><br><span class="line">    </span><br><span class="line">    // We need to calculate the proper transformation to make the image upright.</span><br><span class="line">    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.</span><br><span class="line">    CGAffineTransform transform = CGAffineTransformIdentity;</span><br><span class="line">    </span><br><span class="line">    switch (aImage.imageOrientation) &#123;</span><br><span class="line">        case UIImageOrientationDown:</span><br><span class="line">        case UIImageOrientationDownMirrored:</span><br><span class="line">            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);</span><br><span class="line">            transform = CGAffineTransformRotate(transform, M_PI);</span><br><span class="line">            break;</span><br><span class="line">            </span><br><span class="line">        case UIImageOrientationLeft:</span><br><span class="line">        case UIImageOrientationLeftMirrored:</span><br><span class="line">            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);</span><br><span class="line">            transform = CGAffineTransformRotate(transform, M_PI_2);</span><br><span class="line">            break;</span><br><span class="line">            </span><br><span class="line">        case UIImageOrientationRight:</span><br><span class="line">        case UIImageOrientationRightMirrored:</span><br><span class="line">            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);</span><br><span class="line">            transform = CGAffineTransformRotate(transform, -M_PI_2);</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    switch (aImage.imageOrientation) &#123;</span><br><span class="line">        case UIImageOrientationUpMirrored:</span><br><span class="line">        case UIImageOrientationDownMirrored:</span><br><span class="line">            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);</span><br><span class="line">            transform = CGAffineTransformScale(transform, -1, 1);</span><br><span class="line">            break;</span><br><span class="line">            </span><br><span class="line">        case UIImageOrientationLeftMirrored:</span><br><span class="line">        case UIImageOrientationRightMirrored:</span><br><span class="line">            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);</span><br><span class="line">            transform = CGAffineTransformScale(transform, -1, 1);</span><br><span class="line">            break;</span><br><span class="line">        default:</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // Now we draw the underlying CGImage into a new context, applying the transform</span><br><span class="line">    // calculated above.</span><br><span class="line">    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,</span><br><span class="line">                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,</span><br><span class="line">                                             CGImageGetColorSpace(aImage.CGImage),</span><br><span class="line">                                             CGImageGetBitmapInfo(aImage.CGImage));</span><br><span class="line">    CGContextConcatCTM(ctx, transform);</span><br><span class="line">    switch (aImage.imageOrientation) &#123;</span><br><span class="line">        case UIImageOrientationLeft:</span><br><span class="line">        case UIImageOrientationLeftMirrored:</span><br><span class="line">        case UIImageOrientationRight:</span><br><span class="line">        case UIImageOrientationRightMirrored:</span><br><span class="line">            // Grr...</span><br><span class="line">            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);</span><br><span class="line">            break;</span><br><span class="line">            </span><br><span class="line">        default:</span><br><span class="line">            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // And now we just create a new UIImage from the drawing context</span><br><span class="line">    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);</span><br><span class="line">    UIImage *img = [UIImage imageWithCGImage:cgimg];</span><br><span class="line">    CGContextRelease(ctx);</span><br><span class="line">    CGImageRelease(cgimg);</span><br><span class="line">    return img;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-httpCode" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/12/httpCode/">HTTP状态码</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2019/01/12/httpCode/" class="article-date">
+  <time datetime="2019-01-12T02:29:32.000Z" itemprop="datePublished">2019-01-12</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>##1xx消息</p>
+<ul>
+<li>这一类型的状态码，代表请求已被接受，需要继续处理。这类响应是临时响应，只包含状态行和某些可选的响应头信息，并以空行结束。由于HTTP/1.0协议中没有定义任何1xx状态码，所以除非在某些试验条件下，服务器禁止向此类客户端发送1xx响应。 这些状态码代表的响应都是信息性的，标示客户应该采取的其他行动。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">100 Continue</span><br><span class="line">    客户端应当继续发送请求。这个临时响应是用来通知客户端它的部分请求已经被服务器接收，且仍未被拒绝。客户端应当继续发送请求的剩余部分，或者如果请求已经完成，忽略这个响应。服务器必须在请求完成后向客户端发送一个最终响应。</span><br><span class="line">101 Switching Protocols</span><br><span class="line">    服务器已经理解了客户端的请求，并将通过Upgrade消息头通知客户端采用不同的协议来完成这个请求。在发送完这个响应最后的空行后，服务器将会切换到在Upgrade消息头中定义的那些协议。: 只有在切换新的协议更有好处的时候才应该采取类似措施。例如，切换到新的HTTP版本比旧版本更有优势，或者切换到一个实时且同步的协议以传送利用此类特性的资源。</span><br><span class="line">102 Processing</span><br><span class="line">    由WebDAV（RFC 2518）扩展的状态码，代表处理将被继续执行。</span><br></pre></td></tr></table></figure>
         
           <p class="article-more-link">
-            <a href="/2019/08/21/NSRunLoop_Nostop/#more">阅读全文</a>
+            <a href="/2019/01/12/httpCode/#more">阅读全文</a>
           </p>
         
       
@@ -105,24 +150,26 @@
 </article>
 
   
-    <article id="post-mac_make" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ArrayForPost" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/21/mac_make/">制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）</a>
+      <a class="article-title" href="/2018/12/25/ArrayForPost/">iOS网络请求传入数组</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2019/08/21/mac_make/" class="article-date">
-  <time datetime="2019-08-21T07:02:16.665Z" itemprop="datePublished">2019-08-21</time>
+    <a href="/2018/12/25/ArrayForPost/" class="article-date">
+  <time datetime="2018-12-25T02:29:32.000Z" itemprop="datePublished">2018-12-25</time>
 </a>
     
     
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
   </div>
   
 
@@ -130,10 +177,65 @@
     
     <div class="article-content article-content-cloud" itemprop="articleBody">
       
-        <p>制作 <strong>macOS High Sierra</strong> 正式版 <a href="https://www.iplaysoft.com/tag/usb" target="_blank" rel="noopener">USB</a> 启动盘的方法有很多，用户可以选择使用命令行来创建，也可以选择第三方U盘制作工具来制作，大家可以根据自己的喜好选择。<br>本教程首先介绍命令行的方式，因为这是苹果官方系统内置的命令，优点是稳妥而且没有兼容性问题，只是需要通过命令行操作，对新手来说可能看似有点复杂，但其实步骤还是非常简单的。</p>
+        <p>之前做项目的时候，后台要求传入数组，用AFN传入字典，代码入下：</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">NSDictionary *parameter = [ NSDictionary dictionary];</span><br><span class="line">  </span><br><span class="line">NSArray *arr = @[parameter];</span><br><span class="line">  </span><br><span class="line">NSError *parseError = nil;</span><br><span class="line"></span><br><span class="line">NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted  error:&amp;parseError];</span><br><span class="line">  </span><br><span class="line">NSString *jsonstr =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];</span><br><span class="line">  </span><br><span class="line">NSData *objectData = [jsonstr dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">  </span><br><span class="line">NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:objectData</span><br><span class="line">                           </span><br><span class="line">                                                          options:NSJSONReadingMutableContainers</span><br><span class="line">                           </span><br><span class="line">                                                            error:&amp;parseError];</span><br></pre></td></tr></table></figure></div>
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-autoreleasepool" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/25/autoreleasepool/">自动释放池</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/12/25/autoreleasepool/" class="article-date">
+  <time datetime="2018-12-25T02:29:32.000Z" itemprop="datePublished">2018-12-25</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <ul>
+<li><p>作用</p>
+<ul>
+<li>自动释放对象的</li>
+<li>所有 <code>autorelease</code> 的对象，在出了作用域之后，会被自动添加到<code>最近创建的</code>自动释放池中</li>
+<li>自动释放池被销毁或者耗尽时，会向池中所有对象发送 <code>release</code> 消息，释放池中对象</li>
+<li>自动释放池，在 <code>ARC</code> &amp; <code>MRC</code> 程序中，同样有效</li>
+</ul>
+</li>
+</ul>
+<h2 id="高级面试题："><a href="#高级面试题：" class="headerlink" title="高级面试题："></a>高级面试题：</h2><ul>
+<li>自动释放池是什么时候创建的？什么时候销毁的？</li>
+</ul>
+<ul>
+<li>创建，运行循环检测到事件并启动后，就会创建自动释放池</li>
+<li>销毁：一次完整的运行循环结束之前，会被销毁</li>
+</ul>
+<p><img src="https://s2.ax1x.com/2019/08/22/maw6Cn.png" alt></p>
         
           <p class="article-more-link">
-            <a href="/2019/08/21/mac_make/#more">阅读全文</a>
+            <a href="/2018/12/25/autoreleasepool/#more">阅读全文</a>
           </p>
         
       
@@ -145,24 +247,26 @@
 </article>
 
   
-    <article id="post-EncryptUtil" class="article global-container article-type-post" itemscope itemprop="blogPost">
+    <article id="post-svnChange" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
     <header class="article-header">
       
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/21/EncryptUtil/">PHP、JAVA、C#、Object-C 通用的DES加密</a>
+      <a class="article-title" href="/2018/12/25/svnChange/">SVN服务器地址更换</a>
     </h1>
   
 
     </header>
   
   <div class="article-meta">
-    <a href="/2019/08/21/EncryptUtil/" class="article-date">
-  <time datetime="2019-08-21T03:12:07.373Z" itemprop="datePublished">2019-08-21</time>
+    <a href="/2018/12/25/svnChange/" class="article-date">
+  <time datetime="2018-12-25T02:29:32.000Z" itemprop="datePublished">2018-12-25</time>
 </a>
     
     
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
   </div>
   
 
@@ -170,11 +274,244 @@
     
     <div class="article-content article-content-cloud" itemprop="articleBody">
       
-        <h1 id="EncryptUtil"><a href="#EncryptUtil" class="headerlink" title="EncryptUtil"></a>EncryptUtil</h1><p>一行代码完成DES加密，加密模式 DES + CBC<br>githubDemo:<a href="https://github.com/feiyangkl/EncryptUtil" target="_blank" rel="noopener">https://github.com/feiyangkl/EncryptUtil</a></p>
-<h2 id="DEMO-GIF"><a href="#DEMO-GIF" class="headerlink" title="DEMO GIF"></a>DEMO GIF</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYxMDIxMTgxODA4NDcw" alt="Untitled.gif"></p>
+        <p>###更新cornerStone<br>打开cornerStone,点击更改URL,验证后可用</p>
+<h3 id="更改-SVN中的地址"><a href="#更改-SVN中的地址" class="headerlink" title="更改.SVN中的地址"></a>更改.SVN中的地址</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cd 你的项目所在目录/</span><br><span class="line"></span><br><span class="line">#查看一下，当前的svn地址</span><br><span class="line">svn info ./</span><br><span class="line"></span><br><span class="line">svn cleanup</span><br><span class="line"></span><br><span class="line"># 更换服务器地址, 移除旧的地址,更新新的地址</span><br><span class="line">svn sw --relocate oldsvn 地址 newsvn 地址 ./</span><br><span class="line"></span><br><span class="line">#这里需要输入本机密码</span><br><span class="line"></span><br><span class="line">#这里需要输入svn用户名和密码</span><br></pre></td></tr></table></figure></div>
+
+<p>原文地址：<a href="http://blog.sina.com.cn/s/blog_71715bf80101ar57.html" target="_blank" rel="noopener">http://blog.sina.com.cn/s/blog_71715bf80101ar57.html</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-SDWebImageWebCache" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/22/SDWebImageWebCache/">SDWebImage获取缓存和清除</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/12/22/SDWebImageWebCache/" class="article-date">
+  <time datetime="2018-12-22T02:29:32.000Z" itemprop="datePublished">2018-12-22</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>##获取缓存大小</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/// 获取缓存大小</span><br><span class="line"> NSString * currentCacheSize = [NSString stringWithFormat:@&quot;%@&quot;,[self fileSizeWithInteger:[[SDImageCache sharedImageCache] getSize]]];</span><br><span class="line"></span><br><span class="line">// 根据数据计算出大小</span><br><span class="line">- (NSString *) fileSizeWithInteger:(NSInteger)size&#123;</span><br><span class="line">    // 1K = 1024dB, 1M = 1024K,1G = 1024M</span><br><span class="line">    if (size &lt; 1024) &#123;// 小于1k</span><br><span class="line">        return [NSString stringWithFormat:@&quot;%ldB&quot;,(long)size];</span><br><span class="line">    &#125;else if (size &lt; 1024 * 1024)&#123;// 小于1m</span><br><span class="line">        CGFloat aFloat = size/1024;</span><br><span class="line">        return [NSString stringWithFormat:@&quot;%.0fK&quot;,aFloat];</span><br><span class="line">    &#125;else if (size &lt; 1024 * 1024 * 1024)&#123;// 小于1G</span><br><span class="line">        CGFloat aFloat = size/(1024 * 1024);</span><br><span class="line">        return [NSString stringWithFormat:@&quot;%.1fM&quot;,aFloat];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        CGFloat aFloat = size/(1024*1024*1024);</span><br><span class="line">        return [NSString stringWithFormat:@&quot;%.1fG&quot;,aFloat];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="清除SDWebImage缓存"><a href="#清除SDWebImage缓存" class="headerlink" title="清除SDWebImage缓存"></a>清除SDWebImage缓存</h2><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/// 清除硬盘缓存-当前使用的也会清除</span><br><span class="line">[[SDImageCache sharedImageCache] clearDisk];</span><br><span class="line"></span><br><span class="line">/// 清除过期缓存,缓存时间为7天 计算当前缓存的大小和设置的最大缓存数比较,如果超出,就继续清除(___按照文件创建的先后顺序__)</span><br><span class="line">[[SDImageCache sharedImageCache] cleanDisk];</span><br><span class="line"></span><br><span class="line">///  清除内存缓存</span><br><span class="line">[[[SDWebImageManager sharedManager] imageCache] clearMemory];</span><br></pre></td></tr></table></figure></div>
+
+
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-MacDelete permissions" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/22/MacDelete permissions/">Mac 更改用户名丢失权限操作</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/10/22/MacDelete permissions/" class="article-date">
+  <time datetime="2018-10-22T02:29:32.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>1在开启电脑时按住 Command-S 键，以单用户模式(以新視窗開啟)(以新視窗開啟)启动。等待白色文本出现。﻿</p>
+<p>2在提示符处，单行键入如下所示的每个命令，并在每行结束时按 Return 键。﻿</p>
+<p>3﻿</p>
+<p>4mount -uw /﻿</p>
+<p>5 cd /var/db﻿</p>
+<p>6 mv dslocal dslocal.old﻿</p>
+<p>7 mkdir -p dslocal/nodes﻿</p>
+<p>8 cp -Rp /System/Library/DirectoryServices/DefaultLocalDB/Default dslocal/nodes/﻿</p>
+<p>9 rm .AppleSetupDone﻿</p>
+<p>10 reboot﻿</p>
         
           <p class="article-more-link">
-            <a href="/2019/08/21/EncryptUtil/#more">阅读全文</a>
+            <a href="/2018/10/22/MacDelete permissions/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-SwiftMap" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/22/SwiftMap/">Swift 数组中 Map,FlatMap,Filter,Reduce的使用</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/10/22/SwiftMap/" class="article-date">
+  <time datetime="2018-10-22T02:29:32.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>本文章转载自 <a href="http://www.cocoachina.com/swift/20160210/15068.html" target="_blank" rel="noopener">Melody_Zhy</a> </p>
+<p>##Map</p>
+<blockquote>
+<p>map函数能够被数组调用，它接受一个闭包作为参数，作用于数组中的每个元素。闭包返回一个变换后的元素，接着将所有这些变换后的元素组成一个新的数组</p>
+</blockquote>
+<p>###1.比如我们有一个这样的需求遍历一个数组中所有的元素，将每个元素自身与自身相加，最后返回一个保存相加后元素的数组(-_-原谅我这表达能力,下面用代码阐述)<br>如果我们不使用map函数,那么代码如下</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> sumNumbers = [<span class="type">Int</span>]()</span><br><span class="line"><span class="keyword">for</span> <span class="keyword">var</span> number <span class="keyword">in</span> numbers &#123;</span><br><span class="line">	number += number</span><br><span class="line">	sumNumbers.append(number)</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">// [2,4,6]</span></span><br><span class="line"><span class="built_in">print</span>(sumNumbers)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面的代码正是我们经常用到的代码，但通过数组的map函数可以帮我们简化上面的代码</p>
+        
+          <p class="article-more-link">
+            <a href="/2018/10/22/SwiftMap/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-UITextViewDetail" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/22/UITextViewDetail/">UITextView详解</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/10/22/UITextViewDetail/" class="article-date">
+  <time datetime="2018-10-22T02:29:32.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>之前看到很多好朋友问到UITextView限制字数，或者限制成只输入数字等，接下来见到了解下UITextView。</p>
+<p>##TextView简单属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//初始化UITextView</span><br><span class="line">      UITextView *textview =  [[UITextView alloc] initWithFrame:CGRectMake(100, 100, 300, 44)];</span><br><span class="line">    textview.backgroundColor=[UIColor blueColor]; //设置背景色</span><br><span class="line">    textview.scrollEnabled = NO;    //设置当文字超过视图的边框时是否允许滑动，默认为“YES”</span><br><span class="line">    textview.editable = YES;        //设置是否允许编辑内容，默认为“YES”</span><br><span class="line">    textview.delegate = self;       //设置代理方法的实现类</span><br><span class="line">    textview.font=[UIFont fontWithName:@&quot;Arial&quot; size:18.0]; //设置字体名字和字体大小;</span><br><span class="line">    textview.returnKeyType = UIReturnKeyDefault;//设置return键的类型</span><br><span class="line">    textview.keyboardType = UIKeyboardTypeDefault;//设置键盘类型一般为默认</span><br><span class="line">    textview.textAlignment = NSTextAlignmentLeft; //文本显示的位置默认为居左</span><br><span class="line">    textview.dataDetectorTypes = UIDataDetectorTypeAll; //显示数据类型的连接模式（如电话号码、网址、地址等）</span><br><span class="line">    textview.textColor = [UIColor blackColor];// 设置显示文字颜色</span><br><span class="line">    textview.text = @&quot;UITextView详解&quot;;//设置显示的文本内容</span><br><span class="line">    [self.view addSubview:textview];</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2018/10/22/UITextViewDetail/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    
+  </div>
+  
+  
+</article>
+
+  
+    <article id="post-basic-00-apache" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/basic-00-apache/">配置 Apache 服务器</a>
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/05/20/basic-00-apache/" class="article-date">
+  <time datetime="2018-05-20T02:29:32.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h2 id="目的："><a href="#目的：" class="headerlink" title="目的："></a>目的：</h2><ul>
+<li>能够有一个测试的服务器，不是所有的特殊网络服务都能找到免费的！</li>
+</ul>
+<h2 id="为什么是-Apache"><a href="#为什么是-Apache" class="headerlink" title="为什么是 Apache"></a>为什么是 <code>Apache</code></h2><ol>
+<li>使用最广的 Web 服务器，<code>IIS</code>(微软 Intenet Infomation Server)</li>
+<li>Mac自带，只需要修改几个配置就可以，简单，快捷</li>
+<li>有些特殊的服务器功能，Apache都能很好的支持<br>例如：HTTP <code>PUT</code>/<code>DELETE</code> 操作，知识补充涉及的 <code>HTTPS</code> 服务
+        
+          <p class="article-more-link">
+            <a href="/2018/05/20/basic-00-apache/#more">阅读全文</a>
           </p>
         
       
@@ -187,6 +524,11 @@
 
   
 
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 
 </section>
@@ -212,15 +554,29 @@
 
   
     
+  <div class="widget-box">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-box">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-box">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
     </div>
   </div>
 
@@ -232,15 +588,23 @@
       <ul>
         
           <li>
-            <a href="/2019/08/21/NSRunLoop_Nostop/">IOS 等待条件满足再向下执行但不主卡线程NSRunLoop</a>
+            <a href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
           </li>
         
           <li>
-            <a href="/2019/08/21/mac_make/">制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）</a>
+            <a href="/2019/01/12/httpCode/">HTTP状态码</a>
           </li>
         
           <li>
-            <a href="/2019/08/21/EncryptUtil/">PHP、JAVA、C#、Object-C 通用的DES加密</a>
+            <a href="/2018/12/25/ArrayForPost/">iOS网络请求传入数组</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/autoreleasepool/">自动释放池</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/svnChange/">SVN服务器地址更换</a>
           </li>
         
       </ul>

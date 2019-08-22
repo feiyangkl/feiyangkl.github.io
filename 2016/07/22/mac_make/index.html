@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用） | 贾帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="制作 macOS High Sierra 正式版 USB 启动盘的方法有很多，用户可以选择使用命令行来创建，也可以选择第三方U盘制作工具来制作，大家可以根据自己的喜好选择。本教程首先介绍命令行的方式，因为这是苹果官方系统内置的命令，优点是稳妥而且没有兼容性问题，只是需要通过命令行操作，对新手来说可能看似有点复杂，但其实步骤还是非常简单的。">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）">
+<meta property="og:url" content="http://yoursite.com/2016/07/22/mac_make/index.html">
+<meta property="og:site_name" content="贾帅的博客">
+<meta property="og:description" content="制作 macOS High Sierra 正式版 USB 启动盘的方法有很多，用户可以选择使用命令行来创建，也可以选择第三方U盘制作工具来制作，大家可以根据自己的喜好选择。本教程首先介绍命令行的方式，因为这是苹果官方系统内置的命令，优点是稳妥而且没有兼容性问题，只是需要通过命令行操作，对新手来说可能看似有点复杂，但其实步骤还是非常简单的。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTRjMzgxYTc1NTkxYWZhYTcucG5n">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTFkOGEwNTA2NDNhYTc3YTEucG5n">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTU5ZjAyOTcxNmVlMTUwMzkucG5n">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LWFjZjU4MDI4NzJjYWM4ZDEucG5n">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LWZkOTg2OTQyYmQyMzM4ZjcucG5n">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LWM4NDdiYzNiZGNhZDFmNWIucG5n">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTY4MTJlYjZmMDVlMjE2MmMucG5n">
+<meta property="og:updated_time" content="2019-08-22T02:36:11.524Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）">
+<meta name="twitter:description" content="制作 macOS High Sierra 正式版 USB 启动盘的方法有很多，用户可以选择使用命令行来创建，也可以选择第三方U盘制作工具来制作，大家可以根据自己的喜好选择。本教程首先介绍命令行的方式，因为这是苹果官方系统内置的命令，优点是稳妥而且没有兼容性问题，只是需要通过命令行操作，对新手来说可能看似有点复杂，但其实步骤还是非常简单的。">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTRjMzgxYTc1NTkxYWZhYTcucG5n">
+  
+    <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/default-avatar.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" style="background-image: url(/images/bg.jpg)" title="背景图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-mac_make" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      制作 macOS High Sierra 正式版 USB 启动盘的方法 （亲测可用）
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2016/07/22/mac_make/" class="article-date">
+  <time datetime="2016-07-22T02:29:32.000Z" itemprop="datePublished">2016-07-22</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <p>制作 <strong>macOS High Sierra</strong> 正式版 <a href="https://www.iplaysoft.com/tag/usb" target="_blank" rel="noopener">USB</a> 启动盘的方法有很多，用户可以选择使用命令行来创建，也可以选择第三方U盘制作工具来制作，大家可以根据自己的喜好选择。<br>本教程首先介绍命令行的方式，因为这是苹果官方系统内置的命令，优点是稳妥而且没有兼容性问题，只是需要通过命令行操作，对新手来说可能看似有点复杂，但其实步骤还是非常简单的。</p>
+<a id="more"></a> 
+
+<h3 id="方法一：使用命令行创建制作-macOS-High-Sierra-正式版-USB-安装盘"><a href="#方法一：使用命令行创建制作-macOS-High-Sierra-正式版-USB-安装盘" class="headerlink" title="方法一：使用命令行创建制作 macOS High Sierra 正式版 USB 安装盘"></a>方法一：使用命令行创建制作 macOS High Sierra 正式版 USB 安装盘</h3><ol>
+<li><p>首先，准备一个 <a href="https://www.iplaysoft.com/go/upan" target="_blank" rel="noopener">8GB 或更大容量的 U盘</a>，并<a href="https://www.iplaysoft.com/tag/%E5%A4%87%E4%BB%BD" target="_blank" rel="noopener">备份</a>好里面的所有资料。</p>
+</li>
+<li><p>[下载好 macOS High Sierra 正式版的安装程序]</p>
+</li>
+<li><p>打开 “应用程序 → 实用工具 → 磁盘工具”，将U盘「抹掉」(格式化) 成「Mac OS X 扩展（日志式）」格式、GUID 分区图，并将U盘命名为「Sierra」。(注意：这个盘符名称将会与后面的命令一一对应，如果你改了这盘符的名字，必须保证后面的命令里的名称也要一致。)</p>
+</li>
+</ol>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTRjMzgxYTc1NTkxYWZhYTcucG5n" alt="image.png"></p>
+<ol start="4">
+<li>打开 “应用程序→实用工具→终端”，将下面的一段命令复制并粘贴进去：<br>如果你要制作 High Sierra，拷贝这段命令：</li>
+</ol>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ High\ Sierra.app/Contents/Resources/createinstallmedia --volume /Volumes/Sierra --applicationpath /Applications/Install\ macOS\ High\ Sierra.app --nointeraction</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>请注意红色的「Sierra」要对应你的 U 盘命名 (上图3号处)</li>
+</ul>
+<hr>
+<p>如果你要制作「旧版本的 macOS Sierra」，则拷贝这段命令：</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /Applications/Install\ macOS\ Sierra.app/Contents/Resources/createinstallmedia --volume /Volumes/Sierra --applicationpath /Applications/Install\ macOS\ Sierra.app --nointeraction</span><br></pre></td></tr></table></figure></div>
+
+<ol start="5">
+<li><p>回车并执行该命令，这时会提示让你输入管理员密码，便会开始制作过程了：<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTFkOGEwNTA2NDNhYTc3YTEucG5n" alt="image.png"></p>
+</li>
+<li><p>如上图，这时系统已经在制作中了，请耐心等待直到屏幕最后出现 Done. 字样即表示大功告成了！然后，就带着<a href="https://www.iplaysoft.com/tag/U%E7%9B%98" target="_blank" rel="noopener">U盘</a>出去浪吧……</p>
+</li>
+</ol>
+<h3 id="方法二：使用-DiskMaker-X-启动盘制作工具："><a href="#方法二：使用-DiskMaker-X-启动盘制作工具：" class="headerlink" title="方法二：使用 DiskMaker X 启动盘制作工具："></a>方法二：使用 DiskMaker X 启动盘制作工具：</h3><p>如果你不喜欢任何<a href="https://www.iplaysoft.com/tag/%E4%BB%A3%E7%A0%81" target="_blank" rel="noopener">代码</a>、命令之类的操作，那么除了上面使用命令行来制作 macOS 的启动/安装盘的方法外，我们也有更加傻瓜直观一点的方法，那就是通过 <strong>DiskMaker X</strong> 工具来制作 macOS 安装U盘。</p>
+<p><a href="https://www.iplaysoft.com/macos-usb-install-drive.html" target="_blank" rel="noopener">Diskmaker X</a> 是一款免费的 <strong>macOS USB 启动盘制作软件</strong>，当然前提也是要先下载好 macOS Sierra 正式版的安装程序。最新的 <strong>DiskMaker X 7 已更新支持制作 macOS High Sierra</strong> / Sierra / OS X Yosemite / El Capitan 等不同版本的系统安装盘，启动后会让你选择，按照你的需要选择即可<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTU5ZjAyOTcxNmVlMTUwMzkucG5n" alt="image.png"></p>
+<p>如果你已经下载好 macOS 的安装程序，那么正常情况下，Diskmaker X 会自动帮你找到其路径的，点击 Use This Copy 继续下一步<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LWFjZjU4MDI4NzJjYWM4ZDEucG5n" alt="image.png"></p>
+<p>之后，DiskMaker X 会提示你需要一个至少 <a href="https://www.iplaysoft.com/go/upan" target="_blank" rel="noopener">8GB 容量的U盘</a>，将 U 盘插入 Mac 之后，点击 “An 8 GB USB thumb drive” 按钮下一步<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LWZkOTg2OTQyYmQyMzM4ZjcucG5n" alt="image.png"></p>
+<p>这时会出现选择 U 盘盘符的窗口（请注意千万不要选错盘符哦！！）：<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LWM4NDdiYzNiZGNhZDFmNWIucG5n" alt="image.png"></p>
+<p>确认格式化并抹除 U盘 (Erase then create the disk)，然后就开始一条龙制作过程了。</p>
+<h3 id="通过-U-盘安装-macOS-Sierra-格式化重装-抹盘全新安装系统-方法"><a href="#通过-U-盘安装-macOS-Sierra-格式化重装-抹盘全新安装系统-方法" class="headerlink" title="通过 U 盘安装 macOS Sierra / 格式化重装 (抹盘全新安装系统) 方法"></a>通过 U 盘安装 macOS Sierra / 格式化重装 (抹盘全新安装系统) 方法</h3><p>当你制作好 macOS Sierra 的安装盘 U 盘之后，你就可以利用它来给 <a href="https://www.iplaysoft.com/go/mac" target="_blank" rel="noopener">Mac 电脑</a>格式化重装 (抹盘安装)了。操作的方法非常简单</p>
+<ol>
+<li><p>当然还是要想办法<a href="https://www.iplaysoft.com/tag/%E5%A4%87%E4%BB%BD" target="_blank" rel="noopener">备份</a>好 Mac 里所有的重要数据了。</p>
+</li>
+<li><p>插上制作好的安装U盘，如果系统能识别出来即可，这时我们先关机了。</p>
+</li>
+<li><p>按下电源键开机，当听到“噹”的一声时，按住 Option 键不放，直到出现启动菜单选项：<br><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xODk5OTM0LTY4MTJlYjZmMDVlMjE2MmMucG5n" alt="image.png"></p>
+</li>
+<li><p>这时选择安装U盘 (黄色图标) 并回车，就可以开始安装了，在过程中你可以通过“磁盘工具”对 Mac 的磁盘式化或者重新分区等操作。</p>
+</li>
+<li><p>之后就是一步一步的安装直到完成了。</p>
+</li>
+</ol>
+<p>转载自 <a href="https://www.iplaysoft.com/macos-usb-install-drive.html" target="_blank" rel="noopener">https://www.iplaysoft.com/macos-usb-install-drive.html</a></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2016/08/07/imitate_sdwebimage-05-questions/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            SDWebImage常见面试题
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2016/07/17/multithread/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">多线程</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/code-title.png" title="头像来自网络"></img>
+    <h3 class="avatar-name">
+      
+        一颗心
+      
+    </h3>
+    <p class="avatar-slogan">
+      iOS开发攻城狮 喜欢玩 喜欢懒 喜欢一切有挑战的事情.
+    </p>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/12/httpCode/">HTTP状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/ArrayForPost/">iOS网络请求传入数组</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/autoreleasepool/">自动释放池</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/svnChange/">SVN服务器地址更换</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://yiluyanxia.github.io/" title target='_blank'
+        >一路眼瞎</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 John Doe &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>

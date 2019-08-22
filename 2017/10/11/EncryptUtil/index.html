@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>PHP、JAVA、C#、Object-C 通用的DES加密 | 贾帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="EncryptUtil一行代码完成DES加密，加密模式 DES + CBCgithubDemo:https://github.com/feiyangkl/EncryptUtil DEMO GIF">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP、JAVA、C#、Object-C 通用的DES加密">
+<meta property="og:url" content="http://yoursite.com/2017/10/11/EncryptUtil/index.html">
+<meta property="og:site_name" content="贾帅的博客">
+<meta property="og:description" content="EncryptUtil一行代码完成DES加密，加密模式 DES + CBCgithubDemo:https://github.com/feiyangkl/EncryptUtil DEMO GIF">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYxMDIxMTgxODA4NDcw">
+<meta property="og:updated_time" content="2019-08-22T02:37:41.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP、JAVA、C#、Object-C 通用的DES加密">
+<meta name="twitter:description" content="EncryptUtil一行代码完成DES加密，加密模式 DES + CBCgithubDemo:https://github.com/feiyangkl/EncryptUtil DEMO GIF">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYxMDIxMTgxODA4NDcw">
+  
+    <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/default-avatar.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" style="background-image: url(/images/bg.jpg)" title="背景图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-EncryptUtil" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      PHP、JAVA、C#、Object-C 通用的DES加密
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2017/10/11/EncryptUtil/" class="article-date">
+  <time datetime="2017-10-11T02:29:32.000Z" itemprop="datePublished">2017-10-11</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h1 id="EncryptUtil"><a href="#EncryptUtil" class="headerlink" title="EncryptUtil"></a>EncryptUtil</h1><p>一行代码完成DES加密，加密模式 DES + CBC<br>githubDemo:<a href="https://github.com/feiyangkl/EncryptUtil" target="_blank" rel="noopener">https://github.com/feiyangkl/EncryptUtil</a></p>
+<h2 id="DEMO-GIF"><a href="#DEMO-GIF" class="headerlink" title="DEMO GIF"></a>DEMO GIF</h2><p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTYxMDIxMTgxODA4NDcw" alt></p>
+<a id="more"></a> 
+<h2 id="DEMO-简介"><a href="#DEMO-简介" class="headerlink" title="DEMO 简介"></a>DEMO 简介</h2><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">最近项目中用到DES加密，在这里整理成篇，供大家参考阅读，在使用该demo过程中，你可能会遇到一些问题，首先你需要看一下下面的demo简介，看看该demo 是否适合你的项目。</span><br><span class="line"></span><br><span class="line">项目中的DES加解密主要用在网络请求过程中对上传的参数进行加密，对从后台服务器获取的数据进行解密。</span><br><span class="line"></span><br><span class="line">整体的加密流程为:</span><br><span class="line"></span><br><span class="line">加密的过程: 参数字典 --&gt; json字符串 --&gt; base64加密后的字符串 --&gt; DES加密后base64再加密 --&gt; 输出最终加密后的字符串;</span><br><span class="line"></span><br><span class="line">解密的过程： </span><br><span class="line"></span><br><span class="line">后台服务器获取加密的字符串 --&gt;base64解密 --&gt; DES解密后base64解密 --&gt; json字符串 --&gt; 数据字典;(与加密的过程相反)</span><br><span class="line"></span><br><span class="line">网上对DES的详细介绍已经有很多，在这里不做赘述，如果你需要了解这些知识，google.</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们公司后台为JAVA,移动端有iOS与Android, 讨论后选择DES的加密模式为 DES + CBC (注意是否满足你的加密需求)。</span><br><span class="line"></span><br><span class="line">为什么选择这种加密模式:</span><br><span class="line"></span><br><span class="line">如果采用PKCS7Padding或者PKCS5Padding这种加密方式，末端添加的数据可能不固定，在解码后需要把末端多余的字符去掉，比较棘手。</span><br><span class="line"></span><br><span class="line">如果不管补齐多少位，末端都是&apos;\0&apos;,去掉的话比较容易操作。 最主要的是能使得</span><br><span class="line"></span><br><span class="line">iOS/Android/PHP相互通信，也是加密过程中最难搞的地方，尤其需要开发者注意。</span><br><span class="line"></span><br><span class="line">项目中用到了 google 的 base64 加解密库 GTMBase64，但是这个库已经有很多年没有更新 还是 MRC 开发模式，需要手动配置一下：</span><br><span class="line"></span><br><span class="line">1.选择项目中的Targets，选中你所要操作的Target，</span><br><span class="line"></span><br><span class="line">2.选Build Phases，在其中Complie Sources中选择需要ARC的文件双击，并在输入框中输入 -fno-objc-arc</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="DEMO-使用示例"><a href="#DEMO-使用示例" class="headerlink" title="DEMO 使用示例"></a>DEMO 使用示例</h2><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//加密</span><br><span class="line"></span><br><span class="line">/// 加密</span><br><span class="line">NSMutableDictionary *dic=[NSMutableDictionary dictionary];</span><br><span class="line">[dic setValue:@&quot;111111&quot; forKey:@&quot;password&quot;];</span><br><span class="line">[dic setValue:@&quot;admin&quot; forKey:@&quot;userName&quot;];</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">加密&#123;&quot;userName&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;111111&quot;&#125;和</span><br><span class="line">&#123;</span><br><span class="line">&quot;userName&quot; : &quot;admin&quot;,</span><br><span class="line">&quot;password&quot; : &quot;111111&quot;</span><br><span class="line">&#125;</span><br><span class="line">加密后结果是不一样的,一定要确定公司后台是怎么加密的,要不然有可能会错误</span><br><span class="line">*/</span><br><span class="line">NSString *jsonstr = [dic JSONString];</span><br><span class="line">self.lb_show.text = [EncryptUtil encryptUseDES:jsonstr key:gkey];</span><br><span class="line"></span><br><span class="line">//加密结果 iMXucxT4Z6v0ZILRJtUX1W/8KfR1wvqqdDxHiOdfTvkdVQQnJ7p1DdMPQXM60BwNHBdjhTqbnXIN</span><br><span class="line">eEYVIHbb6w==</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//解密</span><br><span class="line"></span><br><span class="line">- (IBAction)clickDecodeBtn:(UIButton *)sender &#123;</span><br><span class="line"></span><br><span class="line">//上面加密的结果</span><br><span class="line">NSString *AESString = @&quot;iMXucxT4Z6v0ZILRJtUX1W/8KfR1wvqqdDxHiOdfTvkdVQQnJ7p1DdMPQXM60BwNHBdjhTqbnXIN</span><br><span class="line">eEYVIHbb6w==&quot;;</span><br><span class="line"></span><br><span class="line">///解密</span><br><span class="line">self.lb_show.text = [EncryptUtil decryptUseDES:self.lb_show.text key:gkey];</span><br><span class="line"></span><br><span class="line">解密结果:&#123;&quot;userName&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;111111&quot;&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">java </span><br><span class="line">/**</span><br><span class="line">* &lt;li&gt;</span><br><span class="line">* 方法名称:encrypt&lt;/li&gt; &lt;li&gt;</span><br><span class="line">* 加密方法</span><br><span class="line">* @param xmlStr</span><br><span class="line">*            需要加密的消息字符串</span><br><span class="line">* @return 加密后的字符串</span><br><span class="line">*/</span><br><span class="line">public static String encrypt(String xmlStr) &#123;</span><br><span class="line">byte[] encrypt = null;</span><br><span class="line"></span><br><span class="line">try &#123;</span><br><span class="line">// 取需要加密内容的utf-8编码。</span><br><span class="line">encrypt = xmlStr.getBytes(&quot;utf-8&quot;);</span><br><span class="line">&#125; catch (UnsupportedEncodingException e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">// 取MD5Hash码，并组合加密数组</span><br><span class="line">byte[] md5Hasn = null;</span><br><span class="line">try &#123;</span><br><span class="line"></span><br><span class="line">//            md5Hash = EncryptUtil.MD5Hash(temp, 16, temp.length - 16);</span><br><span class="line"></span><br><span class="line">md5Hasn = EncryptUtil.MD5Hash(encrypt, 0, encrypt.length);</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">// 组合消息体</span><br><span class="line">byte[] totalByte = EncryptUtil.addMD5(md5Hasn, encrypt);</span><br><span class="line"></span><br><span class="line">// 取密钥和偏转向量</span><br><span class="line">byte[] key = new byte[8];</span><br><span class="line">byte[] iv = new byte[8];</span><br><span class="line">getKeyIV(EncryptUtil.key, key, iv);</span><br><span class="line"></span><br><span class="line">SecretKeySpec deskey = new SecretKeySpec(key, &quot;DES&quot;);</span><br><span class="line"></span><br><span class="line">IvParameterSpec ivParam = new IvParameterSpec(iv);</span><br><span class="line"></span><br><span class="line">// 使用DES算法使用加密消息体</span><br><span class="line">byte[] temp = null;</span><br><span class="line">try &#123;</span><br><span class="line">temp = EncryptUtil.DES_CBC_Encrypt(totalByte, deskey, ivParam);</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 使用Base64加密后返回</span><br><span class="line">return new BASE64Encoder().encode(temp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ios</span><br><span class="line">/// 加密方法</span><br><span class="line">+ (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key</span><br><span class="line">&#123;</span><br><span class="line">/// 转换成data</span><br><span class="line">NSData* plainTextdata = [plainText dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">NSUInteger plainTextdatLength = [plainTextdata length];</span><br><span class="line">/// 将data数据MD5加密</span><br><span class="line">unsigned char digest[16];</span><br><span class="line">CC_MD5([plainTextdata bytes],(CC_LONG) plainTextdatLength, digest);</span><br><span class="line"></span><br><span class="line">// 总长度 MD5 + plainText</span><br><span class="line">NSUInteger plainTextBufferTotalSize  = 16 +plainTextdatLength;</span><br><span class="line"></span><br><span class="line">// 将plainText 转换成bytes</span><br><span class="line">Byte *testByte = (Byte *)[plainTextdata bytes];</span><br><span class="line"></span><br><span class="line">// 定义totalByte</span><br><span class="line">Byte totalByte[plainTextBufferTotalSize];</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; plainTextBufferTotalSize; ++i) &#123;</span><br><span class="line">if (i&lt;16) &#123;</span><br><span class="line">totalByte[i] =digest[i];</span><br><span class="line">&#125;else&#123;</span><br><span class="line">totalByte[i] =testByte[i - 16];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 将key base64 编码</span><br><span class="line">NSData *baseKey = [GTMBase64 decodeString:key];</span><br><span class="line">Byte *buf = (Byte *)[baseKey bytes];</span><br><span class="line"></span><br><span class="line">Byte key1[8];</span><br><span class="line">Byte iv2[8];</span><br><span class="line">for (int i = 0; i &lt; 8; i++) &#123;</span><br><span class="line"></span><br><span class="line">key1[i] = buf[i];</span><br><span class="line">&#125;</span><br><span class="line">//    // 后8位为iv向量</span><br><span class="line">for (int i = 0; i &lt; 8 ; i++) &#123;</span><br><span class="line">iv2[i] = buf[i + 8];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NSString *ciphertext = nil;</span><br><span class="line">unsigned char buffer[1024];</span><br><span class="line">memset(buffer, 0, sizeof(char));</span><br><span class="line">size_t numBytesEncrypted = 0;</span><br><span class="line">CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt,</span><br><span class="line">kCCAlgorithmDES,</span><br><span class="line">kCCOptionPKCS7Padding,</span><br><span class="line">key1,</span><br><span class="line">kCCKeySizeDES,</span><br><span class="line">iv2,</span><br><span class="line">totalByte,</span><br><span class="line">plainTextBufferTotalSize,</span><br><span class="line">buffer,</span><br><span class="line">1024,</span><br><span class="line">&amp;numBytesEncrypted);</span><br><span class="line">if (cryptStatus == kCCSuccess) &#123;</span><br><span class="line"></span><br><span class="line">NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];</span><br><span class="line">ciphertext = [[NSString alloc] initWithData:[GTMBase64 encodeData:data] encoding:NSUTF8StringEncoding];</span><br><span class="line">&#125;</span><br><span class="line">return ciphertext;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">java 解密</span><br><span class="line">/**</span><br><span class="line">* &lt;li&gt;</span><br><span class="line">* 方法名称:encrypt&lt;/li&gt; &lt;li&gt;</span><br><span class="line">* 功能描述:</span><br><span class="line">*</span><br><span class="line">* &lt;pre&gt;</span><br><span class="line">* 解密方法</span><br><span class="line">* &lt;/pre&gt;</span><br><span class="line">*</span><br><span class="line">* &lt;/li&gt;</span><br><span class="line">*</span><br><span class="line">* @param xmlStr</span><br><span class="line">*            需要解密的消息字符串</span><br><span class="line">* @return 解密后的字符串</span><br><span class="line">* @throws Exception</span><br><span class="line">*/</span><br><span class="line">public static String decrypt(String xmlStr) throws Exception &#123;</span><br><span class="line">// base64解码</span><br><span class="line">BASE64Decoder decoder = new BASE64Decoder();</span><br><span class="line">byte[] encBuf = null;</span><br><span class="line">try &#123;</span><br><span class="line">encBuf = decoder.decodeBuffer(xmlStr);</span><br><span class="line">&#125; catch (IOException e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 取密钥和偏转向量</span><br><span class="line">byte[] key = new byte[8];</span><br><span class="line">byte[] iv = new byte[8];</span><br><span class="line">getKeyIV(EncryptUtil.key, key, iv);</span><br><span class="line"></span><br><span class="line">SecretKeySpec deskey = new SecretKeySpec(key, &quot;DES&quot;);</span><br><span class="line">IvParameterSpec ivParam = new IvParameterSpec(iv);</span><br><span class="line"></span><br><span class="line">// 使用DES算法解密</span><br><span class="line">byte[] temp = null;</span><br><span class="line">try &#123;</span><br><span class="line">temp = EncryptUtil.DES_CBC_Decrypt(encBuf, deskey, ivParam);</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 进行解密后的md5Hash校验</span><br><span class="line">byte[] md5Hash = null;</span><br><span class="line">try &#123;</span><br><span class="line">md5Hash = EncryptUtil.MD5Hash(temp, 16, temp.length - 16);</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 进行解密校检</span><br><span class="line">for (int i = 0; i &lt; md5Hash.length; i++) &#123;</span><br><span class="line">if (md5Hash[i] != temp[i]) &#123;</span><br><span class="line">// System.out.println(md5Hash[i] + &quot;MD5校验错误。&quot; + temp[i]);</span><br><span class="line">throw new Exception(&quot;MD5校验错误。&quot;);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 返回解密后的数组，其中前16位MD5Hash码要除去。</span><br><span class="line">return new String(temp, 16, temp.length - 16, &quot;utf-8&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ios 解密</span><br><span class="line"></span><br><span class="line">/// 解密方法</span><br><span class="line">+ (NSString *) decryptUseDES:(NSString *)plainText key:(NSString *)key &#123;</span><br><span class="line"></span><br><span class="line">// plainTextData转换 base64</span><br><span class="line">NSData *BasePlainTextData = [GTMBase64 decodeString:plainText];</span><br><span class="line">// 将BasePlainTextDatabase64转换为byte数组</span><br><span class="line">Byte *BasePlainTextDataByte = (Byte *)[BasePlainTextData bytes];</span><br><span class="line"></span><br><span class="line">// 将key base64解码</span><br><span class="line">NSData *baseKey = [GTMBase64 decodeString:key];</span><br><span class="line">// 将key 转换成 byte数组</span><br><span class="line">Byte *buf = (Byte *)[baseKey bytes];</span><br><span class="line"></span><br><span class="line">// 定义key iv byte数组</span><br><span class="line">Byte keyByte[8];</span><br><span class="line">Byte ivByte[8];</span><br><span class="line">for (int i = 0; i &lt; 8; i++) &#123;</span><br><span class="line">keyByte[i] = buf[i];</span><br><span class="line">&#125;</span><br><span class="line">//    // 后8位为iv向量</span><br><span class="line">for (int i = 0; i &lt; 8 ; i++) &#123;</span><br><span class="line">ivByte[i] = buf[i + 8];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// 返回值长度</span><br><span class="line">size_t bufferSize = BasePlainTextData.length;</span><br><span class="line"></span><br><span class="line">// 字符串长度比较长 返回值给大点</span><br><span class="line">unsigned char buffer[1024];</span><br><span class="line">memset(buffer,0,sizeof(char));</span><br><span class="line">size_t numBytesEncrypted = 0;</span><br><span class="line">CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,</span><br><span class="line">kCCAlgorithmDES,</span><br><span class="line">kCCOptionPKCS7Padding,</span><br><span class="line">keyByte,</span><br><span class="line">kCCKeySizeDES,</span><br><span class="line">ivByte,</span><br><span class="line">BasePlainTextDataByte,</span><br><span class="line">bufferSize,</span><br><span class="line">buffer,</span><br><span class="line">1024,</span><br><span class="line">&amp;numBytesEncrypted);</span><br><span class="line"></span><br><span class="line">NSData *resultdata;</span><br><span class="line">if (cryptStatus == kCCSuccess) &#123;</span><br><span class="line"></span><br><span class="line">resultdata = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Byte *resultByte = (Byte *)[resultdata bytes];</span><br><span class="line"></span><br><span class="line">// 返回数组长度 减去MD5加密的16</span><br><span class="line">size_t returnLength = resultdata.length - 16;</span><br><span class="line">/// 定义</span><br><span class="line">Byte decryptionByte[returnLength];</span><br><span class="line"></span><br><span class="line">for (int i = 0; i &lt; returnLength; ++i) &#123;</span><br><span class="line">decryptionByte[i] = resultByte[i+16];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// md5 校验</span><br><span class="line">//    unsigned char digest[16];</span><br><span class="line">//    CC_MD5(decryptionByte,returnLength, digest);</span><br><span class="line">//    NSData *md5data = [NSData dataWithBytes:digest length:16];</span><br><span class="line"></span><br><span class="line">// 进行解密校检</span><br><span class="line">//    Byte *md5bte= (Byte *)[md5data bytes];</span><br><span class="line"></span><br><span class="line">//    for (int i = 0; i &lt; 40; i++) &#123;</span><br><span class="line">//</span><br><span class="line">//</span><br><span class="line">//        if (md5bte[i] !=decryptionByte[i] ) &#123;</span><br><span class="line">//            // System.out.println(md5Hash[i] + &quot;MD5校验错误。&quot; + temp[i]);</span><br><span class="line">//            //            throw new Exception(&quot;MD5校验错误。&quot;);</span><br><span class="line">//</span><br><span class="line">//            NSLog(@&quot;c1111uowu&quot;);</span><br><span class="line">//        &#125;else&#123;</span><br><span class="line">//            NSLog(@&quot;cuowu&quot;);</span><br><span class="line">//        &#125;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">NSData *namedata = [[NSData alloc] initWithBytes:decryptionByte length:returnLength];</span><br><span class="line"></span><br><span class="line">NSString *str = [[NSString alloc] initWithData:namedata encoding:NSUTF8StringEncoding];</span><br><span class="line">NSLog(@&quot;%@&quot;,str);</span><br><span class="line"></span><br><span class="line">return str;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>项目中遇到的一些坑，在 DEMO 中都已经注释出来，写的比较清楚，如果该 DEMO 帮助了您，也希望能给个 star</p>
+<p>鼓励一下，如果在使用中您有任何问题，可以在 github issues,我会尽自己能力给您答复 。</p>
+<p>在这里感谢这些 blog 的作者,让我在开发过程中少走了很多弯路:</p>
+<p><a href="http://www.open-open.com/lib/view/open1452738808948.html" target="_blank" rel="noopener">http://www.open-open.com/lib/view/open1452738808948.html</a></p>
+<p><a href="https://my.oschina.net/jsan/blog/54385" target="_blank" rel="noopener">https://my.oschina.net/jsan/blog/54385</a></p>
+<p><a href="http://blog.csdn.net/j_akill/article/details/44079597" target="_blank" rel="noopener">http://blog.csdn.net/j_akill/article/details/44079597</a></p>
+<p><a href="http://blog.csdn.net/jbjwpzyl3611421/article/details/18256917" target="_blank" rel="noopener">http://blog.csdn.net/jbjwpzyl3611421/article/details/18256917</a></p>
+<p><a href="https://github.com/IMCCP/CCPAESEncode/blob/master/CCPAESEncode" target="_blank" rel="noopener">https://github.com/IMCCP/CCPAESEncode/blob/master/CCPAESEncode</a></p>
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2018/03/21/cipher-03-key_chain/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            钥匙串
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2016/10/01/cipher-05-rsa/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">非对称加密算法</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/code-title.png" title="头像来自网络"></img>
+    <h3 class="avatar-name">
+      
+        一颗心
+      
+    </h3>
+    <p class="avatar-slogan">
+      iOS开发攻城狮 喜欢玩 喜欢懒 喜欢一切有挑战的事情.
+    </p>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/12/httpCode/">HTTP状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/ArrayForPost/">iOS网络请求传入数组</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/autoreleasepool/">自动释放池</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/svnChange/">SVN服务器地址更换</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://yiluyanxia.github.io/" title target='_blank'
+        >一路眼瞎</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 John Doe &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>

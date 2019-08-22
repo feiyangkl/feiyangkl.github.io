@@ -5,18 +5,23 @@
   
 
   
-  <title>Archives: 2019 | 贾帅的博客</title>
+  <title>GCD | 贾帅的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="贾帅的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="GCD 核心概念 将任务添加到队列，并且指定执行任务的函数  任务使用 block 封装  任务的 block 没有参数也没有返回值   执行任务的函数  异步 dispatch_async 不用等待当前语句执行完毕，就可以执行下一条语句 会开启线程执行 block 的任务 异步是多线程的代名词   同步 dispatch_sync 必须等待当前语句执行完毕，才会执行下一条语句 不会开启线程 在当">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCD">
+<meta property="og:url" content="http://yoursite.com/2016/09/21/gcd/index.html">
 <meta property="og:site_name" content="贾帅的博客">
+<meta property="og:description" content="GCD 核心概念 将任务添加到队列，并且指定执行任务的函数  任务使用 block 封装  任务的 block 没有参数也没有返回值   执行任务的函数  异步 dispatch_async 不用等待当前语句执行完毕，就可以执行下一条语句 会开启线程执行 block 的任务 异步是多线程的代名词   同步 dispatch_sync 必须等待当前语句执行完毕，才会执行下一条语句 不会开启线程 在当">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-22T02:36:45.605Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="贾帅的博客">
+<meta name="twitter:title" content="GCD">
+<meta name="twitter:description" content="GCD 核心概念 将任务添加到队列，并且指定执行任务的函数  任务使用 block 封装  任务的 block 没有参数也没有返回值   执行任务的函数  异步 dispatch_async 不用等待当前语句执行完毕，就可以执行下一条语句 会开启线程执行 block 的任务 异步是多线程的代名词   同步 dispatch_sync 必须等待当前语句执行完毕，才会执行下一条语句 不会开启线程 在当">
   
     <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
   
@@ -61,72 +66,176 @@
   </div>
 </header>
       <div id="middlecontent" title class="global-width sidebar-right">
-        <section id="main">
+        <section id="main"><article id="post-gcd" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
+    <header class="article-header">
+      
   
+    <h1 class="article-title" itemprop="name">
+      GCD
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2016/09/21/gcd/" class="article-date">
+  <time datetime="2016-09-21T02:29:32.000Z" itemprop="datePublished">2016-09-21</time>
+</a>
     
     
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
       
+        <h2 id="GCD-核心概念"><a href="#GCD-核心概念" class="headerlink" title="GCD 核心概念"></a>GCD 核心概念</h2><ol>
+<li><p>将<code>任务</code>添加到<code>队列</code>，并且指定<code>执行任务的函数</code></p>
+</li>
+<li><p>任务使用 <code>block</code> 封装</p>
+<ul>
+<li>任务的 <code>block</code> 没有参数也没有返回值</li>
+</ul>
+</li>
+<li><p>执行任务的函数</p>
+<ul>
+<li>异步 <code>dispatch_async</code><ul>
+<li>不用等待当前语句执行完毕，就可以执行下一条语句</li>
+<li>会开启线程执行 <code>block</code> 的任务</li>
+<li><code>异步</code>是多线程的代名词</li>
+</ul>
+</li>
+<li>同步 <code>dispatch_sync</code><ul>
+<li>必须等待当前语句执行完毕，才会执行下一条语句</li>
+<li>不会开启线程</li>
+<li>在当前执行 <code>block</code> 的任务</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>队列 - 负责调度任务</p>
+<ul>
+<li>串行队列<ul>
+<li>一次只能”调度”一个任务</li>
+<li><code>dispatch_queue_create(&quot;feiyangkl&quot;, NULL);</code></li>
+</ul>
+</li>
+<li>并发队列<ul>
+<li>一次可以”调度”多个任务</li>
+<li><code>dispatch_queue_create(&quot;feiyangkl&quot;, DISPATCH_QUEUE_CONCURRENT);</code></li>
+</ul>
+</li>
+<li>主队列<ul>
+<li>专门用来在主线程上调度任务的队列</li>
+<li>不会开启线程</li>
+<li><strong>在<code>主线程空闲时</code>才会调度队列中的任务在主线程执行</strong></li>
+<li><code>dispatch_get_main_queue();</code></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+</li>
+</ol>
+<h2 id="阶段性小结"><a href="#阶段性小结" class="headerlink" title="阶段性小结"></a>阶段性小结</h2><ul>
+<li>开不开线程由<code>执行任务的函数</code>决定<ul>
+<li><code>异步</code>开，<code>异步</code>是多线程的代名词</li>
+<li><code>同步</code>不开</li>
+</ul>
+</li>
+<li>开几条线程由<code>队列</code>决定<ul>
+<li><code>串行队列</code>开一条线程</li>
+<li><code>并发队列</code>开多条线程，具体能开的线程数量由底层线程池决定<ul>
+<li>iOS 8.0 之后，GCD 能够开启非常多的线程</li>
+<li>iOS 7.0 以及之前，GCD 通常只会开启 5~6 条线程</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="队列的选择"><a href="#队列的选择" class="headerlink" title="- 队列的选择"></a>- 队列的选择</h2><ul>
+<li><p>多线程的目的：将耗时的操作放在后台执行！</p>
+</li>
+<li><p>串行队列，只开一条线程，所有任务顺序执行</p>
+<ul>
+<li>如果任务有先后执行顺序的要求</li>
+<li>效率低 -&gt; 执行慢 -&gt; “省电”</li>
+<li>有的时候，用户其实不希望太快！例如使用 3G 流量，”省钱”</li>
+</ul>
+</li>
+<li><p>并发队列，会开启多条线程，所有任务不按照顺序执行</p>
+<ul>
+<li>如果任务没有先后执行顺序的要求</li>
+<li>效率高 -&gt; 执行快 -&gt; “费电”</li>
+<li>WIFI，包月</li>
+</ul>
+</li>
+</ul>
+<h3 id="实际开发中，线程数量如何决定"><a href="#实际开发中，线程数量如何决定" class="headerlink" title="实际开发中，线程数量如何决定?"></a>实际开发中，线程数量如何决定?</h3><ul>
+<li>WIFI 线程数 <code>6</code> 条</li>
+<li>3G / 4G 移动开发的时候，<code>2~3</code>条，再多会费电费钱！</li>
+</ul>
+
       
-      <section class="global-container archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2016/09/22/gcd-08-barrier_async/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            Barrier 异步
+          
         </div>
-        <div class="archives">
+      </a>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
-    </h1>
-  
-      
-    </header>
-    <div class="article-meta archive-article-meta">
-      <a href="/2019/08/22/imageChange/" class="article-date">
-  <time datetime="2019-08-22T02:29:32.000Z" itemprop="datePublished">2019-08-22</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </div>
   </div>
-</article>
-  
+  <div class="article-nav-block">
     
+      <a href="/2016/08/07/imitate_sdwebimage-05-questions/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">SDWebImage常见面试题</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/12/httpCode/">HTTP状态码</a>
-    </h1>
-  
-      
-    </header>
-    <div class="article-meta archive-article-meta">
-      <a href="/2019/01/12/httpCode/" class="article-date">
-  <time datetime="2019-01-12T02:29:32.000Z" itemprop="datePublished">2019-01-12</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </div>
   </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
 </article>
-  
-  
-    </div></section>
-  
-
-
 </section>
         <aside id="sidebar">
   

@@ -5,18 +5,23 @@
   
 
   
-  <title>Archives: 2019 | 贾帅的博客</title>
+  <title>iOS网络请求传入数组 | 贾帅的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="贾帅的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="之前做项目的时候，后台要求传入数组，用AFN传入字典，代码入下： 12345678910111213141516171819NSDictionary *parameter = [ NSDictionary dictionary];  NSArray *arr = @[parameter];  NSError *parseError = nil;NSData *jsonData = [NSJSONS">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS网络请求传入数组">
+<meta property="og:url" content="http://yoursite.com/2018/12/25/ArrayForPost/index.html">
 <meta property="og:site_name" content="贾帅的博客">
+<meta property="og:description" content="之前做项目的时候，后台要求传入数组，用AFN传入字典，代码入下： 12345678910111213141516171819NSDictionary *parameter = [ NSDictionary dictionary];  NSArray *arr = @[parameter];  NSError *parseError = nil;NSData *jsonData = [NSJSONS">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-22T02:41:59.280Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="贾帅的博客">
+<meta name="twitter:title" content="iOS网络请求传入数组">
+<meta name="twitter:description" content="之前做项目的时候，后台要求传入数组，用AFN传入字典，代码入下： 12345678910111213141516171819NSDictionary *parameter = [ NSDictionary dictionary];  NSArray *arr = @[parameter];  NSError *parseError = nil;NSData *jsonData = [NSJSONS">
   
     <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
   
@@ -61,72 +66,91 @@
   </div>
 </header>
       <div id="middlecontent" title class="global-width sidebar-right">
-        <section id="main">
+        <section id="main"><article id="post-ArrayForPost" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
+    <header class="article-header">
+      
   
+    <h1 class="article-title" itemprop="name">
+      iOS网络请求传入数组
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/12/25/ArrayForPost/" class="article-date">
+  <time datetime="2018-12-25T02:29:32.000Z" itemprop="datePublished">2018-12-25</time>
+</a>
     
     
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
       
+        <p>之前做项目的时候，后台要求传入数组，用AFN传入字典，代码入下：</p>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">NSDictionary *parameter = [ NSDictionary dictionary];</span><br><span class="line">  </span><br><span class="line">NSArray *arr = @[parameter];</span><br><span class="line">  </span><br><span class="line">NSError *parseError = nil;</span><br><span class="line"></span><br><span class="line">NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr options:NSJSONWritingPrettyPrinted  error:&amp;parseError];</span><br><span class="line">  </span><br><span class="line">NSString *jsonstr =[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];</span><br><span class="line">  </span><br><span class="line">NSData *objectData = [jsonstr dataUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">  </span><br><span class="line">NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:objectData</span><br><span class="line">                           </span><br><span class="line">                                                          options:NSJSONReadingMutableContainers</span><br><span class="line">                           </span><br><span class="line">                                                            error:&amp;parseError];</span><br></pre></td></tr></table></figure></div>
       
-      <section class="global-container archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2019/01/12/httpCode/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            HTTP状态码
+          
         </div>
-        <div class="archives">
+      </a>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
-    </h1>
-  
-      
-    </header>
-    <div class="article-meta archive-article-meta">
-      <a href="/2019/08/22/imageChange/" class="article-date">
-  <time datetime="2019-08-22T02:29:32.000Z" itemprop="datePublished">2019-08-22</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </div>
   </div>
-</article>
-  
+  <div class="article-nav-block">
     
+      <a href="/2018/12/25/autoreleasepool/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">自动释放池</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/12/httpCode/">HTTP状态码</a>
-    </h1>
-  
-      
-    </header>
-    <div class="article-meta archive-article-meta">
-      <a href="/2019/01/12/httpCode/" class="article-date">
-  <time datetime="2019-01-12T02:29:32.000Z" itemprop="datePublished">2019-01-12</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </div>
   </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
 </article>
-  
-  
-    </div></section>
-  
-
-
 </section>
         <aside id="sidebar">
   

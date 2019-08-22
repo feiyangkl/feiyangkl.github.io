@@ -5,18 +5,23 @@
   
 
   
-  <title>Archives: 2019 | 贾帅的博客</title>
+  <title>Mac 更改用户名丢失权限操作 | 贾帅的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="贾帅的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2019/index.html">
+  <meta name="description" content="1在开启电脑时按住 Command-S 键，以单用户模式(以新視窗開啟)(以新視窗開啟)启动。等待白色文本出现。﻿ 2在提示符处，单行键入如下所示的每个命令，并在每行结束时按 Return 键。﻿ 3﻿ 4mount -uw /﻿ 5 cd /var/db﻿ 6 mv dslocal dslocal.old﻿ 7 mkdir -p dslocal/nodes﻿ 8 cp -Rp /System/L">
+<meta name="keywords" content="Mac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac 更改用户名丢失权限操作">
+<meta property="og:url" content="http://yoursite.com/2018/10/22/MacDelete permissions/index.html">
 <meta property="og:site_name" content="贾帅的博客">
+<meta property="og:description" content="1在开启电脑时按住 Command-S 键，以单用户模式(以新視窗開啟)(以新視窗開啟)启动。等待白色文本出现。﻿ 2在提示符处，单行键入如下所示的每个命令，并在每行结束时按 Return 键。﻿ 3﻿ 4mount -uw /﻿ 5 cd /var/db﻿ 6 mv dslocal dslocal.old﻿ 7 mkdir -p dslocal/nodes﻿ 8 cp -Rp /System/L">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-22T03:18:54.425Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="贾帅的博客">
+<meta name="twitter:title" content="Mac 更改用户名丢失权限操作">
+<meta name="twitter:description" content="1在开启电脑时按住 Command-S 键，以单用户模式(以新視窗開啟)(以新視窗開啟)启动。等待白色文本出现。﻿ 2在提示符处，单行键入如下所示的每个命令，并在每行结束时按 Return 键。﻿ 3﻿ 4mount -uw /﻿ 5 cd /var/db﻿ 6 mv dslocal dslocal.old﻿ 7 mkdir -p dslocal/nodes﻿ 8 cp -Rp /System/L">
   
     <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
   
@@ -61,72 +66,124 @@
   </div>
 </header>
       <div id="middlecontent" title class="global-width sidebar-right">
-        <section id="main">
+        <section id="main"><article id="post-MacDelete permissions" class="article global-container article-type-post" itemscope itemprop="blogPost">
   
+    <header class="article-header">
+      
   
+    <h1 class="article-title" itemprop="name">
+      Mac 更改用户名丢失权限操作
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2018/10/22/MacDelete permissions/" class="article-date">
+  <time datetime="2018-10-22T02:29:32.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
     
     
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
       
+        <p>1在开启电脑时按住 Command-S 键，以单用户模式(以新視窗開啟)(以新視窗開啟)启动。等待白色文本出现。﻿</p>
+<p>2在提示符处，单行键入如下所示的每个命令，并在每行结束时按 Return 键。﻿</p>
+<p>3﻿</p>
+<p>4mount -uw /﻿</p>
+<p>5 cd /var/db﻿</p>
+<p>6 mv dslocal dslocal.old﻿</p>
+<p>7 mkdir -p dslocal/nodes﻿</p>
+<p>8 cp -Rp /System/Library/DirectoryServices/DefaultLocalDB/Default dslocal/nodes/﻿</p>
+<p>9 rm .AppleSetupDone﻿</p>
+<p>10 reboot﻿</p>
+<a id="more"></a> 
+<p>11 ﻿</p>
+<p>12重新启动电脑后，完成“设置助理”，以再次创建管理员用户帐户。创建帐户时，输入到“帐户名称”字段中的短名称应与位于“/用户”中的用户个人文件夹的名称相匹配，以便新用户使用现有的个人文件夹。﻿</p>
+<p>13运行“设置助理”后，打开“终端”并键入以下命令：﻿</p>
+<p>14﻿</p>
+<p>15sudo chown -R 用户名:staff /Users/用户名﻿</p>
+<p>16  注：“/Users/”前有一个空格。将“用户名”替换为上一步中在“帐户名称”字段中输入的用户短名称。﻿</p>
+<p>17如果电脑具有多个用户，请使用“系统偏好设置”的“帐户”面板来重新创建其余的任何用户。创建每个帐户时，输入到“帐户名称”字段中的短名称应与位于“/用户”中的用户个人文件夹的名称相匹配，以便新用户使用现有的个人文件夹。1在开启电脑时按住 Command-S 键，以单用户模式(以新視窗開啟)(以新視窗開啟)启动。等待白色文本出现。﻿</p>
+<p>2在提示符处，单行键入如下所示的每个命令，并在每行结束时按 Return 键。﻿</p>
+<p>3﻿</p>
+<p>4mount -uw /﻿</p>
+<p>5 cd /var/db﻿</p>
+<p>6 mv dslocal dslocal.old﻿</p>
+<p>7 mkdir -p dslocal/nodes﻿</p>
+<p>8 cp -Rp /System/Library/DirectoryServices/DefaultLocalDB/Default dslocal/nodes/﻿</p>
+<p>9 rm .AppleSetupDone﻿</p>
+<p>10 reboot﻿</p>
+<p>11 ﻿</p>
+<p>12重新启动电脑后，完成“设置助理”，以再次创建管理员用户帐户。创建帐户时，输入到“帐户名称”字段中的短名称应与位于“/用户”中的用户个人文件夹的名称相匹配，以便新用户使用现有的个人文件夹。﻿</p>
+<p>13运行“设置助理”后，打开“终端”并键入以下命令：﻿</p>
+<p>14﻿</p>
+<p>15sudo chown -R 用户名:staff /Users/用户名﻿</p>
+<p>16  注：“/Users/”前有一个空格。将“用户名”替换为上一步中在“帐户名称”字段中输入的用户短名称。﻿</p>
+<p>17如果电脑具有多个用户，请使用“系统偏好设置”的“帐户”面板来重新创建其余的任何用户。创建每个帐户时，输入到“帐户名称”字段中的短名称应与位于“/用户”中的用户个人文件夹的名称相匹配，以便新用户使用现有的个人文件夹。</p>
+
       
-      <section class="global-container archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2018/12/22/SDWebImageWebCache/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            SDWebImage获取缓存和清除
+          
         </div>
-        <div class="archives">
+      </a>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
-    </h1>
-  
-      
-    </header>
-    <div class="article-meta archive-article-meta">
-      <a href="/2019/08/22/imageChange/" class="article-date">
-  <time datetime="2019-08-22T02:29:32.000Z" itemprop="datePublished">2019-08-22</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </div>
   </div>
-</article>
-  
+  <div class="article-nav-block">
     
+      <a href="/2018/10/22/SwiftMap/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Swift 数组中 Map,FlatMap,Filter,Reduce的使用</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/12/httpCode/">HTTP状态码</a>
-    </h1>
-  
-      
-    </header>
-    <div class="article-meta archive-article-meta">
-      <a href="/2019/01/12/httpCode/" class="article-date">
-  <time datetime="2019-01-12T02:29:32.000Z" itemprop="datePublished">2019-01-12</time>
-</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-
-    </div>
   </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
 </article>
-  
-  
-    </div></section>
-  
-
-
 </section>
         <aside id="sidebar">
   

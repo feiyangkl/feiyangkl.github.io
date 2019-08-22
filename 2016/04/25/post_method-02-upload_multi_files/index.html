@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>上传多个文件 | 贾帅的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="需求 有些服务器可以在上传文件的同时，提交一些文本内容给服务器 典型应用：新浪微博，上传图片的同时，发送一个微博！  上传原理 用 firebug 演示 upload-m.php 注意修改 abc 文件夹的访问权限">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上传多个文件">
+<meta property="og:url" content="http://yoursite.com/2016/04/25/post_method-02-upload_multi_files/index.html">
+<meta property="og:site_name" content="贾帅的博客">
+<meta property="og:description" content="需求 有些服务器可以在上传文件的同时，提交一些文本内容给服务器 典型应用：新浪微博，上传图片的同时，发送一个微博！  上传原理 用 firebug 演示 upload-m.php 注意修改 abc 文件夹的访问权限">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-22T02:34:21.818Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="上传多个文件">
+<meta name="twitter:description" content="需求 有些服务器可以在上传文件的同时，提交一些文本内容给服务器 典型应用：新浪微博，上传图片的同时，发送一个微博！  上传原理 用 firebug 演示 upload-m.php 注意修改 abc 文件夹的访问权限">
+  
+    <link rel="alternate" href="/atom.xml" title="贾帅的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/default-avatar.webp">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/highlight.css">
+  <script>
+  let antiquityStorage = window.sessionStorage.getItem('antiquitySessionStorage');
+  if (antiquityStorage == '' || antiquityStorage == null) {
+    var antiquityLoader = '<div id="loaderbox"><div class="loader"><div class="load-roll"><div class="load-top"></div><div class="load-right"></div><div class="load-bottom"></div></div></div></div>';
+    document.write(antiquityLoader);
+    document.body.style.overflow = 'hidden'
+  }
+  </script>
+</head>
+</html>
+<body>
+  <div id="fullpage" class="mobile-nav-right">
+    
+      <div id="wrapper" style="background-image: url(/images/bg.jpg)" title="背景图片来自网络">
+    
+    
+      <header id="header">
+  <div id="nav-toggle" class="nav-toggle"></div>
+  <div class="head-box global-width">
+    <nav class="nav-box nav-right">
+      
+        <a class="nav-item" href="/" title
+        
+        >首页</a>
+      
+        <a class="nav-item" href="/archives" title
+        
+        >归档</a>
+      
+    </nav>
+  </div>
+</header>
+      <div id="middlecontent" title class="global-width sidebar-right">
+        <section id="main"><article id="post-post_method-02-upload_multi_files" class="article global-container article-type-post" itemscope itemprop="blogPost">
+  
+    <header class="article-header">
+      
+  
+    <h1 class="article-title" itemprop="name">
+      上传多个文件
+    </h1>
+  
+
+    </header>
+  
+  <div class="article-meta">
+    <a href="/2016/04/25/post_method-02-upload_multi_files/" class="article-date">
+  <time datetime="2016-04-25T02:29:32.000Z" itemprop="datePublished">2016-04-25</time>
+</a>
+    
+    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+
+  </div>
+  
+    <span id="busuanzi_container_page_pv">
+      本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+    </span>
+  
+
+  <div class="article-inner">
+    
+    <div class="article-content article-content-cloud" itemprop="articleBody">
+      
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><ul>
+<li>有些服务器可以在上传文件的同时，提交一些文本内容给服务器</li>
+<li>典型应用：新浪微博，上传图片的同时，发送一个微博！</li>
+</ul>
+<h2 id="上传原理"><a href="#上传原理" class="headerlink" title="上传原理"></a>上传原理</h2><ul>
+<li>用 firebug 演示 upload-m.php</li>
+<li>注意修改 abc 文件夹的访问权限</li>
+</ul>
+<a id="more"></a> 
+
+<h2 id="上传多个文件"><a href="#上传多个文件" class="headerlink" title="上传多个文件"></a>上传多个文件</h2><ul>
+<li>请求格式</li>
+</ul>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart/form-data; boundary=boundary</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>数据格式</li>
+</ul>
+<div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">--boundary\r\n</span><br><span class="line">Content-Disposition: form-data; name=&quot;userfile[]&quot;; filename=&quot;aaa.txt&quot;\r\n</span><br><span class="line">Content-Type: application/octet-stream\r\n\r\n</span><br><span class="line"></span><br><span class="line">二进制数据</span><br><span class="line">\r\n</span><br><span class="line">--boundary\r\n</span><br><span class="line">Content-Disposition: form-data; name=&quot;userfile[]&quot;; filename=&quot;aaa副本.txt&quot;\r\n</span><br><span class="line">Content-Type: application/octet-stream\r\n\r\n</span><br><span class="line"></span><br><span class="line">二进制数据</span><br><span class="line">\r\n</span><br><span class="line">--boundary\r\n</span><br><span class="line">// status 是脚本文件接收参数的名称</span><br><span class="line">Content-Disposition: form-data; name=&quot;status&quot;\r\n\r\n</span><br><span class="line"></span><br><span class="line">二进制数据</span><br><span class="line">\r\n</span><br><span class="line">--boundary--</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="准备数据确认参数"><a href="#准备数据确认参数" class="headerlink" title="准备数据确认参数"></a>准备数据确认参数</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="OBJC"><figure class="iseeu highlight /objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 上传文件数据</span></span><br><span class="line">    <span class="built_in">NSURL</span> *fileURL1 = [[<span class="built_in">NSBundle</span> mainBundle] URLForResource:<span class="string">@"001.png"</span> withExtension:<span class="literal">nil</span>];</span><br><span class="line">    <span class="built_in">NSData</span> *data1 = [<span class="built_in">NSData</span> dataWithContentsOfURL:fileURL1];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSURL</span> *fileURL2 = [[<span class="built_in">NSBundle</span> mainBundle] URLForResource:<span class="string">@"demo.jpg"</span> withExtension:<span class="literal">nil</span>];</span><br><span class="line">    <span class="built_in">NSData</span> *data2 = [<span class="built_in">NSData</span> dataWithContentsOfURL:fileURL2];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如何传递参数 － 用字典传递参数</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *dataDict = @&#123;<span class="string">@"001.png"</span>: data1, <span class="string">@"002.jpg"</span>: data2&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 字符串参数</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *params = @&#123;<span class="string">@"status"</span>: <span class="string">@"how are you"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 上传文件并且提交参数</span></span><br><span class="line">    [<span class="keyword">self</span> uploadFile:<span class="string">@"userfile[]"</span> dataDict:dataDict params:params];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="OBJC"><figure class="iseeu highlight /objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#define boundary @<span class="meta-string">"itcast-upload"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">///  上传文件</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///  @param fieldName 服务器字段名</span></span><br><span class="line"><span class="comment">///  @param dataDict  上传文件数据字典 "保存在服务器文件名": 二进制数据</span></span><br><span class="line"><span class="comment">///  @param params    提交参数字典</span></span><br><span class="line">- (<span class="keyword">void</span>)uploadFile:(<span class="built_in">NSString</span> *)fieldName dataDict:(<span class="built_in">NSDictionary</span> *)dataDict params:(<span class="built_in">NSDictionary</span> *)params &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. url</span></span><br><span class="line">    <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://10.0.1.8/post/upload-m.php"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. request</span></span><br><span class="line">    <span class="built_in">NSMutableURLRequest</span> *request = [<span class="built_in">NSMutableURLRequest</span> requestWithURL:url];</span><br><span class="line">    request.HTTPMethod = <span class="string">@"POST"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSString</span> *typeValue = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"multipart/form-data; boundary=%@"</span>, boundary];</span><br><span class="line">    [request setValue:typeValue forHTTPHeaderField:<span class="string">@"Content-Type"</span>];</span><br><span class="line"></span><br><span class="line">    request.HTTPBody = [<span class="keyword">self</span> formData:fieldName dataDict:dataDict params:params];</span><br><span class="line"></span><br><span class="line">    [<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request queue:[<span class="built_in">NSOperationQueue</span> mainQueue] completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *connectionError) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:data options:<span class="number">0</span> error:<span class="literal">NULL</span>]);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="生成-formData-数据"><a href="#生成-formData-数据" class="headerlink" title="生成 formData 数据"></a>生成 formData 数据</h3><div class="highlight-box"autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true"data-rel="OBJC"><figure class="iseeu highlight /objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">///  生成 formData 二进制数据</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///  @param fieldName 服务器字段名</span></span><br><span class="line"><span class="comment">///  @param dataDict  上传文件数据字典 "保存在服务器文件名": 二进制数据</span></span><br><span class="line"><span class="comment">///  @param params    提交参数字典</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">///  @return formData 二进制数据</span></span><br><span class="line">- (<span class="built_in">NSData</span> *)formData:(<span class="built_in">NSString</span> *)fieldName dataDict:(<span class="built_in">NSDictionary</span> *)dataDict params:(<span class="built_in">NSDictionary</span> *)params &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSMutableData</span> *dataM = [<span class="built_in">NSMutableData</span> data];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 生成文件数据</span></span><br><span class="line">    [dataDict enumerateKeysAndObjectsUsingBlock:^(<span class="built_in">NSString</span> *fileName, <span class="built_in">NSData</span> *fileData, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line">        <span class="built_in">NSMutableString</span> *strM = [<span class="built_in">NSMutableString</span> string];</span><br><span class="line"></span><br><span class="line">        [strM appendFormat:<span class="string">@"--%@\r\n"</span>, boundary];</span><br><span class="line">        [strM appendFormat:<span class="string">@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n"</span>, fieldName, fileName];</span><br><span class="line">        [strM appendString:<span class="string">@"Content-Type: application/octet-stream\r\n\r\n"</span>];</span><br><span class="line"></span><br><span class="line">        [dataM appendData:[strM dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>]];</span><br><span class="line">        [dataM appendData:fileData];</span><br><span class="line"></span><br><span class="line">        [dataM appendData:[<span class="string">@"\r\n"</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>]];</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 生成参数数据</span></span><br><span class="line">    [params enumerateKeysAndObjectsUsingBlock:^(<span class="built_in">NSString</span> *key, <span class="built_in">NSString</span> *value, <span class="built_in">BOOL</span> *stop) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSMutableString</span> *strM = [<span class="built_in">NSMutableString</span> string];</span><br><span class="line"></span><br><span class="line">        [strM appendFormat:<span class="string">@"--%@\r\n"</span>, boundary];</span><br><span class="line">        [strM appendFormat:<span class="string">@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n"</span>, key];</span><br><span class="line">        [strM appendString:value];</span><br><span class="line">        [strM appendString:<span class="string">@"\r\n"</span>];</span><br><span class="line"></span><br><span class="line">        [dataM appendData:[strM dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>]];</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> dataM.copy;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+      
+    </div>
+    
+      <footer class="article-footer">
+        完
+      </footer>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  <div class="article-nav-block">
+    
+      <a href="/2016/05/01/post_method-01-upload_file/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption"></strong>
+        <div class="article-nav-title">
+          
+            POST上传单个文件
+          
+        </div>
+      </a>
+    
+  </div>
+  <div class="article-nav-block">
+    
+      <a href="/2016/04/21/runloop/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">runloop</div>
+        <strong class="article-nav-caption"></strong>
+      </a>
+    
+  </div>
+</nav>
+
+    
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: '',
+  repo: '',
+  oauth: {
+    client_id: '',
+    client_secret: '',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+  
+  
+</article>
+</section>
+        <aside id="sidebar">
+  
+    <div class="widget-box">
+  <div class="avatar-box">
+    <img class="avatar" src="/images/code-title.png" title="头像来自网络"></img>
+    <h3 class="avatar-name">
+      
+        一颗心
+      
+    </h3>
+    <p class="avatar-slogan">
+      iOS开发攻城狮 喜欢玩 喜欢懒 喜欢一切有挑战的事情.
+    </p>
+  </div>
+</div>
+
+
+  
+    
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-box">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/08/22/imageChange/">iOS拍照后图片翻转</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/12/httpCode/">HTTP状态码</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/ArrayForPost/">iOS网络请求传入数组</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/autoreleasepool/">自动释放池</a>
+          </li>
+        
+          <li>
+            <a href="/2018/12/25/svnChange/">SVN服务器地址更换</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+      <div class="widget-box">
+    <h3 class="widget-title">友链</h3>
+    <div class="widget">
+      
+        <a style="display: block;" href="https://yiluyanxia.github.io/" title target='_blank'
+        >一路眼瞎</a>
+      
+    </div>
+  </div>
+
+  
+</aside>
+      </div>
+      <footer id="footer">
+  <div class="foot-box global-width">
+    &copy; 2019 John Doe &nbsp;&nbsp;
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    &nbsp;|&nbsp;主题 <a href="https://github.com/yiluyanxia/hexo-theme-antiquity">antiquity</a>
+    <br>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv">不蒜子告之   阁下是第<span id="busuanzi_value_site_pv"></span>个访客</span>
+  </div>
+</footer>
+      <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+if (!window.jQuery) {
+var script = document.createElement('script');
+script.src = "/js/jquery-2.0.3.min.js";
+document.body.write(script);
+}
+</script>
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+    </div>
+    <nav id="mobile-nav" class="mobile-nav-box">
+  <div class="mobile-nav-img mobile-nav-top"></div>
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+  <div class="mobile-nav-img  mobile-nav-bottom"></div>
+</nav>    
+  </div>
+</body>
+</html>
