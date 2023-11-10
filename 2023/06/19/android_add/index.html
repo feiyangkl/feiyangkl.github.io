@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Android 增量构建的科技与狠活 | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="Android 增量构建的科技与狠活 | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-android_add" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Android 增量构建的科技与狠活</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-06-18 22:26:23'>2023-06-18 22:26</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-%E5%A2%9E%E9%87%8F%E6%9E%84%E5%BB%BA%E7%9A%84%E7%A7%91%E6%8A%80%E4%B8%8E%E7%8B%A0%E6%B4%BB"><span class="toc-text">Android 增量构建的科技与狠活</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%80%97%E6%97%B6%E6%8E%92%E6%9F%A5"><span class="toc-text">耗时排查</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91"><span class="toc-text">优化方向</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Trasnform-%E5%A2%9E%E9%87%8F%E6%9E%84%E5%BB%BA"><span class="toc-text">Trasnform 增量构建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DexMerge-%E5%A2%9E%E9%87%8F%E4%BC%98%E5%8C%96"><span class="toc-text">DexMerge 增量优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dexMerge-%E6%B5%81%E7%A8%8B"><span class="toc-text">dexMerge 流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A2%9E%E9%87%8F%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9%E7%9A%84-dexMerge"><span class="toc-text">增量构建产物的 dexMerge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0%E6%96%B9%E6%A1%88"><span class="toc-text">热更新方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A2%9E%E9%87%8F-dex-%E4%B8%B4%E6%97%B6%E4%BA%A7%E7%89%A9"><span class="toc-text">1. 增量 dex 临时产物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD-dex"><span class="toc-text">2. 运行时动态加载 dex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dex-%E9%87%8D%E6%8E%92%E6%96%B9%E6%A1%88"><span class="toc-text">Dex 重排方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Android-Package-%E6%B5%81%E7%A8%8B-hook"><span class="toc-text">Android Package 流程 hook</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%95%88%E6%9E%9C"><span class="toc-text">优化效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Android-增量构建的科技与狠活"><a href="#Android-增量构建的科技与狠活" class="headerlink" title="Android 增量构建的科技与狠活"></a>Android 增量构建的科技与狠活</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对于 <code>Android</code> 应用，尤其是大型应用而言，构建耗时是令人头疼的一件事。动辄几分钟甚至十几分钟的时间更是令大部分开发人员苦不堪言。而在实际开发过程中面对最多的就是本地的增量编译，虽然官方对增量编译有做处理，但在具体项目，尤其是中大型项目中，效果其实都不太理想。</p>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>目前网易云音乐及旗下 <code>look</code> 直播，心遇， <code>mus</code> 等 <code>app</code> 先后采取了公共模块 <code>aar</code> 化，使用最新 <code>agp</code> 版本等措施，但整体构建耗时依然很久，增量构建一般在 2-5 <code>min</code> 左右。由于本人当前主要是负责开发 <code>mus</code> 的业务，因此结合目前 <code>mus</code> 的实际构建情况对增量构建做了一些优化工作。</p>
+<h1 id="耗时排查"><a href="#耗时排查" class="headerlink" title="耗时排查"></a>耗时排查</h1><p>结合 <code>mus</code> 构建的具体情况来看，目前构建耗时的大头主要集中在一些 <code>Transform</code> 和 <code>dexMerge</code> ( agp 版本 4.2.1 )。</p>
+<p>对于 <code>Transform</code> 而言，主要是一些例如隐私扫描，自动化埋点等工具耗时严重，通常增量时这些 <code>Transform</code> 的耗时就达到数分钟。</p>
+<p>另外 <code>dexMeger</code> 任务也是增量构建时的大头， <code>mus</code> 增量 <code>dexMerge</code> 耗时约为 35-40s ，云音乐 <code>dexMerge</code> 增量构建耗时约 90-100s 。</p>
+<h1 id="优化方向"><a href="#优化方向" class="headerlink" title="优化方向"></a>优化方向</h1><p>对于大型项目而言，最耗时的基本就是 <code>Transform</code> 了，这些 <code>Transform</code> 一般分为以下两类：</p>
+<ol>
+<li>功能型 <code>Transform</code>，移除只会影响自己的功能部分，不影响构建产物和项目运行。例如：埋点校验，隐私扫描。</li>
+<li>强依赖型 <code>Transform</code> ，移除影响编译或项目正常运行。这部分通常是在 <code>apt</code> 中采集一些信息，然后在 <code>Transform</code> 执行时生成 <code>class</code> ，在运行时调用执行。</li>
+</ol>
+<p>功能型 <code>Transform</code> 可以通过编译开关和 <code>debug/release</code> 判断，避免在开发时调用执行。对于强依赖的 <code>Transform</code> 可以通过字节开源的 <code>byteX</code> 之类的工具将 <code>Transform</code> 流程拍平，对增量和全量编译都有效果。但是 <code>byteX</code> 的侵入性较大，需要将现有的 <code>Transform</code> 改成字节提供的 <code>Transform</code> 的子类。这里我们采用一种修改构建输入产物的轻量级方案来实现 <code>Transform</code> 增量构建的优化。</p>
+<p>同时对于 <code>dex</code> 相关操作耗时的点，可以结合 <code>dexMerge</code> 的实际流程做增量优化，确保只有最小粒度的改动点会触发 <code>dex</code> 的 <code>merge</code> 操作。</p>
+<h1 id="Trasnform-增量构建"><a href="#Trasnform-增量构建" class="headerlink" title="Trasnform 增量构建"></a>Trasnform 增量构建</h1><p>虽然 <code>mus</code> 目前依赖的大部分 <code>Transform</code> 的 <code>isIncremental</code> 配置返回 <code>true</code> ，但是实际的 <code>io</code> 和插桩很少有做增量逻辑的。</p>
+<p>在增量构建时，大部分 <code>class</code> 在第一次构建时已经经过各 <code>Transform</code> 的处理，被插桩修改后移动到对应的下一级 <code>Transform</code> 目录了，增量时这部分已经处理过的产物其实没有必要再在各 <code>Transform</code> 之间执行插桩和 <code>io</code> 了。</p>
+<p>目前大部分 <code>Transform</code> 的写法都是如下写法：</p>
+<pre><code class="groovy">input.jarInputs.each &#123; JarInput jarInput -&gt;
+    ile destFile = transformInvocation.getOutputProvider().getContentLocation(destName , jarInput.contentTypes, jarInput.scopes, Format.JAR)
+    FileUtils.copyFile(srcFile, destFile)
+&#125;
+
+input.directoryInputs.each &#123; DirectoryInput directoryInput -&gt;
+    File destFile = transformInvocation.getOutputProvider().getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
+    ...
+    FileUtils.copyDirectory(directoryInput.file, destFile)
+&#125;
+</code></pre>
+<p>这里在增量构建时应该做的是只对发生变化的产物做插桩和 <code>copy</code> 的操作：</p>
+<pre><code class="Groovy">// 伪代码如下：
+// jar 增量处理
+if（!isIncremental) return
+
+if (Status.ADDED ==jarInput.status || Status.CHANGED==jarInput.status)&#123;
+    File destFile = transformInvocation.getOutputProvider().getContentLocation(destName , jarInput.contentTypes, jarInput.scopes, Format.JAR)
+    FileUtils.copyFile(srcFile, destFile)
+&#125;
+
+// class 增量处理
+val dest = outputProvider!!.getContentLocation(
+        directoryInput.name, directoryInput.contentTypes,
+        directoryInput.scopes, Format.DIRECTORY
+)
+
+if（Status.ADDED ==dirInput.status || Status.CHANGED==dirInput.status）&#123;
+    dirInput.changedFiles.forEach&#123;
+        // 插桩逻辑
+        ...
+        // 只移动增量变化插桩后的class文件到对应目录下
+        copyFileToTarger(it,dest)
+    &#125;
+&#125;
+</code></pre>
+<p>当然由于一些历史原因，有些 <code>Transform</code> 的代码可能都找不到，无法改造，因此为了兼容所有情况，这边简单对 <code>Transform</code> 的输入产物做了简单的 <code>hook</code> 替换操作。</p>
+<p>通常实现一个 <code>Transform</code> 都是新建一个类实现 <code>Trasnform</code> 的 <code>transform</code> 方法，在 <code>transform</code> 方法里执行具体操作，而 <code>Trasnform</code> 产物的入参正是在 <code>com.android.build.api.transform.TransformInvocation#getInputs</code> 的方法里：</p>
+<pre><code class="java">public interface TransformInvocation &#123;
+
+    Context getContext();
+
+    /**
+     * Returns the inputs/outputs of the transform.
+     * @return the inputs/outputs of the transform.
+     */
+    @NonNull
+    Collection&lt;TransformInput&gt; getInputs();
+      ...
+&#125;
+</code></pre>
+<p>通过 <code>hook</code> 掉 <code>TransformInvocation#getInputs</code> 返回的 <code>JarInput</code> 和 <code>DirectoryInput</code> ，将 <code>JarInputs</code> 和 <code>Directory</code> 中未发生改变的产物移除。</p>
+<p><img src="/./resource/android_01.png" alt="img"></p>
+<p>经过上述优化后原来耗时几十秒到几分钟的 <code>Transform</code> 基本都能被压缩到1-2 s以内。</p>
+<h1 id="DexMerge-增量优化"><a href="#DexMerge-增量优化" class="headerlink" title="DexMerge 增量优化"></a>DexMerge 增量优化</h1><p>事实上 <code>agp</code> 版本更新非常频繁，对于不同版本， <code>dex</code> 耗时不同。对于 3.x 的版本 <code>dex</code> 相关 <code>task</code> 主要耗时集中在 <code>dexBuilder</code> 上，而4.x的版本主要耗时则集中在 <code>dexMerger</code>，由于目前 <code>mus</code> 等业务都使用 4.2 及以上版本的 <code>agp</code> ，研究发现 4.x 的版本实际上对 <code>dexBuilder</code> 有做了增量的处理，整体耗时不多，因此主要对4.2及以上版本 <code>dexMerger</code> 耗时做优化。</p>
+<p>顾名思义， <code>dexMerge</code> 实际上是对已经打出的 <code>dex</code> 进行合并，将多个 <code>dex</code> 或者 <code>jar</code> 合成一个较大的 <code>dex</code> 的流程。按照正常情况， <code>dex</code> 数量越多，应用的启动速度越慢，因此对于大型项目， <code>dexMerge</code> 也是必不可少的一步。</p>
+<h2 id="dexMerge-流程"><a href="#dexMerge-流程" class="headerlink" title="dexMerge 流程"></a>dexMerge 流程</h2><p><code>dexMerger</code> 是有分桶操作的，桶的数量一般不额外配置使用默认值 16，通常桶的分配逻辑是按照包名来的，也就是说同一包名下的 <code>class</code> 会被分配到同一个桶里。</p>
+<pre><code class="kotlin">fun getBucketNumber(relativePath: String, numberOfBuckets: Int): Int &#123;
+    ...
+    val packagePath = File(relativePath).parent
+    return if (packagePath.isNullOrEmpty()) &#123;
+        0
+    &#125; else &#123;
+        when (numberOfBuckets) &#123;
+            1 -&gt; 0
+            else -&gt; &#123;
+                // 同一包名下class被分到同一个bucket里
+                val normalizedPackagePath = File(packagePath).invariantSeparatorsPath
+                return abs(normalizedPackagePath.hashCode()) % (numberOfBuckets - 1) + 1
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+public val File.invariantSeparatorsPath: String
+    get() = if (File.separatorChar != &#39;/&#39;) path.replace(File.separatorChar, &#39;/&#39;) else path
+</code></pre>
+<p>实际的构建产物如下：</p>
+<p><img src="/./resource/android_02.png" alt="img"></p>
+<p>增量构建时， <code>agp</code> 会按照以下规则来执行 <code>dexMerge</code> 任务:</p>
+<ol>
+<li>如果有 <code>jar</code> 文件状态发生变更或者被移除了，即对应状态 <code>CHANGED</code> 或者 <code>REMOVE</code> ,这种情况所有的桶都要重新走 <code>dexMerge</code> 流程，通常默认的 <code>bucket</code> 数量是 16 个，也就是当构建时有一个 <code>jar</code> 文件发生变更时，所有的输入产物全部都会参与 <code>dexMeger</code> 流程。（虽然 <code>d8</code> 命令行工具对增量 <code>dexMeger</code> 本身有一定优化，增量速度对比全量会有一定加快，但对于大型项目而言总体还是很慢。）</li>
+</ol>
+<p><img src="/./resource/android_03.png" alt="img"></p>
+<ol start="2">
+<li>如果是只有新增的 <code>jar</code> 或者 <code>dex</code> 发生改变的 <code>Directory</code>，那么会根据对应的包名获取到对应的桶的数组，只对找到的桶的数组进行增量的打包，这也就是我们说的 <code>dexMerge</code> 本身的增量操作。<br><img src="/./resource/android_04.png" alt="img"></li>
+</ol>
+<p>返回对应bucket id 数组的代码如下：</p>
+<pre><code class="kotlin">private fun getImpactedBuckets(
+    fileChanges: SerializableFileChanges,
+    numberOfBuckets: Int
+): Set&lt;Int&gt; &#123;
+    val hasModifiedRemovedJars =
+        (fileChanges.modifiedFiles + fileChanges.removedFiles)
+            .find &#123; isJarFile(it.file) &#125; != null
+
+    if (hasModifiedRemovedJars) &#123;
+          // 1. 如果有CHANGED或者REMOVE状态的jar,则返回全部bucket数组。
+        return (0 until numberOfBuckets).toSet()
+    &#125;
+
+      // 2. 如果是新增jar，或者是directory中class发生变化，返回计算到的bucket数组。
+    val addedJars = (fileChanges.addedFiles).map &#123; it.file &#125;.filter &#123; isJarFile(it) &#125;
+    val relativePathsOfDexFilesInAddedJars =
+        addedJars.flatMap &#123; getSortedRelativePathsInJar(it, isDexFile) &#125;
+    val relativePathsOfChangedDexFilesInDirs =
+        fileChanges.fileChanges.map &#123; it.normalizedPath &#125;.filter &#123; isDexFile(it) &#125;
+
+    return (relativePathsOfDexFilesInAddedJars + relativePathsOfChangedDexFilesInDirs)
+            .map &#123; getBucketNumber(it, numberOfBuckets) &#125;.toSet()
+&#125;
+</code></pre>
+<p>这种增量操作适用的是大部分代码囊括在壳工程中且不会频繁改动底层库的业务，不知道是不是因为国外包括 <code>google</code> 官方本身项目开发模式就是这样。对于大部分国内的项目，只要你做了组件化，甚至没做业务组件化但是有多个子模块类型的项目，只要有涉及到子模块的改动，所有的产物都要全部重新参与 <code>dexMerge</code> 。</p>
+<p>对于 <code>mus</code> ，云音乐等组件化工程，通常构建时只有壳工程是以文件夹的形式作为输入产物在后续的 <code>Transform</code> 和 <code>dex</code> 相关流程里流转，而子模块通常是以 <code>jar</code> 的形式参与构建，而我们实际开发中基本就是对各业务模块的改动，对应上述第一种情况，所有的桶全部会重新走的 <code>dexMerger</code>，而第二种情况只有改动壳工程代码或者新增依赖或者模块之类的才会命中，这种情况偏少可以不用考虑。</p>
+<p>针对上述问题解决方法主要有两种：</p>
+<ol>
+<li>将所有的 <code>jar</code> 拆解为文件夹，这样只有改动模块对应的分桶生效，但是这种问题在于哪怕只改动了一个模块中的两个类，由于 <code>bucket</code> 是按照包名固定分在同一个桶里，非相同包名则根据包名随机分桶，很可能也会连带着其他的 <code>bucket</code> 一起进行 <code>dexMerger</code> ，虽然可以适当扩大分桶的数量，但是同样的，也没法完全规避这种问题。</li>
+<li>仅针对发生改变的输入产物进行重新的 <code>dexMerger</code>，将新生成的 <code>merge</code> 后的 <code>dex</code> 打进 <code>apk</code> 或者移到设备中确保运行时增量改变的这部分代码可以被执行。</li>
+</ol>
+<p>为了确保最小化单元的 <code>dex</code> 参与后续的 <code>dexMerge</code> 流程，我们采用第二种方式作为 <code>dexMerge</code> 增量构建的方案。</p>
+<h2 id="增量构建产物的-dexMerge"><a href="#增量构建产物的-dexMerge" class="headerlink" title="增量构建产物的 dexMerge"></a>增量构建产物的 dexMerge</h2><p>通过 <code>hook</code> <code>dexMerge</code> 的关键流程，我们可以获取到发生变化的 <code>jar</code> 文件和包含 <code>dex</code> 的文件夹，然后把 <code>dexMerge</code> 输入产物由原来的全部产物修改为我们 <code>hook</code> 之后的产物：</p>
+<p>我们将所有发生变化的 <code>dex</code> 文件汇总移动到临时的文件目录内，然后将目标文件夹作为一个输入产物即可，对于发生变更的 <code>jar</code>，我们也将其加到输入的产物里，然后继续走原来的 <code>dexMerge</code> 流程。</p>
+<p>打出来的增量 <code>dex</code> 产物如下：<br><img src="/./resource/android_05.png" alt="img"></p>
+<p>同时我们需要变更增量 <code>dexMerge</code> 的输出目录，因为 <code>dexMerger</code> 正常运行时，在有代码修改的情况，所有的 <code>bucket</code> 都会被新的产物覆盖，哪怕新的产物是空文件夹。如果不更改文件目录就会覆盖掉之前全量打出的所有的 <code>dex</code> ，导致最终的 <code>apk</code> 包仅包含这次增量的 <code>dex</code> 从而无法正常运行。</p>
+<p>同时由于每次增量构建变化的产物都不同，因此对每次构建产物的输出目录做了递增，同样是确保上次增量的产物不要被本次覆盖掉，这里每次的产物都对后续构建流程有作用，具体会在后续内容中说明。</p>
+<p>当然，新的目录具体放在哪里，也跟我们选择的方案有关系。</p>
+<h2 id="热更新方案"><a href="#热更新方案" class="headerlink" title="热更新方案"></a>热更新方案</h2><p>因为有了增量的 <code>dex</code>，我们很容易联想到热更新的方案，即将增量构建出的 <code>dex</code> 推送到手机 <code>sd</code> 卡上，然后在运行时去动态加载。这种情况下增量 <code>merge</code> 的 <code>dex</code> 产物放在哪个目录下都可以，因为对后续构建流程已经没有什么太大影响了，影响的主要是运行时 <code>dex</code> 的加载逻辑。</p>
+<h3 id="1-增量-dex-临时产物"><a href="#1-增量-dex-临时产物" class="headerlink" title="1. 增量 dex 临时产物"></a>1. 增量 dex 临时产物</h3><p>上述虽然有了增量的构建产物，但是为了运行时方便排序仍然会每次把当次编译新增的 <code>dex</code> 移动到临时目录 <code>pulledMergeDex</code> 文件夹中。</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cf4cb8502bf3456788afc2ec7ed05342~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1280&h=660&s=154572&e=png&b=4f4b40" alt="img"></p>
+<p>然后通过 <code>adb</code> 每次批量清理设备中临时的 <code>dex</code> ，再将全部 <code>pulledMergeDex</code> 目录下的 <code>dex</code> 推送到设备中，这样做的目的是为了确保设备中 <code>dex</code> 的准确性，避免因为某次构建残留的 <code>dex</code> 产物运行影响现有的代码逻辑。</p>
+<h3 id="2-运行时动态加载-dex"><a href="#2-运行时动态加载-dex" class="headerlink" title="2. 运行时动态加载 dex"></a>2. 运行时动态加载 dex</h3><p>由于 <code>dex</code> 的加载是按照 <code>PathList</code> 加载 <code>dexElements</code> 数组的顺序从前往后加载的，因此只要按照 <code>dex</code> 的热更方案，在运行时反射替换 <code>PathClassLoader</code> 中的 <code>dexElements</code> 数组，将之前推送到手机目录中的数组，按照倒序先排列好，然后再插入在 <code>dexElements</code> 数组最前面即可，这里热更新的具体原理不再阐述。</p>
+<p>接入项目中实测发现有些代码改动会不生效(主要是 <code>Application</code> 和 <code>Application</code> 直接引用到的 <code>class</code>)，具体原因应该是 <a target="_blank" rel="noopener" href="https://github.com/WeMobileDev/article/blob/master/Android_N%E6%B7%B7%E5%90%88%E7%BC%96%E8%AF%91%E4%B8%8E%E5%AF%B9%E7%83%AD%E8%A1%A5%E4%B8%81%E5%BD%B1%E5%93%8D%E8%A7%A3%E6%9E%90.md%22">Android N 对热补丁的影响</a>，本地在 <code>AndroidMainfest</code> 文件中加了 <code>safemode=true</code>，但在实际设备运行还是无效，不知道是不是现在设备的版本不支持了。另外一种可行的方式就是类似 <code>tinker</code> 的解决方案对 <code>Application</code> 进行改造，然后通过另外的 <code>ClassLoader</code> 加载后续的 <code>class</code> 了。</p>
+<h2 id="Dex-重排方案"><a href="#Dex-重排方案" class="headerlink" title="Dex 重排方案"></a>Dex 重排方案</h2><p>除了在运行时加载 <code>dex</code>，我们也可以尝试在编译时将增量的 <code>dex</code> 打包到 <code>apk</code> 中。</p>
+<p><code>gradle</code> 中对应的 <code>task</code> 都有对应的构建缓存，如果我们增量的 <code>dex</code> 放置在一个随机目录中，后续的 <code>task</code> 例如 <code>package</code>， <code>assemble</code> 等检测输入产物没有变化的情况下，是会直接走增量构建缓存的，也就不会再执行了。而我们期望我们增量的 <code>dex</code> 被打进 <code>apk</code> 中，后续的 <code>package</code> 等 <code>task</code> 必须要被执行。</p>
+<p>这种情况下，构建产物的目录就比较有讲究了，我们可以取个巧，在之前 <code>dexMeger</code> 全量产物输出的目录下，增加一个 <code>incremental</code> 文件夹，专门做增量产物的 <code>dexMeger</code>，同样的每次增量的产物在该文件目录下按照 <code>index</code> 递增，这样确保每次增量 <code>dexMerge</code> 的产物没有冲突。</p>
+<p>打包到 <code>apk</code> 中的 <code>dex</code> 同样也是会按照 <code>dex</code> 的排列顺序加载执行，因此我们需要将新增的 <code>dex</code> 在编译时就排列在 <code>apk</code> 的最前面。 <code>apk</code> 中 <code>dex</code> 的排序是在 <code>package</code> 任务中去执行的，因此我们需要尝试去 <code>hook</code> <code>package</code> 的关键路径，将我们新增的 <code>dex</code> 排在 <code>Apk</code> 内 <code>dex</code> 数组最前面。</p>
+<h3 id="Android-Package-流程-hook"><a href="#Android-Package-流程-hook" class="headerlink" title="Android Package 流程 hook"></a>Android Package 流程 hook</h3><p><code>Android package</code> 负责将之前打包流程中的所有产物汇总打包到最终对外输出的 <code>apk</code> 产物里， <code>dex</code> 自然也不例外。 <code>Android package</code> 会结合产物的变化对 <code>apk</code> 中发生变更的文件做更改，将 <code>apk</code> 中对比 <code>CHANGED</code> 和 <code>REMOVED</code> 的文件删除，然后将构建产物中 <code>ADDED</code> 和 <code>CHANGED</code> 的产物重新添加到 <code>apk</code> 中去。</p>
+<pre><code class="java">public void updateFiles() throws IOException &#123;
+    // Calculate packagedFileUpdates
+    List&lt;PackagedFileUpdate&gt; packagedFileUpdates = new ArrayList&lt;&gt;();
+      // dex 文件的变更
+    packagedFileUpdates.addAll(mDexRenamer.update(mChangedDexFiles));
+        ...
+    deleteFiles(packagedFileUpdates);
+        ...
+    addFiles(packagedFileUpdates);
+&#125;
+
+private void deleteFiles(@NonNull Collection&lt;PackagedFileUpdate&gt; updates) throws IOException &#123;
+              // 当前 CHANGED REMOVED 状态的文件 先移除apk
+        Predicate&lt;PackagedFileUpdate&gt; deletePredicate =
+                mApkCreatorType == ApkCreatorType.APK_FLINGER
+                        ? (p) -&gt; p.getStatus() == REMOVED || p.getStatus() == CHANGED
+                        : (p) -&gt; p.getStatus() == REMOVED;
+                ...
+        for (String deletedPath : deletedPaths) &#123;
+            getApkCreator().deleteFile(deletedPath);
+        &#125;
+    &#125;
+
+private void addFiles(@NonNull Collection&lt;PackagedFileUpdate&gt; updates) throws IOException &#123;
+              // NEW CHANGED 状态的文件 添加进apk
+        Predicate&lt;PackagedFileUpdate&gt; isNewOrChanged =
+                pfu -&gt; pfu.getStatus() == FileStatus.NEW || pfu.getStatus() == CHANGED;
+                ...
+        for (File arch : archives) &#123;
+            getApkCreator().writeZip(arch, pathNameMap::get, name -&gt; !names.contains(name));
+        &#125;
+    &#125;
+</code></pre>
+<p>文件关系则通过 <code>DexIncrementalRenameManager</code> 来维护， <code>DexIncrementalRenameManager</code> 每次会先去 <code>dex-renamer-state.txt</code> 去加载当前的 <code>dex mapping</code> 关系，结合变更的 <code>dex</code> 去对 <code>apk</code> 中文件做更改，同时每次排序完成后会将新的 <code>dex mapping</code> 更新在 <code>dex-renamer-state.txt</code> 文件中。</p>
+<p>我们这边参考原来的 <code>mapping</code> 文件，在每次编译时，将构建产物中的 <code>dex</code> 路径和该 <code>dex</code> 对应 <code>apk</code> 中的实际 <code>dex</code> 的 <code>path</code> <code>classesX.dex</code> 关联起来做好 <code>mapping</code> ，然后存在单独记录的 <code>dex_mapping</code> 文件里。</p>
+<p>每次增量编译有新 <code>merge</code> 的 <code>dex</code> 时，先将增量的 <code>dex</code> 按照 <code>classes.dex</code>， <code>classes2.dex</code>… 的顺序排列，然后将 <code>dex-mapping</code> 中的构建产物和 <code>apk</code> 中 <code>dex</code> 路径的关系加载到内存中，按照原有的顺序排列在增量的 <code>dex</code> 后面，最后通过 <code>hook</code> <code>package</code> 流程将变化的内容同步更新到 <code>apk</code> 文件中。</p>
+<p>整体流程如下图：</p>
+<p><img src="/./resource/android_06.png" alt="img"></p>
+<p>在 <code>apk</code> 更新完成后，将最新的的 <code>dex</code> 和 <code>apk</code> 中 <code>dex</code> 路径的 <code>mapping</code> 关系重新写到 <code>dex_mapping</code> 文件记录最新的的 <code>dex</code> 和 <code>apk path</code> 的关系。为了避免每次 <code>dex</code> 全部参与重排，可以在 <code>classes.dex</code> 和 <code>classesN.dex</code> 中预留一定数量的空位，避免每次所有 <code>dex</code> 重排。</p>
+<p>实测 <code>package</code> 会有部分耗时增加，总体应该在 1s 以内， <code>mus</code> 整体 <code>dexMerge</code> 耗时由 35-40 s 缩减到3 s 左右。</p>
+<p>目前该增量构建组件两种方案都支持，可以根据开关配置，要注意的点是热更的方案可能涉及到 <code>Application</code> 的改造。</p>
+<h1 id="优化效果"><a href="#优化效果" class="headerlink" title="优化效果"></a>优化效果</h1><p>经过上述方案的优化，实测在 <code>mus</code> 中理想情况下更改子模块中一行最简单的 <code>kotlin</code> 类中的一行代码 <code>task</code> 总耗时(不包含 <code>configure</code> )最快约 10s，实际开发情况来看基本在 20-40s 之间。这部分耗时主要是实际开发改动的 <code>class</code> 和模块会多一些，同时包含了 <code>configure</code> 的耗时，这部分时间目前是无法避免的。同时也包含 <code>class</code> 编译和 <code>kapt</code> 等 <code>task</code> 一起的耗时，也会受到设备的 <code>cpu</code> ，实时内存等影响。</p>
+<p><img src="/./resource/android_07.png" alt="img"></p>
+<p>以上数据基于个人电脑，2.3 GHz 四核 Intel Core i7，32 GB 3733 MHz LPDDR4X，不同设备跑出的数据会有部分差异，但整体优化效果还是很明显的。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>结合上述的优化方案，增量构建速度整体在一个比较低的水平，当然例如kotlin编译，kapt，增量的判断等还有进一步的优化空间，期待后续和其他 <code>task</code> 的进一步优化完成时继续分享。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RecyclerView 之 DiffUtil | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="RecyclerView 之 DiffUtil | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-diffutil" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">RecyclerView 之 DiffUtil</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-08-07 11:17:07'>2023-08-07 11:17</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RecyclerView-%E4%B9%8B-DiffUtil"><span class="toc-text">RecyclerView 之 DiffUtil</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="toc-text">一、前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%EF%BC%9A"><span class="toc-text">官方文档：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%8E%A8%E5%87%BADiffUtil"><span class="toc-text">一、为什么会推出DiffUtil</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%8B%E7%BB%8DDiffUtil"><span class="toc-text">二、介绍DiffUtil</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81DiffUtil-Callback"><span class="toc-text">1、DiffUtil.Callback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81DiffUtil-DiffResult"><span class="toc-text">2、DiffUtil.DiffResult</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E4%BD%BF%E7%94%A8DiffUtil"><span class="toc-text">3、使用DiffUtil</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BD%BF%E7%94%A8"><span class="toc-text">三、使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%A7%E6%89%BF%E8%87%AA-DiffUtil-Callback-%E7%9A%84%E7%B1%BB"><span class="toc-text">1、自定义继承自 DiffUtil.Callback 的类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-text">2、更新数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81DiffUtil-%E7%9A%84%E6%95%88%E7%8E%87%E9%97%AE%E9%A2%98"><span class="toc-text">3、DiffUtil 的效率问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%87%E6%B3%A8%EF%BC%88%E5%BE%85%E5%95%86%E6%A6%B7%EF%BC%89"><span class="toc-text">四、备注（待商榷）</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="RecyclerView-之-DiffUtil"><a href="#RecyclerView-之-DiffUtil" class="headerlink" title="RecyclerView 之 DiffUtil"></a>RecyclerView 之 DiffUtil</h1><h1 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h1><p>DiffUtils 是 Support-v7:24:2.0 中，更新的工具类，主要是为了配合RecyclerView 使用，通过比对新、旧两个数据集的差异，生成旧数据到新数据的最小变动，然后对有变动的数据项，进行局部刷新。</p>
+<p>DiffUtil is a utility class that can calculate the difference between two lists and output a list of update operations that converts the first list into the second one.</p>
+<h3 id="官方文档："><a href="#官方文档：" class="headerlink" title="官方文档："></a>官方文档：</h3><p><a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/support/v7/util/DiffUtil">https://developer.android.com/reference/android/support/v7/util/DiffUtil</a></p>
+<h1 id="一、为什么会推出DiffUtil"><a href="#一、为什么会推出DiffUtil" class="headerlink" title="一、为什么会推出DiffUtil"></a>一、为什么会推出DiffUtil</h1><p>RecyclerView是我们日常开发中最常用的组件之一。当我们滑动列表，我们要去更新视图，更新数据。我们会从服务器获取新的数据，需要处理旧的数据。通常，随着每个item越来越复杂，这个处理过程所需的时间也就越多。在列表滑动过程中的处理延迟的长短，决定着对用户体验的影响的多少。所以，我们会希望需要进行的计算越少越好。</p>
+<p>RecyclerView 自从被发布以来，一直被说成是 ListView、GridView 等一系列列表控件的完美替代品。并且它本身使用起来也非常的好用，布局切换方便、自带ViewHolder、局部更新并且可带更新动画等等。</p>
+<p>局部更新、并且可以很方便的设置更新动画这一点，是 RecyclerView 一个不错的亮点。它为此提供了对应的方法：</p>
+<ul>
+<li>adapter.notifyItemChange()</li>
+<li>adapter.notifyItemInserted()</li>
+<li>adapter.notifyItemRemoved()</li>
+<li>adapter.notifyItemMoved()</li>
+</ul>
+<p>以上方法都是为了对数据集中，单一项进行操作，并且为了操作连续的数据集的变动，还提供了对应的 notifyRangeXxx() 方法。虽然 RecyclerView 提供的局部更新的方法，看似非常的好用，但是实际上，其实并没有什么用。在实际开发中，最方便的做法就是无脑调用 notifyDataSetChanged()，用于更新 adapter 的数据集。</p>
+<p>虽然 notifyDataSetChanged 有一些缺点：</p>
+<ul>
+<li>不会触发 RecyclerView 的局部更新的动画。</li>
+<li>性能低，会刷新整个 RecyclerView 可视区域（(all visible view on screen and few buffer view above and below the screen)）</li>
+</ul>
+<p>但是真有需要频繁刷新，前后有两个数据集的场景，一个 notifyDataSetChanged() 方法，会比自己写一个数据集比对方法，然后去计算他们的差值，最后调用对应的方法更新到 RecyclerView 中去要更方便。于是，Google就发布了DiffUtil。</p>
+<p>有一个特别适合使用的场景便是 <code>下拉刷新</code>，不仅有动画，效率也有提高，尤其是 <code>下拉刷新</code> 操作后， <code>Adapter</code> 内集合数据并没有发生改变，不需要进行重新绘制 <code>RecyclerView</code> 时。</p>
+<h1 id="二、介绍DiffUtil"><a href="#二、介绍DiffUtil" class="headerlink" title="二、介绍DiffUtil"></a>二、介绍DiffUtil</h1><p>它能很方便的对两个数据集之间进行比对，然后计算出变动情况，配合RecyclerView.Adapter ，可以自动根据变动情况，调用 adapter 的对应方法。当然，DiffUtil 不仅只能配合 RecyclerView 使用，它实际上可以单独用于比对两个数据集，然后如何操作是可以定制的，那么在什么场景下使用，就全凭我们自己发挥了。</p>
+<p>DiffUtil 在使用起来，主要需要关注几个类：</p>
+<ul>
+<li>DiffUtil.Callback：具体用于限定数据集比对规则。</li>
+<li>DiffUtil.DiffResult：比对数据集之后，返回的差异结果。</li>
+</ul>
+<h3 id="1、DiffUtil-Callback"><a href="#1、DiffUtil-Callback" class="headerlink" title="1、DiffUtil.Callback"></a>1、DiffUtil.Callback</h3><p>DiffUtil.Callback 主要就是为了限定两个数据集中子项的比对规则。毕竟开发者面对的数据结构多种多样，既然没法做一套通用的内容比对方式，那么就将比对的规则，交还给开发者来实现即可。</p>
+<p>它拥有 4 个抽象方法和 1 个非抽象方法的抽象类。我们需要继承并实现它的所有方法：在自定义的 Callback 中，其实需要实现 4 个方法：</p>
+<ul>
+<li>getOldListSize()：旧数据集的长度。</li>
+<li>getNewListSize()：新数据集的长度</li>
+<li>areItemsTheSame()：判断是否是同一个Item。</li>
+<li>areContentsTheSame()：如果是通一个Item（即areItemsTheSame返回true），此方法用于判断是否同一个 Item 的内容也相同。</li>
+</ul>
+<p>前两个是获取数据集长度的方法，这没什么好说的。但是后两个方法，主要是为了对应多布局的情况产生的，也就是存在多个 viewType 和多个 ViewHodler 的情况。首先需要使用 areItemsTheSame() 方法比对是否是同一个 viewType（也就是同一个ViewHolder） ，然后再通过 areContentsTheSame() 方法比对其内容是否也相等。</p>
+<p>其实 Callback 还有一个 getChangePayload() 的方法，它可以在 ViewType 相同，但是内容不相同的时候，用 payLoad 记录需要在这个 ViewHolder 中，具体需要更新的View。</p>
+<p>areItemsTheSame()、areContentsTheSame()、getChangePayload() 分别代表了不同量级的刷新。</p>
+<p>首先会通过 areItemsTheSame() 判断当前 position 下，ViewType是否一致，如果不一致就表明当前position下，从数据到UI结构上全部变化了，那么就不关心内容，直接更新就好了。如果一致的话，那么其实View是可以复用的，就还需要再通过 areContentsTheSame() 方法判断其内容是否一致，如果一致，则表示是同一条数据，不需要做额外的操作。但是一旦不一致，则还会调用 getChangePayload() 来标记到底是哪个地方的不一样，最终标记需要更新的地方，最终返回给 DiffResult 。</p>
+<p>当然，对性能要是要求没那么高的情况下，是可以不使用 getChangedPayload() 方法的。</p>
+<h3 id="2、DiffUtil-DiffResult"><a href="#2、DiffUtil-DiffResult" class="headerlink" title="2、DiffUtil.DiffResult"></a>2、DiffUtil.DiffResult</h3><p>DiffUtil.DiffResult 其实就是 DiffUtil 通过 DiffUtil.Callback 计算出来，两个数据集的差异。它是可以直接使用在 RecyclerView 上的。</p>
+<h3 id="3、使用DiffUtil"><a href="#3、使用DiffUtil" class="headerlink" title="3、使用DiffUtil"></a>3、使用DiffUtil</h3><p>介绍了 Callback 和 DiffResult 之后，其实就可以正常使用 DiffUtil 来进行数据集的比对了。</p>
+<p>在这个过程中，其实其实很简单，只需要调用两个方法：</p>
+<pre><code class="ini">DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mOldList, mList), true);
+diffResult.dispatchUpdatesTo(myAdapter);
+</code></pre>
+<p>calculateDiff 方法主要是用于通过一个具体的 DiffUtils.Callback 实现对象，来计算出两个数据集差异的结果，得到 DiffUtil.DiffResult 。而 calculateDiff 的另外一个参数，用于标记是否需要检测 Item 的移动，</p>
+<p>而 dispatchUpdatesTo() 就是将这个数据集差异的结果，通过 adapter 更新到 RecyclerView 上面，自动调用以下四个方法：</p>
+<pre><code class="java">public void dispatchUpdatesTo(final RecyclerView.Adapter adapter) &#123;
+    dispatchUpdatesTo(new ListUpdateCallback() &#123;
+        @Override
+        public void onInserted(int position, int count) &#123;
+            adapter.notifyItemRangeInserted(position, count);
+        &#125;
+
+        @Override
+        public void onRemoved(int position, int count) &#123;
+            adapter.notifyItemRangeRemoved(position, count);
+        &#125;
+
+        @Override
+        public void onMoved(int fromPosition, int toPosition) &#123;
+            adapter.notifyItemMoved(fromPosition, toPosition);
+        &#125;
+
+        @Override
+        public void onChanged(int position, int count, Object payload) &#123;
+            adapter.notifyItemRangeChanged(position, count, payload);
+        &#125;
+    &#125;);
+&#125;
+</code></pre>
+<p>DiffUtil 使用的是 Eugene Myers 的Difference 差别算法，这个算法本身是不检查元素的移动的。也就是说，有元素的移动它也只是会先标记为删除，然后再标记插入（即 calculateDiff 的第三个参数为 false 时）。而如果需要计算元素的移动，它实际上也是在通过 Eugene Myers 算法比对之后，再进行一次移动检查。所以，如果集合本身已经排序过了，可以不进行移动的检查。</p>
+<p>而如果添加了对数据条目移动的识别，复杂度就会提高到O(N^2)。所以如果数据集中数据不存在移位情况，你可以关闭移动识别功能来提高性能。</p>
+<h1 id="三、使用"><a href="#三、使用" class="headerlink" title="三、使用"></a>三、使用</h1><h3 id="1、自定义继承自-DiffUtil-Callback-的类"><a href="#1、自定义继承自-DiffUtil-Callback-的类" class="headerlink" title="1、自定义继承自 DiffUtil.Callback 的类"></a>1、自定义继承自 DiffUtil.Callback 的类</h3><p>RecyclerView 中使用单一 ViewType ，并且使用一个 TextView 承载一个 字符串来显示。</p>
+<pre><code class="java">package com.example.zhangruirui.coordinatorlayoutdemo;
+
+import android.support.v7.util.DiffUtil;
+
+import java.util.List;
+
+public class DiffCallBack extends DiffUtil.Callback &#123;
+
+  private List&lt;String&gt; mOldDatas, mNewDatas;
+
+  public DiffCallBack(List&lt;String&gt; oldDatas, List&lt;String&gt; newDatas) &#123;
+    this.mOldDatas = oldDatas;
+    this.mNewDatas = newDatas;
+  &#125;
+
+  // 老数据集 size
+  @Override
+  public int getOldListSize() &#123;
+    return mOldDatas != null ? mOldDatas.size() : 0;
+  &#125;
+
+  // 新数据集 size
+  @Override
+  public int getNewListSize() &#123;
+    return mNewDatas != null ? mNewDatas.size() : 0;
+  &#125;
+
+  /**
+   * Called by the DiffUtil to decide whether two object represent the same Item.
+   * 被 DiffUtil 调用，用来判断两个对象是否是相同的 Item。
+   * For example, if your items have unique ids, this method should check their id equality.
+   * 例如，如果你的Item有唯一的id字段，这个方法就判断id是否相等。
+   *
+   * @param oldItemPosition The position of the item in the old list
+   * @param newItemPosition The position of the item in the new list
+   * @return True if the two items represent the same object or false if they are different.
+   */
+
+  @Override
+  public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) &#123;
+//    Log.e(&quot;zhangrr&quot;, &quot;areItemsTheSame: &quot; + (oldItemPosition == newItemPosition)
+//    + &quot; oldItemPosition = &quot; + oldItemPosition + &quot; newItemPosition = &quot; + newItemPosition);
+//    return oldItemPosition == newItemPosition;
+    return mOldDatas.get(oldItemPosition).equals(mNewDatas.get(newItemPosition));
+//    return mOldDatas.get(oldItemPosition).getClass().equals(mNewDatas.get(newItemPosition).getClass());
+  &#125;
+
+  /**
+   * Called by the DiffUtil when it wants to check whether two items have the same data.
+   * 被 DiffUtil 调用，用来检查两个 item 是否含有相同的数据
+   * DiffUtil uses this information to detect if the contents of an item has changed.
+   * DiffUtil 用返回的信息（true false）来检测当前 item 的内容是否发生了变化
+   * DiffUtil uses this method to check equality instead of &#123;@link Object#equals(Object)&#125;
+   * DiffUtil 用这个方法替代 equals 方法去检查是否相等。
+   * so that you can change its behavior depending on your UI.
+   * 所以你可以根据你的 UI 去改变它的返回值
+   * For example, if you are using DiffUtil with a
+   * &#123;@link android.support.v7.widget.RecyclerView.Adapter RecyclerView.Adapter&#125;, you should
+   * return whether the items&#39; visual representations are the same.
+   * 例如，如果你用 RecyclerView.Adapter 配合 DiffUtil 使用，你需要返回 Item 的视觉表现是否相同。
+   * This method is called only if &#123;@link #areItemsTheSame(int, int)&#125; returns
+   * &#123;@code true&#125; for these items.
+   * 这个方法仅仅在 areItemsTheSame() 返回 true 时，才会被调用。
+   *
+   * @param oldItemPosition The position of the item in the old list
+   * @param newItemPosition The position of the item in the new list which replaces the
+   *                        oldItem
+   * @return True if the contents of the items are the same or false if they are different.
+   */
+  @Override
+  public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) &#123;
+    String oldData = mOldDatas.get(oldItemPosition);
+    String newData = mNewDatas.get(newItemPosition);
+//    Log.e(&quot;zhangrr&quot;, &quot;areContentsTheSame: &quot; + oldData.equals(newData)
+//        + &quot; oldItemPosition = &quot; + oldItemPosition + &quot; newItemPosition = &quot; + newItemPosition);
+    return oldData.equals(newData);
+  &#125;
+
+  /**
+   * When &#123;@link #areItemsTheSame(int, int)&#125; returns &#123;@code true&#125; for two items and
+   * &#123;@link #areContentsTheSame(int, int)&#125; returns false for them, DiffUtil
+   * calls this method to get a payload about the change.
+   * 定向刷新中的局部更新
+   * @param oldItemPosition The position of the item in the old list
+   * @param newItemPosition The position of the item in the new list which replaces the
+   *                        oldItem
+   * @return A payload object that represents the change between the two items.
+   */
+//  @Nullable
+//  @Override
+//  public Object getChangePayload(int oldItemPosition, int newItemPosition) &#123;
+//    String oldData = mOldDatas.get(oldItemPosition);
+//    String newData = mNewDatas.get(newItemPosition);
+//
+//    Bundle payload = new Bundle();
+//    if (oldData != newData)&#123;
+//      payload.putString(&quot;NEW_DATA&quot;, newData);
+//    &#125;
+//    Log.e(&quot;zhangrr&quot;, &quot;getChangePayload() called with: oldItemPosition = [&quot; + oldItemPosition + &quot;], newItemPosition = &quot;
+//        + newItemPosition + &quot; oldData = [&quot; + oldData + &quot;], newData = [&quot; + newData + &quot; payload = &quot; + payload.size());
+//    return payload.size() == 0 ? null : payload;
+//  &#125;
+&#125;
+</code></pre>
+<h3 id="2、更新数据集"><a href="#2、更新数据集" class="headerlink" title="2、更新数据集"></a>2、更新数据集</h3><p>此处通过单击item时模拟数据更新操作</p>
+<pre><code class="arduino">myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() &#123;
+      @Override
+      public void onClick(int position) &#123;
+        Toast.makeText(getActivity(), &quot;您选择了 &quot; + mList.get(position),
+            Toast.LENGTH_SHORT).show();
+
+        mList.set(position, &quot;new &quot; + &quot; item&quot;);
+        final long startTime = SystemClock.uptimeMillis();
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mOldList, mList), true);
+        Log.e(&quot;zhangrr&quot;, &quot;onLongClick() called with: dialog = [&quot; + mOldList.size() + &quot;], i = [&quot; + mList.size() + &quot;]&quot;
+            + &quot; 计算时延 = &quot; + (SystemClock.uptimeMillis() - startTime));
+        diffResult.dispatchUpdatesTo(myAdapter);
+        mOldList = new ArrayList&lt;&gt;(mList);
+        myAdapter.setDatas(mList);
+      &#125;
+</code></pre>
+<h3 id="3、DiffUtil-的效率问题"><a href="#3、DiffUtil-的效率问题" class="headerlink" title="3、DiffUtil 的效率问题"></a>3、DiffUtil 的效率问题</h3><p>通过测试不同量级的数据集，可发现</p>
+<pre><code class="arduino">private void initData(String titleText) &#123;
+  mList = new ArrayList&lt;&gt;(100000);
+  // 不新开线程，数据量 1000 的时候，耗时 7ms
+  // 不新开线程，数据量 10000 的时候，耗时 29ms
+  // 不新开线程，数据量 100000 的时候，耗时 105ms
+  // 所以我们应该将获取 DiffResult 的过程放到子线程中，并在主线程中更新 RecyclerView
+  // 此处使用 RxJava，当数据量为 100000 的时候，耗时 13ms
+
+  for (int i = 0; i &lt; 100000; i++) &#123;
+    mList.add(titleText + &quot; 第 &quot; + i + &quot; 个item&quot;);
+  &#125;
+  mOldList = new ArrayList&lt;&gt;(mList);
+&#125;
+</code></pre>
+<p>所以当数据集较大时，你应该在后台线程计算数据集的更新。官网也考虑到这点，于是发布了 AsyncListDiffer 用于在后台执行计算差异的逻辑。</p>
+<p>虽然后面 Google 官方提供了 ListAdapter 和 AsyncListDiffer这连个类，不过其在 version27 之后才引入了，所以在老项目中使用是不显示的，但是 DiffUtil 是在v7包中的。</p>
+<p>此处使用 RxJava 对前面的逻辑进行修改</p>
+<pre><code class="typescript">private void doCalculate() &#123;
+  Observable.create(new ObservableOnSubscribe&lt;DiffUtil.DiffResult&gt;() &#123;
+    @Override
+    public void subscribe(ObservableEmitter&lt;DiffUtil.DiffResult&gt; e) &#123;
+      DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mOldList, mList), false);
+      e.onNext(diffResult);
+    &#125;
+  &#125;).subscribeOn(Schedulers.computation())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Consumer&lt;DiffUtil.DiffResult&gt;() &#123;
+        @Override
+        public void accept(DiffUtil.DiffResult diffResult) &#123;
+          diffResult.dispatchUpdatesTo(myAdapter);
+          mOldList = new ArrayList&lt;&gt;(mList);
+          myAdapter.setDatas(mList);
+        &#125;
+      &#125;);
+&#125;
+</code></pre>
+<p>在监听事件中进行方法调用</p>
+<pre><code class="arduino">myAdapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() &#123;
+      @Override
+      public void onClick(int position) &#123;
+        Toast.makeText(getActivity(), &quot;您选择了 &quot; + mList.get(position),
+            Toast.LENGTH_SHORT).show();
+
+        mList.set(position, &quot;new &quot; + &quot; item&quot;);
+        final long startTime = SystemClock.uptimeMillis();
+        doCalculate();
+        Log.e(&quot;zhangrr&quot;, &quot;onLongClick() called with: dialog = [&quot; + mOldList.size() + &quot;], i = [&quot; + mList.size() + &quot;]&quot;
+            + &quot; 计算时延 = &quot; + (SystemClock.uptimeMillis() - startTime));
+      &#125;
+</code></pre>
+<h1 id="四、备注（待商榷）"><a href="#四、备注（待商榷）" class="headerlink" title="四、备注（待商榷）"></a>四、备注（待商榷）</h1><p>发现之前一个错误的写法，在 dispatchUpdatesTo(adapter) 之后才应该使用 adapter.setDatas 更新 adapter 里面的数据集，因为 Callback 的 getChangePayload 方法是在 dispatchUpdatesTo 之后执行，如果先 adapter.setDatas 更新了数据，那么 adapter 内的数据集和新的数据集内容就是一样了。这样 getChangePayload 就返回 null 了。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

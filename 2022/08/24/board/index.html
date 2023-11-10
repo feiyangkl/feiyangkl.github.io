@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Android:实现带边框的输入框 | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="Android:实现带边框的输入框 | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-board" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Android:实现带边框的输入框</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2022-08-23 23:28:07'>2022-08-23 23:28</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-%E5%AE%9E%E7%8E%B0%E5%B8%A6%E8%BE%B9%E6%A1%86%E7%9A%84%E8%BE%93%E5%85%A5%E6%A1%86"><span class="toc-text">Android:实现带边框的输入框</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Android-实现带边框的输入框"><a href="#Android-实现带边框的输入框" class="headerlink" title="Android:实现带边框的输入框"></a>Android:实现带边框的输入框</h1><blockquote>
+<p>如今市面上APP的输入框可以说是千奇百怪，不搞点花样出来貌似代表格局没打开。还在使用系统自带的输入框的兄弟可以停下脚步，哥带你实现一个简易的带边框输入框。</p>
+</blockquote>
+<p>话不多说，直接上图： <img src="/./resource/board_01.png" alt="1.gif"></p>
+<p>要实现这个效果，不得不再回顾下自定义View的流程，感兴趣的童鞋可以自行网上搜索，这里只提及该效果涉及到的内容。总体实现大致流程：</p>
+<ul>
+<li>继承 <strong>AppCompatEditText</strong></li>
+<li>配置可定义的资源属性</li>
+<li><strong>onDraw()</strong> 方法的重写</li>
+</ul>
+<p>首先还得分析：效果图中最多只能输入6个数字，需要计算出每个文字的宽高和间隙，再分别绘制文字背景和文字本身。从中我们需要提取背景颜色、高度、边距等私有属性，通过新建attrs.xml文件进行配置：</p>
+<pre><code class="ini">&lt;declare-styleable name=&quot;RoundRectEditText&quot;&gt;
+    &lt;attr name=&quot;count&quot; format=&quot;integer&quot;/&gt;
+    &lt;attr name=&quot;itemPading&quot; format=&quot;dimension&quot;/&gt;
+    &lt;attr name=&quot;strokeHight&quot; format=&quot;dimension&quot;/&gt;
+    &lt;attr name=&quot;strokeColor&quot; format=&quot;color&quot;/&gt;/&gt;
+&lt;/declare-styleable&gt;
+</code></pre>
+<p>这样在初始化的时候即可给你默认值：</p>
+<pre><code class="ini">val typedArray =context.obtainStyledAttributes(it, R.styleable.RoundRectEditText)
+count = typedArray.getInt(R.styleable.RoundRectEditText_count, count)
+itemPading = typedArray.getDimension(R.styleable.RoundRectEditText_itemPading,0f)
+strokeHight = typedArray.getDimension(R.styleable.RoundRectEditText_strokeHight,0f)
+strokeColor = typedArray.getColor(R.styleable.RoundRectEditText_strokeColor,strokeColor)
+typedArray.recycle()
+</code></pre>
+<p>接下来便是重头戏，如何绘制文字和背景色。思路其实很简单，通过for循环去遍历绘制每一个数字。关键点还在于去计算每个文字的位置及宽高，只要得到了位置和宽高，绘制背景和绘制文字易如反掌。</p>
+<p>获取每个文字宽度：</p>
+<pre><code class="scss">strokeWith =(width.toFloat() - paddingLeft.toFloat() - paddingRight.toFloat() - (count - 1) * itemPading) / count
+</code></pre>
+<p>文字居中需要计算出对应Y值：</p>
+<pre><code class="ini">val fontMetrics = paint.fontMetrics
+val textHeight = fontMetrics.bottom - fontMetrics.top
+val distance = textHeight / 2 - fontMetrics.bottom
+val baseline = height / 2f + distance
+</code></pre>
+<p>文字的X值则根据当前index和文字宽度以及各边距得出：</p>
+<pre><code class="kotlin">private fun getIndexOfX(index: Int): Float &#123;
+    return paddingLeft.toFloat() + index * (itemPading + strokeWith) + 0.5f * strokeWith
+&#125;
+</code></pre>
+<p>得到了位置，宽高接下来的步骤再简单不过了。使用 <strong>drawText</strong> 绘制文字，使用 <strong>drawRoundRect</strong> 绘制背景。这里有一个细节一定要注意，绘制背景一定要在绘制文字之前，否则背景会把文字给覆盖。</p>
+<p>另外，还需要注意一点。如果 <strong>onDraw</strong> 方法中不注释掉超类方法，底部会多出一段输入的数字。其实很好理解，这是 <strong>AppCompatEditText</strong> 自身绘制的数字，所以我们把它注释即可，包括光标也是一样。如果想要光标则需要自己在 <strong>onDraw</strong> 方法中绘制即可。</p>
+<pre><code class="kotlin">//隐藏自带光标
+super.setCursorVisible(false)
+
+override fun onDraw(canvas: Canvas) &#123;
+        //不注释掉会显示在最底部
+//        super.onDraw(canvas)
+          ......
+&#125;
+</code></pre>
+<p>以上便是实现带边框的输入框的全部类型，希望对大家有所帮助！</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

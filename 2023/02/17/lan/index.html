@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>launchWhenX 给我弃用了，这可咋整？ | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="launchWhenX 给我弃用了，这可咋整？ | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-lan" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">launchWhenX 给我弃用了，这可咋整？</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-02-16 23:57:18'>2023-02-16 23:57</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#launchWhenX-%E7%BB%99%E6%88%91%E5%BC%83%E7%94%A8%E4%BA%86%EF%BC%8C%E8%BF%99%E5%8F%AF%E5%92%8B%E6%95%B4%EF%BC%9F"><span class="toc-text">launchWhenX 给我弃用了，这可咋整？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#repeatOnLifecycle-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">repeatOnLifecycle 的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8A%BF"><span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%99%90"><span class="toc-text">局限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%8A-repeatOnLifecycle-%E7%94%A8%E6%88%90-launchWhenX-%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="toc-text">把 repeatOnLifecycle 用成 launchWhenX 的样子</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="launchWhenX-给我弃用了，这可咋整？"><a href="#launchWhenX-给我弃用了，这可咋整？" class="headerlink" title="launchWhenX 给我弃用了，这可咋整？"></a>launchWhenX 给我弃用了，这可咋整？</h1><blockquote>
+<p>Android 别三日，当 deprecated 相待。</p>
+</blockquote>
+<p>我当时写程序的时候有这种需求，希望某一段协程在 <strong>某一个生命周期开始</strong>（下文假设生命周期为 onStart）进行，而且就 <strong>执行一次</strong>。如果执行一次的话，单走一个 <code>lifecycleScope.launch</code> 其实也行，但并不安全。我去谷歌查阅了资料，又受到 IDE 提示的影响，了解到了“神奇”的 <code>lifecycleScope.launchWhenStarted</code>，这个函数恰好满足我的需求。可是贴上去发现，弃用了！</p>
+<p><img src="/./resource/lan_01.png" alt="launchWhen1.png"></p>
+<p>好家伙，让我去用 <code>repeatOnLifecycle</code>？我心想这不对啊，我要执行一次，而这个函数的重点是 <code>repeat</code>，还是不符合我要求。</p>
+<p>我又转向了 <code>LifecycleOwner::whenStarted</code>，该函数跟上面那个函数作用是一样的，只不过作用域不太一样。我想看看他是让你怎么做的。</p>
+<p><img src="/./resource/lan_02.png" alt="launchWhen2.png"></p>
+<p>好家伙，让我去用 <code>withStarted</code>？但是 <code>withStarted</code> 里面只能放 non-suspending work（非挂起任务），这还是不符合我的要求啊。</p>
+<p>其实如果你不怎么在乎警告，而且这种代码并没有给你的软件带来多大损失，你可以继续这么用着。但是在这个函数受众面这么广泛的情况下，为什么官方这么执意把它删除呢？</p>
+<h2 id="repeatOnLifecycle-的问题"><a href="#repeatOnLifecycle-的问题" class="headerlink" title="repeatOnLifecycle 的问题"></a>repeatOnLifecycle 的问题</h2><h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>我们可能都看过一张比较优势图：</p>
+<p><img src="/./resource/lan_03.png"></p>
+<p>可以看到， <code>repeatOnLifecycle</code> 会在每次重复时都从头开始执行协程，并在生命周期状态降低到指定状态以下时取消。对于收集大多数流来说，它非常适合，因为在不需要时能完全取消流，从而节省了资源。</p>
+<p>而 <code>launchWhenX</code> 系列函数不会取消协程并重新启动。它只会推迟启动时间，并在生命周期状态低于指定状态时挂起。</p>
+<p>举一个简单的例子，</p>
+<pre><code class="kotlin">delay(5000)
+Log.d(&quot;test&quot;, &quot;test&quot;)
+</code></pre>
+<p>如果被 <code>repeatOnLifecycle(Lifecycle.State.STARTED)</code> 包裹起来，且 1s 后返回主界面，该挂起函数会立即 <strong>取消</strong>，因为取消了，所以你再等 4s，也不会有任何反应。你返回程序再等 5s 后，log 信息会出现在控制台中，因为重新执行了。</p>
+<p>如果被 <code>launchWhenStarted</code> 包裹起来，且 1s 后返回主界面，该挂起函数会立即 <strong>挂起</strong>，因为挂起了，所以你再等 4s，也不会有任何反应，但是它还是一直在后台进行着 delay 的。当你过了 4s 多打开程序后，log 信息会立即出现在控制台中，因为挂起恢复了。</p>
+<p>详细例子就不从这里细说了，可以参考一下这篇文章： <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/389218426">使用更为安全的方式收集 Android UI 数据流</a></p>
+<h3 id="局限"><a href="#局限" class="headerlink" title="局限"></a>局限</h3><p>我们从这篇文章也可以看到，这里面处理的是一个位置信息。位置信息，我们自然需要最新的，而且后台把该流取消掉，然后返回后重新创建也是可以接受的。</p>
+<p>弃用 <code>launchWhenX</code> 方法，基本就是为了有效遏制挂起函数在后台还在运行，导致资源浪费甚至程序崩溃。</p>
+<p>但是实际的需求是无穷无尽的，假如需要显示一个 <strong>一次性</strong> SnackBar，或者打开一个 <strong>一次性</strong> window，这些需求如果用 <code>repeatOnLifecycle</code>，让我想起了 <code>LiveData</code> 当年的痛，有点类似处理粘性事件了，但又不太一样。</p>
+<h2 id="把-repeatOnLifecycle-用成-launchWhenX-的样子"><a href="#把-repeatOnLifecycle-用成-launchWhenX-的样子" class="headerlink" title="把 repeatOnLifecycle 用成 launchWhenX 的样子"></a>把 repeatOnLifecycle 用成 launchWhenX 的样子</h2><p>官方在 <a target="_blank" rel="noopener" href="https://issuetracker.google.com/issues/27004950">Alternative APIs for running one-time suspend code when lifecycle state is at least X?</a> 中提供了三种解决方案，适用于不同需求</p>
+<ol>
+<li><p><strong>让挂起的代码继续运行至结束</strong></p>
+<p>这样做的好处是整个代码块以原子方式运行，也就是说不会在中途被取消。</p>
+<pre><code class="kotlin">lifecycleScope.launch &#123;
+  // 直到 STARTED 前一直挂起
+  withStarted &#123; &#125;
+  // 之前你写在 launchWhenStarted 中的代码写到这下面
+  doYourOneTimeWork()
+  // 注意：即使生命周期低于 STARTED 对应的 onStop，代码也将继续运行，
+  // 这个和 launchWhenStarted 还不太一样！
+&#125;
+</code></pre>
+<p>这种类型的代码假设你的一次性任务不依赖于保持在某个生命周期状态以上，但这是一个库无法知道的情况。举个例子，如果在挂起任务之后运行了一个 FragmentTransaction，那么在该调用发生之前可能会保存状态。</p>
+</li>
+<li><p><strong>取消挂起的代码，并在返回到该状态以上时重新启动它</strong></p>
+<p>每次回到给定的生命周期状态以上时再重新运行代码块确实是 <code>repeatOnLifecycle</code> 的规定。然而，对于一个库来说，是无法知道是否可以安全地重新运行整个代码块，或者是否需要更频繁地进行检查点操作的。</p>
+<p>简单来说，如果可以多次运行整个代码块直到成功完成，那么只需要用一个 <code>isComplete</code> 来标记：</p>
+<pre><code class="kotlin">lifecycleScope.launch &#123;
+  var isComplete = false
+  repeatOnLifecycle(Lifecycle.State.STARTED) &#123;
+    if (!isComplete) &#123;
+      // 之前你写在 launchWhenStarted 中的代码写到这下面
+      // 如果在运行时生命周期走向 STARTED 对应的 onStop 时会被直接取消
+      doYourOneTimeWork()
+      // 标记是否成功
+      isComplete = true
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>当然不能保证如果中途被取消，重新运行该代码块就一定是安全的。</p>
+</li>
+<li><p><strong>取消挂起的代码，不重新启动</strong></p>
+<p>这个跟上一个类似，但是这个无论完没完成，都会在 finally 块中设置 <code>isComplete</code>，让它彻底取消。</p>
+<pre><code class="kotlin">lifecycleScope.launch &#123;
+  var isComplete = false
+  repeatOnLifecycle(Lifecycle.State.STARTED) &#123;
+    if (!isComplete) &#123;
+      try &#123;
+        // 之前你写在 launchWhenStarted 中的代码写到这下面
+        // 如果在运行时生命周期走向 STARTED 对应的 onStop 时会被直接取消
+        doYourOneTimeWork()
+      &#125; finally &#123;
+        // 即使一次性任务运行了一半没运行完，也当它运行完了，
+        // 并且在 finally 块中标记该任务已完成，所以该代码块不会重启。
+        isComplete = true
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+</li>
+</ol>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

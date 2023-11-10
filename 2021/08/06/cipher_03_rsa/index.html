@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RSA | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" iOS ">
+  <meta name="description" content="RSA | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-cipher_03_rsa" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">RSA</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="iOS">iOS</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">iOS</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2021-08-05 22:38:29'>2021-08-05 22:38</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-text">与对称加密算法的对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA-%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-text">RSA 算法原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%BC%94%E7%BB%83"><span class="toc-text">代码演练</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-text">iOS 相关函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenSSL-%E7%BB%88%E7%AB%AF%E6%B5%8B%E8%AF%95%E5%91%BD%E4%BB%A4"><span class="toc-text">OpenSSL 终端测试命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90"><span class="toc-text">程序开发证书生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="toc-text">数字签名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenSSL-%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E6%BC%94%E7%BB%83"><span class="toc-text">OpenSSL 生成密钥演练</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%81%E9%92%A5-%E5%85%AC%E9%92%A5"><span class="toc-text">私钥 &amp; 公钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86-%E8%A7%A3%E5%AF%86"><span class="toc-text">加密 &amp; 解密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2"><span class="toc-text">格式转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PKCS"><span class="toc-text">PKCS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PKCS%E5%8D%8F%E8%AE%AE"><span class="toc-text">PKCS协议</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><ul>
+<li>非对称加密算法需要两个密钥：<code>公开密钥（publickey）</code> 和 <code>私有密钥（privatekey）</code></li>
+<li>公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密<span id="more"></span></li>
+</ul>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>算法强度复杂、安全性依赖于算法与密钥</li>
+<li>加密解密速度慢</li>
+</ul>
+<h2 id="与对称加密算法的对比"><a href="#与对称加密算法的对比" class="headerlink" title="与对称加密算法的对比"></a>与对称加密算法的对比</h2><ul>
+<li>对称加密只有一种密钥，并且是非公开的，如果要解密就得让对方知道密钥</li>
+<li>非对称密钥体制有两种密钥，其中一个是公开的</li>
+</ul>
+<h2 id="RSA-算法原理"><a href="#RSA-算法原理" class="headerlink" title="RSA 算法原理"></a>RSA 算法原理</h2><ol>
+<li>找出两个“很大”的质数：P &amp; Q<ul>
+<li>N &#x3D; P * Q</li>
+<li>M &#x3D; (P – 1) * (Q – 1)</li>
+</ul>
+</li>
+<li>找出整数E，E与M互质，即除了1之外，没有其他公约数</li>
+<li>找出整数D，使得 E*D 除以 M 余 1，即 (E * D) % M &#x3D; 1</li>
+<li>经过上述准备工作之后，可以得到：<ul>
+<li>E是公钥，负责加密</li>
+<li>D是私钥，负责解密</li>
+<li>N负责公钥和私钥之间的联系</li>
+</ul>
+</li>
+<li>加密算法，假定对X进行加密<ul>
+<li>(X ^ E) % N &#x3D; Y</li>
+</ul>
+</li>
+<li>解密算法，根据费尔马小定义，可以使用以下公式完成解密<ul>
+<li>(Y ^ D) % N &#x3D; X</li>
+</ul>
+</li>
+</ol>
+<h2 id="代码演练"><a href="#代码演练" class="headerlink" title="代码演练"></a>代码演练</h2><pre><code class="objc">CryptorTools *tools = [[CryptorTools alloc] init];
+
+// 1. 加载公钥
+NSString *pubPath = [[NSBundle mainBundle] pathForResource:@&quot;rsacert.der&quot; ofType:nil];
+[tools loadPublicKeyWithFilePath:pubPath];
+
+// 2. 使用公钥加密，加密内容最大长度 117
+NSString *result = [tools RSAEncryptString:@&quot;abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghi&quot;];
+NSLog(@&quot;RSA 加密 %@&quot;, result);
+
+// 3. 加载私钥，并指定导出 p12 时设置的密码
+NSString *privatePath = [[NSBundle mainBundle] pathForResource:@&quot;p.p12&quot; ofType:nil];
+[tools loadPrivateKey:privatePath password:@&quot;123&quot;];
+
+// 4. 使用私钥解密
+NSLog(@&quot;解密结果 %@&quot;, [tools RSADecryptString:result]);
+</code></pre>
+<h3 id="iOS-相关函数"><a href="#iOS-相关函数" class="headerlink" title="iOS 相关函数"></a>iOS 相关函数</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SecKeyEncrypt</td>
+<td>使用公钥对数据加密</td>
+</tr>
+<tr>
+<td>SecKeyDecrypt</td>
+<td>使用私钥对数据解密</td>
+</tr>
+<tr>
+<td>SecKeyRawVerify</td>
+<td>使用公钥对数字签名进行验证</td>
+</tr>
+<tr>
+<td>SecKeyRawSign</td>
+<td>使用私钥生成数字签名</td>
+</tr>
+</tbody></table>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>由于 <code>RSA</code> 算法的加密解密速度要比对称算法的速度慢很多，在实际应用中，通常采取：</p>
+<ul>
+<li>数据本身的加密解密使用对称加密算法(AES)</li>
+<li>用 <code>RSA</code> 算法加密并传输对称算法所需的密钥</li>
+</ul>
+<h2 id="OpenSSL-终端测试命令"><a href="#OpenSSL-终端测试命令" class="headerlink" title="OpenSSL 终端测试命令"></a>OpenSSL 终端测试命令</h2><h3 id="程序开发证书生成"><a href="#程序开发证书生成" class="headerlink" title="程序开发证书生成"></a>程序开发证书生成</h3><pre><code class="bash"># 生成私钥
+$ openssl genrsa -out private.pem 1024
+# 创建证书请求
+$ openssl req -new -key private.pem -out rsacert.csr
+# 生成证书并签名，有效期10年
+$ openssl x509 -req -days 3650 -in rsacert.csr -signkey private.pem -out rsacert.crt
+# 转换格式-将 PEM 格式文件转换成 DER 格式
+$ openssl x509 -outform der -in rsacert.crt -out rsacert.der
+# 导出P12文件
+$ openssl pkcs12 -export -out p.p12 -inkey private.pem -in rsacert.crt
+</code></pre>
+<blockquote>
+<p>在苹果开发中，不能直接使用 PEM 格式的证书</p>
+</blockquote>
+<ul>
+<li><code>DER</code> 文件是 <code>CRT</code> 文件的 <code>BASE 64</code> 解码前的二进制数据文件</li>
+<li><code>OpenSSL</code> 默认生成的都是 <code>PEM</code> 格式的证书（BASE64 编码后的文本文件）</li>
+</ul>
+<h3 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h3><ul>
+<li>发送方<ul>
+<li><code>报文</code> HASH 得到 <code>报文摘要</code></li>
+<li><code>报文摘要</code> 用公钥加密(数字签名) + 报文</li>
+<li>发送给接收方</li>
+</ul>
+</li>
+<li>接收方<ul>
+<li><code>报文</code> HASH 得到 <code>报文摘要</code></li>
+<li><code>数字签名</code> 用私钥解密 判断是否与 <code>报文摘要</code> 相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="OpenSSL-生成密钥演练"><a href="#OpenSSL-生成密钥演练" class="headerlink" title="OpenSSL 生成密钥演练"></a>OpenSSL 生成密钥演练</h3><h4 id="私钥-公钥"><a href="#私钥-公钥" class="headerlink" title="私钥 &amp; 公钥"></a>私钥 &amp; 公钥</h4><pre><code class="bash"># 生成强度是 512 的 RSA 私钥
+$ openssl genrsa -out private.pem 512
+# 以明文输出私钥内容
+$ openssl rsa -in private.pem -text -out private.txt
+# 校验私钥文件
+$ openssl rsa -in private.pem -check
+# 从私钥中提取公钥
+$ openssl rsa -in private.pem -out public.pem -outform PEM -pubout
+# 以明文输出公钥内容
+$ openssl rsa -in public.pem -out public.txt -pubin -pubout -text
+</code></pre>
+<h4 id="加密-解密"><a href="#加密-解密" class="headerlink" title="加密 &amp; 解密"></a>加密 &amp; 解密</h4><pre><code class="bash"># 使用公钥加密小文件
+$ openssl rsautl -encrypt -pubin -inkey public.pem -in msg.txt -out msg.bin
+# 使用私钥解密小文件
+$ openssl rsautl -decrypt -inkey private.pem -in msg.bin -out a.txt
+</code></pre>
+<h4 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h4><pre><code class="bash"># 将私钥转换成 DER 格式
+$ openssl rsa -in private.pem -out private.der -outform der
+# 将公钥转换成 DER 格式
+$ openssl rsa -in public.pem -out public.der -pubin -outform der
+</code></pre>
+<h3 id="PKCS"><a href="#PKCS" class="headerlink" title="PKCS"></a>PKCS</h3><ul>
+<li>Public-Key Cryptography Standards (PKCS)是由美国 RSA 数据安全公司及其合作伙伴制定的一组公钥密码学标准，其中包括证书申请、证书更新、证书作废表发布、扩展证书内容以及数字签名、数字信封的格式等方面的一系列相关协议</li>
+</ul>
+<h4 id="PKCS协议"><a href="#PKCS协议" class="headerlink" title="PKCS协议"></a>PKCS协议</h4><table>
+<thead>
+<tr>
+<th>协议</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PKCS#1</td>
+<td>定义 RSA 公开密钥算法加密和签名机制，主要用于组织 PKCS#7 中所描述的数字签名和数字信封（专门用来加密&#x2F;解密）</td>
+</tr>
+<tr>
+<td>PKCS#8</td>
+<td>描述私有密钥信息格式，该信息包括公开密钥算法的私有密钥以及可选的属性集等（JAVA使用）</td>
+</tr>
+<tr>
+<td>PKCS#12</td>
+<td>描述个人信息交换语法标准。描述了将用户公钥、私钥、证书和其他相关信息打包的语法（苹果使用）</td>
+</tr>
+</tbody></table>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

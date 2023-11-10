@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>APISIX介绍以及集群部署 | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" APISIX ">
+  <meta name="description" content="APISIX介绍以及集群部署 | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Apisix" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">APISIX介绍以及集群部署</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Network">Network</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color2">APISIX</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-01-20 21:33:53'>2023-01-20 21:33</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#APISIX%E4%BB%8B%E7%BB%8D%E4%BB%A5%E5%8F%8A%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="toc-text">APISIX介绍以及集群部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-APISIX%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">1 APISIX是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.1介绍</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Apisix%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="toc-text">2 Apisix集群部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E6%90%AD%E5%BB%BAETCD%E9%9B%86%E7%BE%A4"><span class="toc-text">2.1搭建ETCD集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%90%AD%E5%BB%BAAPISIX%E9%9B%86%E7%BE%A4"><span class="toc-text">4.1 搭建APISIX集群</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="APISIX介绍以及集群部署"><a href="#APISIX介绍以及集群部署" class="headerlink" title="APISIX介绍以及集群部署"></a>APISIX介绍以及集群部署</h1><h2 id="1-APISIX是什么"><a href="#1-APISIX是什么" class="headerlink" title="1 APISIX是什么"></a>1 APISIX是什么</h2><h4 id="1-1介绍"><a href="#1-1介绍" class="headerlink" title="1.1介绍"></a>1.1介绍</h4><p>Apache APISIX 是一个动态、实时、高性能的云原生 API 网关，提供了负载均衡、动态上游、灰度发布、服务熔断、身份认证、可观测性等丰富的流量管理功能。可以使用 Apache APISIX 处理传统的南北向流量，也可以处理服务间的东西向流量。同时，它也支持作为 k8s IngressController 来使用，使用routers来提供灵活的网关管理功能，在一个请求中，routes包含访问逻辑和上游目标信息。。官方文档：<a target="_blank" rel="noopener" href="https://apisix.apache.org/docs/apisix/getting-started/README/">APISIX文档</a></p>
+<ul>
+<li>APISIX原理图<br><img src="/../Resource/apifox_01.png" alt="ps.png"></li>
+</ul>
+<p><img src="/../Resource/apisix_02.png" alt="ps.png"></p>
+<ul>
+<li><p>APISIX 的架构图，整体上分成数据面和控制面两个部分，控制面用来管理路由，主要通过 etcd 来实现配置中心，数据面用来处理客户端请求，通过 APISIX 自身来实现，会不断去 watch etcd 中的 route、upstream 等数据<br><img src="/../Resource/apisix_03.png.webp" alt="ps.png"></p>
+</li>
+<li><p>Route 是什么<br>Route（也称之为路由）是访问上游目标的路径，在 Apache APISIX 中，Route 首先通过预定的规则来匹配客户端请求，然后加载和执行相应的插件，最后将请求转发至特定的 Upstream。<br>在 APISIX 中，一个最简单的 Route 仅由匹配路径和 Upstream 地址两个信息组成。</p>
+</li>
+<li><p>Upstream 是什么<br>Upstream（也称之为上游）是一组具备相同功能的节点集合，它是对虚拟主机的抽象。Upstream 可以通过预先配置的规则对多个服务节点进行负载均衡。</p>
+</li>
+</ul>
+<h2 id="2-Apisix集群部署"><a href="#2-Apisix集群部署" class="headerlink" title="2 Apisix集群部署"></a>2 Apisix集群部署</h2><h3 id="2-1搭建ETCD集群"><a href="#2-1搭建ETCD集群" class="headerlink" title="2.1搭建ETCD集群"></a>2.1搭建ETCD集群</h3><ul>
+<li><p>etcd简介</p>
+<p>  etcd是一个分布式的、可靠的key-value存储系统，它用于存储分布式系统中的关键数据。apisix采用etcd保存和同步配置信息。</p>
+</li>
+<li><p>3.2 创建etcd-cluster-compose.yml</p>
+<p>  在home目录下创建etcd-node目录，用于存放etcd集群配置文件。服务器节点1和服务器节点2均需要执行如下操作：</p>
+<pre><code>[root@s113 home]# cd /home/
+[root@s113 home]# mkdir etcd-node
+[root@s113 home]# cd etcd-node/
+[root@s113 etcd-node]# touch etcd-cluster-compose.yml
+[root@s113 etcd-node]# vim etcd-cluster-compose.yml
+</code></pre>
+</li>
+<li><p>3.3 服务器节点1ECTD集群配置</p>
+<pre><code>version: &#39;3&#39;
+services:
+  etcd:
+    image: bitnami/etcd:3.4.15
+    restart: always
+    volumes:
+      - /home/etcd-node/data:/bitnami/etcd
+    environment:
+      ETCD_NAME: &quot;etcd1&quot;
+      ETCD_ENABLE_V2: &quot;true&quot;
+      ALLOW_NONE_AUTHENTICATION: &quot;yes&quot;
+      ETCD_ADVERTISE_CLIENT_URLS: &quot;http://176.16.108.113:2379&quot;
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: &quot;http://176.16.108.113:2380&quot;
+      ETCD_LISTEN_CLIENT_URLS: &quot;http://0.0.0.0:2379&quot;
+      ETCD_LISTEN_PEER_URLS: &quot;http://0.0.0.0:2380&quot;
+      ETCD_INITIAL_CLUSTER_STATE: &quot;new&quot;
+      ETCD_INITIAL_CLUSTER_TOKEN: &quot;etcd-cluster&quot;
+      ETCD_INITIAL_CLUSTER: &quot;etcd1=http://176.16.108.113:2380,etcd2=http://176.16.108.114:2380&quot;
+      ETCD_DATA_DIR: &quot;/var/lib/etcd&quot;
+    ports:
+       - &quot;2379:2379/tcp&quot;
+       - &quot;2380:2380/tcp&quot;
+    networks:
+      apisix:
+
+networks:
+  apisix:
+    driver: bridge      
+
+volumes:
+  etcd_data:
+    driver: local
+</code></pre>
+</li>
+<li><p>3.4 服务器节点2ECTD集群配置</p>
+<pre><code>version: &#39;3&#39;
+services:
+  etcd:
+    image: bitnami/etcd:3.4.15
+    restart: always
+    volumes:
+      - /home/etcd-node/data:/bitnami/etcd
+    environment:
+      ETCD_NAME: &quot;etcd2&quot;
+      ETCD_ENABLE_V2: &quot;true&quot;
+      ALLOW_NONE_AUTHENTICATION: &quot;yes&quot;
+      ETCD_ADVERTISE_CLIENT_URLS: &quot;http://176.16.108.114:2379&quot;
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: &quot;http://176.16.108.114:2380&quot;
+      ETCD_LISTEN_CLIENT_URLS: &quot;http://0.0.0.0:2379&quot;
+      ETCD_LISTEN_PEER_URLS: &quot;http://0.0.0.0:2380&quot;
+      ETCD_INITIAL_CLUSTER_STATE: &quot;new&quot;
+      ETCD_INITIAL_CLUSTER_TOKEN: &quot;etcd-cluster&quot;
+      ETCD_INITIAL_CLUSTER: &quot;etcd1=http://176.16.108.113:2380,etcd2=http://176.16.108.114:2380&quot;
+      ETCD_DATA_DIR: &quot;/var/lib/etcd&quot;
+    ports:
+       - &quot;2379:2379/tcp&quot;
+       - &quot;2380:2380/tcp&quot;
+    networks: 
+      apisix:
+
+networks:
+  apisix:
+    driver: bridge
+
+volumes:
+  etcd_data:
+    driver: local
+</code></pre>
+</li>
+<li><p>3.5 ETCD参数详细</p>
+<pre><code>
+ETCD_NAME：设置成员节点的别名，建议为每个成员节点配置可识别的命名。
+
+ETCD_ADVERTISE_CLIENT_URLS：广播到集群中本成员的监听客户端请求的地址。
+
+ETCD_INITIAL_ADVERTISE_PEER_URLS：广播到集群中本成员的Peer监听通信地址。
+
+ETCD_LISTEN_CLIENT_URLS：客户端请求的监听地址列表。
+
+ETCD_LISTEN_PEER_URLS：Peer消息的监听服务地址列表。
+
+ETCD_INITIAL_CLUSTER_TOKEN：启动集群的时候指定集群口令，只有相同token的几点才能加入到同一集群。
+
+ETCD_INITIAL_CLUSTER：所有集群节点的地址列表。
+
+ETCD_INITIAL_CLUSTER_STATE：初始化集群状态，默认为new，也可以指定为existing表示要加入到一个已有集群。
+</code></pre>
+</li>
+<li><p>3.6 启动并验证集群</p>
+<p>  在&#x2F;home&#x2F;etcd-node目录下执行指令，服务器节点1和服务器节点2均需要执行如下操作：</p>
+<pre><code>[root@s113 etcd-node]# docker-compose -f etcd-cluster-compose.yml up -d
+</code></pre>
+<pre><code>[root@s114 etcd-node]# docker ps
+</code></pre>
+<pre><code>[root@s113 etcd-node]# docker ps
+</code></pre>
+</li>
+</ul>
+<p>通过上面指令的执行结果，看出两台服务器节点上的etcd已经在docker中成功运行起来了。</p>
+<pre><code>查看集群
+在服务器节点1上执行
+
+
+```
+[root@s113 etcd-node]# docker exec -it a8b536f1163c bash
+
+I have no name!@a8b536f1163c:/opt/bitnami/etcd$ etcdctl member list
+175f9081790c5dee, started, etcd1, http://176.16.108.113:2380, http://176.16.108.113:2379, false
+5eefe34a545763d9, started, etcd2, http://176.16.108.114:2380, http://176.16.108.114:2379, false
+I have no name!@a8b536f1163c:/opt/bitnami/etcd$ 
+``` 
+
+在服务器节点2上执行
+
+    ```
+    [root@s114 etcd-node]# docker exec -it b5cef18d3687 bash
+    I have no name!@b5cef18d3687:/opt/bitnami/etcd$ etcdctl member list
+    175f9081790c5dee, started, etcd1, http://176.16.108.113:2380, http://176.16.108.113:2379, false
+    5eefe34a545763d9, started, etcd2, http://176.16.108.114:2380, http://176.16.108.114:2379, false
+    I have no name!@b5cef18d3687:/opt/bitnami/etcd$
+    ```
+    进入etcd容器内部查看节点集群情况，看到两个节点都存在，就说明etcd集群成功了。
+</code></pre>
+<h3 id="4-1-搭建APISIX集群"><a href="#4-1-搭建APISIX集群" class="headerlink" title="4.1 搭建APISIX集群"></a>4.1 搭建APISIX集群</h3><ul>
+<li><p>下载apisix-docker</p>
+<p>  下载地址为：<a target="_blank" rel="noopener" href="https://github.com/apache/apisix-docker/tree/release/apisix-3.0.0">https://github.com/apache/apisix-docker/tree/release/apisix-3.0.0</a></p>
+</li>
+<li><p>上传apisix-docker.zip至两台服务器节点</p>
+<p>  上传apisix-docker-apisix-3.0.0.zip至&#x2F;home目录，并解压重命名为apisix-docker。</p>
+<pre><code>[root@s113 home]# rz
+[root@s113 home]# unzip apisix-docker-apisix-3.0.0.zip
+[root@s113 home]# mv apisix-docker-release-apisix-3.0.0 apisix-docker
+</code></pre>
+<pre><code>[root@s114 home]# rz
+[root@s114 home]# unzip apisix-docker-apisix-3.0.0.zip
+[root@s114 home]# mv apisix-docker-release-apisix-3.0.0 apisix-docker
+</code></pre>
+</li>
+</ul>
+<pre><code>* 修改docker-compose.yml
+
+    由于etcd集群在安装apisix集群之前就已经安装好了，所以在这里的docker-compose.yml中就不需要再配置了，可以选择删除或者注释。
+apisix镜像apisix-jdk11:latest是通过自定义插件重新生成的镜像，内嵌apisix镜像为apisix:3.0.0-centos。这里的apisix镜像可以不改，或者改为apisix:3.0.0-centos。
+![ps.png](../Resource/apisix_04.png)
+
+    服务器节点1和服务器节点2
+
+    ```
+    [root@s113 /]# cd /home/apisix-docker/example/
+    [root@s114 /]# cd /home/apisix-docker/example/
+    ```
+
+    ```
+    version: &quot;3&quot;
+    
+    services:
+      apisix-dashboard:
+        image: apache/apisix-dashboard:2.13-alpine
+        restart: always
+        volumes:
+        - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+        ports:
+        - &quot;9000:9000&quot;
+        networks:
+          apisix:
+    
+      apisix:
+        image: apisix-jdk11:latest
+        restart: always
+        volumes:
+          - ./apisix_log:/usr/local/apisix/logs
+          - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+        ##network_mode: host
+        ports:
+          - &quot;9180:9180/tcp&quot;
+          - &quot;9080:9080/tcp&quot;
+          - &quot;9091:9091/tcp&quot;
+          - &quot;9443:9443/tcp&quot;
+          - &quot;9092:9092/tcp&quot;
+        networks:
+          apisix:
+    
+      web1:
+        image: nginx:1.19.0-alpine
+        restart: always
+        volumes:
+          - ./upstream/web1.conf:/etc/nginx/nginx.conf
+        ports:
+          - &quot;9081:80/tcp&quot;
+        environment:
+          - NGINX_PORT=80
+        networks:
+          apisix:
+    
+      web2:
+        image: nginx:1.19.0-alpine
+        restart: always
+        volumes:
+          - ./upstream/web2.conf:/etc/nginx/nginx.conf
+        ports:
+          - &quot;9082:80/tcp&quot;
+        environment:
+          - NGINX_PORT=80
+        networks:
+          apisix:
+    
+      prometheus:
+        image: prom/prometheus:v2.25.0
+        restart: always
+        volumes:
+          - ./prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+        ports:
+          - &quot;9090:9090&quot;
+        networks:
+          apisix:
+    
+      grafana:
+        image: grafana/grafana:7.3.7
+        restart: always
+        ports:
+          - &quot;3000:3000&quot;
+        volumes:
+          - &quot;./grafana_conf/provisioning:/etc/grafana/provisioning&quot;
+          - &quot;./grafana_conf/dashboards:/var/lib/grafana/dashboards&quot;
+          - &quot;./grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini&quot;
+        networks:
+          apisix:
+    
+    networks:
+      apisix:
+        driver: bridge
+    
+    volumes:
+      etcd_data:
+        driver: local
+    
+    
+    ```
+![ps.png](../Resource/apisix_05.png)
+
+
+    ```
+    conf:
+      listen:
+        host: 0.0.0.0     # `manager api` listening ip or host name
+        port: 9000          # `manager api` listening port
+      allow_list:           # If we don&#39;t set any IP list, then any IP access is allowed by default.
+        - 0.0.0.0/0
+      etcd:
+        endpoints:          # supports defining multiple etcd host addresses for an etcd cluster
+          - &quot;http://176.16.108.113:2379&quot;
+          - &quot;http://176.16.108.114:2379&quot;
+                              # yamllint disable rule:comments-indentation
+                              # etcd basic auth info
+        # username: &quot;root&quot;    # ignore etcd username if not enable etcd auth
+        # password: &quot;123456&quot;  # ignore etcd password if not enable etcd auth
+        mtls:
+          key_file: &quot;&quot;          # Path of your self-signed client side key
+          cert_file: &quot;&quot;         # Path of your self-signed client side cert
+          ca_file: &quot;&quot;           # Path of your self-signed ca cert, the CA is used to sign callers&#39; certificates
+        # prefix: /apisix     # apisix config&#39;s prefix in etcd, /apisix by default
+      log:
+        error_log:
+          level: warn       # supports levels, lower to higher: debug, info, warn, error, panic, fatal
+          file_path:
+            logs/error.log  # supports relative path, absolute path, standard output
+                            # such as: logs/error.log, /tmp/logs/error.log, /dev/stdout, /dev/stderr
+        access_log:
+          file_path:
+            logs/access.log  # supports relative path, absolute path, standard output
+                             # such as: logs/access.log, /tmp/logs/access.log, /dev/stdout, /dev/stderr
+                             # log example: 2020-12-09T16:38:09.039+0800    INFO    filter/logging.go:46    /apisix/admin/routes/r1 &#123;&quot;status&quot;: 401, &quot;host&quot;: &quot;127.0.0.1:9000&quot;, &quot;query&quot;: &quot;asdfsafd=adf&amp;a=a&quot;, &quot;requestId&quot;: &quot;3d50ecb8-758c-46d1-af5b-cd9d1c820156&quot;, &quot;latency&quot;: 0, &quot;remoteIP&quot;: &quot;127.0.0.1&quot;, &quot;method&quot;: &quot;PUT&quot;, &quot;errs&quot;: []&#125;
+    authentication:
+      secret:
+        secret              # secret for jwt token generation.
+                            # NOTE: Highly recommended to modify this value to protect `manager api`.
+                            # if it&#39;s default value, when `manager api` start, it will generate a random string to replace it.
+      expire_time: 3600     # jwt token expire time, in second
+      users:                # yamllint enable rule:comments-indentation
+        - username: admin   # username and password for login `manager api`
+          password: admin
+        - username: user
+          password: user
+    
+    plugins:                          # plugin list (sorted in alphabetical order)
+      - api-breaker
+      - authz-keycloak
+      - basic-auth
+      - batch-requests
+      - consumer-restriction
+      - cors
+      # - dubbo-proxy
+      - echo
+      # - error-log-logger
+      # - example-plugin
+      - fault-injection
+      - grpc-transcode
+      - hmac-auth
+      - http-logger
+      - ip-restriction
+      - jwt-auth
+      - kafka-logger
+      - key-auth
+      - limit-conn
+      - limit-count
+      - limit-req
+      # - log-rotate
+      # - node-status
+      - openid-connect
+      - prometheus
+      - proxy-cache
+      - proxy-mirror
+      - proxy-rewrite
+      - redirect
+      - referer-restriction
+      - request-id
+      - request-validation
+      - response-rewrite
+      - serverless-post-function
+      - serverless-pre-function
+      # - skywalking
+      - sls-logger
+      - syslog
+      - tcp-logger
+      - udp-logger
+      - uri-blocker
+      - wolf-rbac
+      - zipkin
+      - server-info
+      - traffic-split
+    
+    ```
+
+* 启动apisix并验证集群
+    切换到/home/apisix-docker/example目录下，执行启动指令。
+
+    ```
+    [root@s113 example]# docker-compose -p docker-apisix up -d
+    
+    ```
+    
+    ```
+    [root@s114 example]# docker-compose -p docker-apisix up -d
+    
+    ```
+
+* 查看集群
+
+    访问http://176.16.108.113:9000或者http://176.16.108.114:9000，输入账号admin，密码admin登录到apisix dashboard系统，打开系统信息模块，看到两个apisix节点，就代表apisix集群搭建成功了
+
+    ![ps.png](../Resource/apisix_06.png)
+
+    在http://176.16.108.113:9000或者http://176.16.108.114:9000任意一个系统中，添加上游、服务、路由信息，在两个系统中都可以看到添加的数据信息。
+
+
+### 4 搭建NGINX集群
+
+* 安装nginx
+
+    两台服务器节点做下面同样的指令操作。
+    拉取镜像
+
+    ```
+    docker pull nginx
+    ```
+
+    临时启动nginx容器，复制容器内的重要配置文件到本机
+
+    ```
+    docker run --name nginx -p 80:80 -d nginx
+    docker cp nginx:/etc/nginx/nginx.conf /home/nginx/
+    docker cp nginx:/etc/nginx/conf.d/ /home/nginx/conf/
+    docker cp nginx:/usr/share/nginx/html/ /home/nginx/html/
+    docker cp nginx:/var/log/nginx/ /home/nginx/logs/
+    ```
+
+    停止删除临时nginx容器
+
+    ```
+    docker stop nginx
+    docker rm nginx
+    ```
+
+    正式运行nginx容器
+
+    ```
+    docker run -p 8080:80 \
+    -v /home/nginx/nginx.conf:/etc/nginx/nginx.conf \
+    -v /home/nginx/logs:/var/log/nginx \
+    -v /home/nginx/html:/usr/share/nginx/html \
+    -v /home/nginx/conf:/etc/nginx/conf.d \
+    -v /etc/localtime:/etc/localtime \
+    --name nginx \
+    --restart=always \
+    -d nginx
+    ```
+
+* nginx配置负载均衡
+        切换到/home/nginx目录中，修改相关配置文件，服务器节点1和服务器节点2均需要做如下修改。
+        
+        修改nginx.conf配置文件
+    
+    ```
+    [root@s113 /]# cd /home/nginx/
+    [root@s114 /]# cd /home/nginx/
+    ```
+    ```
+    user  nginx;
+    worker_processes  auto;
+    
+    error_log  /var/log/nginx/error.log notice;
+    pid        /var/run/nginx.pid;
+    
+    events &#123;
+        worker_connections  1024;
+    &#125;
+    
+    http &#123;
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+    
+        log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+                          &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+                          &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+    
+        access_log  /var/log/nginx/access.log  main;
+    
+        sendfile        on;
+        #tcp_nopush     on;
+    
+        keepalive_timeout  65;
+    
+        #gzip  on;
+        upstream apisix &#123;
+            ip_hash;
+            server 176.16.108.113:9000 weight=1;
+            server 176.16.108.114:9000 weight=1;
+        &#125;
+    
+        upstream apisixApi &#123;
+            server 176.16.108.113:9080 weight=1;
+            server 176.16.108.114:9080 weight=1;
+        &#125;
+        include /etc/nginx/conf.d/*.conf;
+    &#125;
+    ```
+    
+    ###### 修改default.conf配置文件
+    
+    ```
+    server &#123;
+        listen       80;
+        listen  [::]:80;
+        server_name  localhost;
+    
+        #access_log  /var/log/nginx/host.access.log  main;
+    
+    # 转发网站
+        location / &#123;
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+            proxy_pass http://apisix/;
+        &#125;
+    
+    # 转发接口
+        location ^~/apisixApi/ &#123;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;
+            proxy_set_header X-NginX-Proxy true;
+            rewrite ^/apisixApi/(.*)$ /$1 break;
+            proxy_pass http://apisixApi/;
+        &#125;
+    
+        #error_page  404              /404.html;
+    
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html &#123;
+            root   /usr/share/nginx/html;
+        &#125;
+    
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ &#123;
+        #    proxy_pass   http://127.0.0.1;
+        #&#125;
+    
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ &#123;
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #&#125;
+    
+        # deny access to .htaccess files, if Apache&#39;s document root
+        # concurs with nginx&#39;s one
+        #
+        #location ~ /\.ht &#123;
+        #    deny  all;
+        #&#125;
+    &#125;
+    ```
+
+    修改好配置文件，删除旧nginx容器，重新运行新nginx容器。
+
+* 验证nginx负载均衡转发
+    
+    访问http://176.16.108.113:8080或者http://176.16.108.114:8080，输入账号admin，密码admin登录到apisix dashboard系统。
+
+    为了验证nginx集群已经生效了，我们将服务器节点 176.16.108.113上apisix停止运行。再次访问http://176.16.108.113:8080，发现访问成功，说明nginx将请求转发到了服务器节点2的apisix http://176.16.108.114:9000。
+
+### 6 搭建Keepalived集群
+*  keepalived简介
+
+    keepalived是基于VRRP协议实现的保证集群高可用的一个服务软件，主要功能是实现真机的故障隔离和负载均衡器间的失败切换，防止单点故障。VRRP协议保证当主机的下一路由器出现故障时，由另外一台路由器来代替出现故障的路由器进行工作，从而保持网络通信的连续性和可靠性。
+
+* 安装keepalived
+    在两台服务器节点上都安装keepalived，下面是安装步骤。
+
+* 安装keepalived
+
+    ```
+    yum install -y  keepalived
+    ```
+    
+    开启keepalived服务
+    
+    ```
+    systemctl start keepalived.service
+    ```
+    
+    关闭keepalived服务
+    
+    ```
+    systemctl stop keepalived.service
+    ```
+    查看keepalived服务状态
+    
+    ```
+    systemctl status keepalived.service
+    ```
+    
+    并对该脚本文件授权：
+    
+    ```
+    chmod 777 /etc/keepalived/nginx_check.sh
+    ```
+    
+* 创建nginx_check.sh
+
+    nginx_check.sh就是起到一个nginx宕机以后，自动开启服务。
+切换到/home目录下，创建keepalived目录，在keepalived目录中创建nginx_check.sh文件。两个服务器节点都需要创建。
+
+    ```
+    [root@s113 /]# cd /home/
+    [root@s113 home]# mkdir keepalived
+    [root@s113 home]# cd keepalived/
+    [root@s113 keepalived]# touch nginx_check.sh
+    ```
+
+    
+    ```
+    A=`ps -ef | grep nginx | grep -v grep | wc -l`
+    if [ $A -eq 0 ];then
+        nginx
+        sleep 2
+        if [ `ps -ef | grep nginx | grep -v grep | wc -l` -eq 0 ];then
+            #killall keepalived
+            ps -ef|grep keepalived|grep -v grep|awk &#39;&#123;print $2&#125;&#39;|xargs kill -9
+        fi
+    
+    Fi
+</code></pre>
+<ul>
+<li><p>修改keepalived.conf<br>  切换到&#x2F;etc&#x2F;keepalived目录下，修改配置文件，两台服务器节点都需要修改。<br>  主节点配置文件</p>
+<pre><code>! Configuration File for keepalived
+vrrp_script chk_nginx &#123;
+    script &quot;/home/keepalived/nginx_check.sh&quot; #运行脚本，脚本内容下面有，就是起到一个nginx宕机以后，自动开启服务
+    interval 2 #检测时间间隔
+    weight -20 #如果条件成立的话，则权重 -20
+&#125;
+# 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称
+vrrp_instance VI_1 &#123;
+    state MASTER #来决定主从
+    interface ens192 # 绑定虚拟 IP 的网络接口，根据自己的机器填写
+    virtual_router_id 121 # 虚拟路由的 ID 号， 两个节点设置必须一样
+    mcast_src_ip 176.16.108.113 #填写本机ip
+    priority 100 # 节点优先级,主要比从节点优先级高
+    nopreempt # 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题
+    advert_int 1 # 组播信息发送间隔，两个节点设置必须一样，默认 1s
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    # 将track_script块加入instance 配置块
+    track_script &#123;
+        chk_nginx #执行Nginx监控的服务
+    &#125;
+
+    virtual_ipaddress &#123;
+        176.16.108.115 #虚拟ip
+    &#125;
+&#125;
+</code></pre>
+<p>  从节点配置文件</p>
+<pre><code>! Configuration File for keepalived
+vrrp_script chk_nginx &#123;
+    script &quot;/home/keepalived/nginx_check.sh&quot; #运行脚本，脚本内容下面有，就是起到一个nginx宕机以后，自动开启服务
+    interval 2 #检测时间间隔
+    weight -20 #如果条件成立的话，则权重 -20
+&#125;
+# 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称
+vrrp_instance VI_1 &#123;
+    state BACKUP #来决定主从
+    interface ens192 # 绑定虚拟 IP 的网络接口，根据自己的机器填写
+    virtual_router_id 121 # 虚拟路由的 ID 号， 两个节点设置必须一样
+    mcast_src_ip 176.16.108.114 #填写本机ip
+    priority 90 # 节点优先级,主要比从节点优先级高
+    nopreempt # 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题
+    advert_int 1 # 组播信息发送间隔，两个节点设置必须一样，默认 1s
+    authentication &#123;
+        auth_type PASS
+        auth_pass 1111
+    &#125;
+    # 将 track_script 块加入 instance 配置块
+    track_script &#123;
+        chk_nginx #执行 Nginx 监控的服务
+    &#125;
+
+    virtual_ipaddress &#123;
+        176.16.108.115 # 虚拟ip
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li><p>启动keepalived并验证集群<br>  上面修改了keepalived配置文件，这里需要先重启一下keepalived服务。重启完成之后，输入<a href="http://176.16.108.115:8080，就能访问到nginx，再由nginx转发到apisix">http://176.16.108.115:8080，就能访问到nginx，再由nginx转发到apisix</a> dashboard界面。<br>keepalived的主节点为176.16.108.113，副节点为176.16.108.114，默认使用主节点的keepalived，它的优先级高。当我们模拟将主节故障，把它停掉，虚拟ip就会漂移到副节点上，这时由副节点接手主节点的工作。当主节点恢复正常运行，副节点就会停止工作，进入备份状态。</p>
+<p>  停止主节点，观察副节点</p>
+<pre><code>[root@s113 /]# systemctl stop keepalived.service
+[root@s113 /]# systemctl status keepalived.service
+
+[root@s113 /]# ip add
+
+[root@s114 /]# systemctl status keepalived.service
+
+[root@s114 /]# ip add
+</code></pre>
+<p>  开启主节点，观察副节点</p>
+<pre><code>[root@s113 /]# systemctl start keepalived.service
+[root@s114 /]# systemctl status keepalived.service
+</code></pre>
+</li>
+</ul>
+<p>至此，在docker中apisix集群部署就搭建完成了！</p>
+<p>参考博客</p>
+<p>docker如何部署etcd集群：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/278169.htm">https://www.jb51.net/article/278169.htm</a><br>Nacos+ApiSix docker 集群环境搭建(docker-compose方式)：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013480019/article/details/128633596">https://blog.csdn.net/u013480019/article/details/128633596</a><br>Apache APISIX v3.0 中文文档：<a target="_blank" rel="noopener" href="https://www.bookstack.cn/read/apisix-3.0-zh/2690359772755fd6.md">https://www.bookstack.cn/read/apisix-3.0-zh/2690359772755fd6.md</a><br>Docker安装Nginx：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u010148813/article/details/126172372">https://blog.csdn.net/u010148813/article/details/126172372</a><br>nginx 配置接口：<a target="_blank" rel="noopener" href="https://blog.csdn.net/code12313/article/details/117466261">https://blog.csdn.net/code12313/article/details/117466261</a><br>Nginx 配置根据路径转发：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67393295/article/details/126062706">https://blog.csdn.net/m0_67393295/article/details/126062706</a><br>nginx配置负载均衡：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34825514/article/details/124311144">https://blog.csdn.net/qq_34825514/article/details/124311144</a><br>nginx 转发配置：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zjhblogs/p/16423751.html">https://www.cnblogs.com/zjhblogs/p/16423751.html</a><br>nginx的配置转发到其他网站详解：<a target="_blank" rel="noopener" href="https://www.jb51.net/article/259831.htm">https://www.jb51.net/article/259831.htm</a><br>CentOS7 下配置Keepalived为系统服务，开机自动启动：<a target="_blank" rel="noopener" href="https://it.cha138.com/php/show-40463.html">https://it.cha138.com/php/show-40463.html</a><br>Nginx的高可用集群：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liangmengbk/article/details/128177421">https://blog.csdn.net/liangmengbk/article/details/128177421</a><br>搭建Nginx高可用集群（keepalived+双机热备）：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_59566851/article/details/124957266">https://blog.csdn.net/weixin_59566851/article/details/124957266</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

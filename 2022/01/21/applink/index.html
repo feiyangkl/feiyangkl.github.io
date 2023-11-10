@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>【Android】点击短信链接唤起APP的方案实践 | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="【Android】点击短信链接唤起APP的方案实践 | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-applink" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">【Android】点击短信链接唤起APP的方案实践</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2022-01-20 18:36:23'>2022-01-20 18:36</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E3%80%90Android%E3%80%91%E7%82%B9%E5%87%BB%E7%9F%AD%E4%BF%A1%E9%93%BE%E6%8E%A5%E5%94%A4%E8%B5%B7APP%E7%9A%84%E6%96%B9%E6%A1%88%E5%AE%9E%E8%B7%B5"><span class="toc-text">【Android】点击短信链接唤起APP的方案实践</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E6%A6%82%E8%BF%B0"><span class="toc-text">一.概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%96%B9%E6%A1%88"><span class="toc-text">二.方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DeepLink"><span class="toc-text">1.DeepLink</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%96%B9%E6%A1%88%E6%95%88%E6%9E%9C"><span class="toc-text">1.1 方案效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">1.2 使用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E9%85%8D%E7%BD%AE%E7%9B%91%E5%90%AC%E9%93%BE%E6%8E%A5"><span class="toc-text">1.2.1 配置监听链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E7%82%B9%E5%87%BB%E7%9F%AD%E4%BF%A1%E4%B8%AD%E7%9A%84%E9%93%BE%E6%8E%A5"><span class="toc-text">1.2.2 点击短信中的链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E9%80%9A%E8%BF%87%E6%B5%8F%E8%A7%88%E5%99%A8%E5%94%A4%E8%B5%B7app"><span class="toc-text">1.2.3 通过浏览器唤起app</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-%E8%A7%A3%E6%9E%90%E9%93%BE%E6%8E%A5%E6%90%BA%E5%B8%A6%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-text">1.2.4 解析链接携带的数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-AppLink"><span class="toc-text">2.AppLink</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%96%B9%E6%A1%88%E6%95%88%E6%9E%9C"><span class="toc-text">2.1 方案效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">2.2 使用流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E9%85%8D%E7%BD%AE%E7%9B%91%E5%90%AC%E9%93%BE%E6%8E%A5"><span class="toc-text">2.2.1 配置监听链接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E7%94%9F%E6%88%90assetlinks-json%E6%96%87%E4%BB%B6"><span class="toc-text">2.2.2 生成assetlinks.json文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E9%83%A8%E7%BD%B2assetlinks-json%E6%96%87%E4%BB%B6"><span class="toc-text">2.2.3 部署assetlinks.json文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E6%9F%A5%E7%9C%8B%E9%AA%8C%E8%AF%81%E7%8A%B6%E6%80%81"><span class="toc-text">2.2.4 查看验证状态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">2.3 注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-assetlinks-json%E6%96%87%E4%BB%B6%E7%9A%84%E9%83%A8%E7%BD%B2%E8%A6%81%E6%B1%82"><span class="toc-text">2.3.1 assetlinks.json文件的部署要求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-assetlinks-json%E6%96%87%E4%BB%B6%E7%9A%84%E9%AA%8C%E8%AF%81%E6%97%B6%E6%9C%BA"><span class="toc-text">2.3.2 assetlinks.json文件的验证时机</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-%E6%80%BB%E7%BB%93"><span class="toc-text">三.总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DeepLink-1"><span class="toc-text">1.DeepLink</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-AppLink-1"><span class="toc-text">2.AppLink</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="【Android】点击短信链接唤起APP的方案实践"><a href="#【Android】点击短信链接唤起APP的方案实践" class="headerlink" title="【Android】点击短信链接唤起APP的方案实践"></a>【Android】点击短信链接唤起APP的方案实践</h1><h1 id="一-概述"><a href="#一-概述" class="headerlink" title="一.概述"></a>一.概述</h1><pre><code>在很多业务场景中，需要点击短信链接跳转到App的指定页面。在Android系统中，想要实现这个功能，可以通过DeepLink或AppLink实现。
+</code></pre>
+<h1 id="二-方案"><a href="#二-方案" class="headerlink" title="二.方案"></a>二.方案</h1><h2 id="1-DeepLink"><a href="#1-DeepLink" class="headerlink" title="1.DeepLink"></a>1.DeepLink</h2><pre><code>DeepLink是Android系统最基础、最普遍、最广泛的外部唤起App的方式，不受系统版本限制。
+</code></pre>
+<h3 id="1-1-方案效果"><a href="#1-1-方案效果" class="headerlink" title="1.1 方案效果"></a>1.1 方案效果</h3><pre><code>当用户点击链接时，系统会弹出弹窗让用户选择使用哪个App来处理这个链接，如下图所示： ![WechatIMG67.jpg](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0bc29c9443034714934383d8b296c640~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=4906&amp;h=2160&amp;s=3130460&amp;e=jpg&amp;b=e1e2dc)
+</code></pre>
+<h3 id="1-2-使用流程"><a href="#1-2-使用流程" class="headerlink" title="1.2 使用流程"></a>1.2 使用流程</h3><h4 id="1-2-1-配置监听链接"><a href="#1-2-1-配置监听链接" class="headerlink" title="1.2.1 配置监听链接"></a>1.2.1 配置监听链接</h4><pre><code>在AndroidManifest文件中需要唤起的activity中加入intent-filter，监听对应的链接。代码如下：
+</code></pre>
+<pre><code class="xml">&lt;intent-filter&gt;
+    &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+
+    &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+    &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+
+    &lt;data
+        android:host=&quot;yuwen.ggl.cn&quot;
+        android:scheme=&quot;http&quot; /&gt;
+    &lt;data
+        android:host=&quot;yuwen.ggl.cn&quot;
+        android:scheme=&quot;https&quot; /&gt;
+    &lt;data
+        android:host=&quot;ggl.ggl&quot;
+        android:scheme=&quot;prek&quot; /&gt;
+&lt;/intent-filter&gt;
+</code></pre>
+<pre><code>注意：由于一个intent-filter中多个data，scheme、host、path等会进行组合。因此，按照上面XML的配置，最后会生成6个链接，如下所示：
+</code></pre>
+<ul>
+<li><p><a href="https://link.juejin.cn/?target=http://yuwen.ggl.cn" title="http://yuwen.ggl.cn">yuwen.ggl.cn</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://yuwen.ggl.cn" title="https://yuwen.ggl.cn">yuwen.ggl.cn</a></p>
+</li>
+<li><p>prek:&#x2F;&#x2F;ggl.ggl</p>
+</li>
+<li><p>prek:&#x2F;&#x2F;yuwen.ggl.cn</p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=http://ggl.ggl" title="http://ggl.ggl">ggl.ggl</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://ggl.ggl" title="https://ggl.ggl">ggl.ggl</a></p>
+<p>  可以通过为每个data单独设置一个intent-filter来避免这个问题。</p>
+<p>  若需要监听指定的路径，可以通过设置path属性实现，代码如下：</p>
+</li>
+</ul>
+<pre><code class="xml">    &lt;data
+        android:path=&quot;/app&quot;
+        android:host=&quot;yuwen.ggl.cn&quot;
+        android:scheme=&quot;https&quot; /&gt;
+</code></pre>
+<p>点击 <a href="https://link.juejin.cn/?target=https://yuwen.ggl.cn/app" title="https://yuwen.ggl.cn/app">yuwen.ggl.cn&#x2F;app</a> 跳转，点击 <a href="https://link.juejin.cn/?target=https://yuwen.ggl.cn" title="https://yuwen.ggl.cn">yuwen.ggl.cn</a> 不跳转。</p>
+<h4 id="1-2-2-点击短信中的链接"><a href="#1-2-2-点击短信中的链接" class="headerlink" title="1.2.2 点击短信中的链接"></a>1.2.2 点击短信中的链接</h4><pre><code>大多数接近原生的Android系统会弹出如下弹窗，让用户选择使用哪个app打开该链接，如下图所示： ![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/da93591eabdd4874bd85a096c481bed6~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1080&amp;h=548&amp;s=112252&amp;e=png&amp;b=f3f3f3)     一些被魔改过的国产Android系统，会直接使用浏览器打开链接。
+
+同时，通常情况下浏览器都会监听全部的http和https协议的链接，代码如下：
+</code></pre>
+<pre><code class="xml">&lt;intent-filter&gt;
+    &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+
+    &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+    &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+
+    &lt;data
+        android:host=&quot;*&quot;
+        android:scheme=&quot;http&quot; /&gt;
+    &lt;data
+        android:host=&quot;*&quot;
+        android:scheme=&quot;https&quot; /&gt;
+&lt;/intent-filter&gt;
+</code></pre>
+<h4 id="1-2-3-通过浏览器唤起app"><a href="#1-2-3-通过浏览器唤起app" class="headerlink" title="1.2.3 通过浏览器唤起app"></a>1.2.3 通过浏览器唤起app</h4><pre><code>浏览器唤起app共有两种方式，一种是通过自定义Scheme实现，一种是通过Intent Scheme实现。
+</code></pre>
+<p><strong>1）自定义的Sheme</strong></p>
+<p><strong>语法格式</strong>：scheme:&#x2F;&#x2F;host&#x2F;path?parameters</p>
+<pre><code class="typescript">&lt;a href = &quot;http://yuwen.ggl.cn&quot;&gt; 点击跳转 &lt;/a&gt; //❌
+&lt;a href = &quot;https://yuwen.ggl.cn&quot;&gt; 点击跳转 &lt;/a&gt; //❌
+&lt;a href = &quot;prek://ggl.ggl&quot;&gt; 点击跳转 &lt;/a&gt; //✅
+</code></pre>
+<p><strong>缺点</strong>：不支持scheme为http和https等非自定义scheme。部分浏览器不支持。存在信息泄漏安全风险。</p>
+<p><strong>2）Intent Scheme</strong></p>
+<p><strong>语法格式</strong>：intent:Host&#x2F;Uri_path#Intent;package&#x3D;[String];action&#x3D;[String];component&#x3D;[String];scheme&#x3D;[String];end</p>
+<pre><code class="typescript">&lt;a href = &quot;intent:prek://ggl.ggl#Intent;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;end&quot;&gt; 点击跳转 &lt;/a&gt;
+</code></pre>
+<p><strong>缺点</strong>：格式复杂。部分浏览器不支持。存在信息泄漏安全风险。</p>
+<pre><code>由于Intent Scheme格式过于复杂，因此可以通过Android Studio生成，代码如下：
+</code></pre>
+<pre><code class="kotlin">var schemeUri = Intent().apply &#123;
+    action = Intent.ACTION_VIEW
+    addCategory(Intent.CATEGORY_DEFAULT)
+    addCategory(Intent.CATEGORY_BROWSABLE)
+    data = Uri.parse(&quot;prek://ggl.ggl&quot;)
+&#125;.toUri(0)
+
+// prek://ggl.ggl#Intent;category=android.intent.category.DEFAULT;category=android.intent.category.BROWSABLE;end
+</code></pre>
+<h4 id="1-2-4-解析链接携带的数据"><a href="#1-2-4-解析链接携带的数据" class="headerlink" title="1.2.4 解析链接携带的数据"></a>1.2.4 解析链接携带的数据</h4><pre><code>以 [yuwen.ggl.cn/app?a=123&amp;b…](https://link.juejin.cn?target=https%3A%2F%2Fyuwen.ggl.cn%2Fapp%3Fa%3D123%26b%3D%27ggl%27 &quot;https://yuwen.ggl.cn/app?a=123&amp;b=&#39;ggl&#39;&quot;) 为例，代码如下:
+</code></pre>
+<pre><code class="kotlin">val data:Uri? = intent.data // https://yuwen.ggl.cn/app?a=123&amp;b=&#39;ggl&#39;
+val scheme:String? = data?.scheme // https
+val host:String? = data?.host // yuwen.ggl.cn
+val path:String? = data?.path // /app
+val valueA:String? = data?.getQueryParameter(&quot;a&quot;) // 123
+val valueB:String? = data?.getQueryParameter(&quot;b&quot;) // &#39;ggl&#39;
+</code></pre>
+<h2 id="2-AppLink"><a href="#2-AppLink" class="headerlink" title="2.AppLink"></a>2.AppLink</h2><pre><code>AppLink是DeepLink升级版，只支持Android6.0以上。
+</code></pre>
+<h3 id="2-1-方案效果"><a href="#2-1-方案效果" class="headerlink" title="2.1 方案效果"></a>2.1 方案效果</h3><pre><code>当用户点击链接时，系统会直接唤起对应的App处理这个链接，如下图所示： ![WechatIMG68.jpg](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c9b8b3474e8b4ca8bc21d93577809f25~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=2458&amp;h=2160&amp;s=1272926&amp;e=jpg&amp;b=fefef9)
+</code></pre>
+<h3 id="2-2-使用流程"><a href="#2-2-使用流程" class="headerlink" title="2.2 使用流程"></a>2.2 使用流程</h3><h4 id="2-2-1-配置监听链接"><a href="#2-2-1-配置监听链接" class="headerlink" title="2.2.1 配置监听链接"></a>2.2.1 配置监听链接</h4><pre><code>在AndroidManifest文件中需要唤起的activity中加入intent-filter，监听对应的链接。注意：scheme只能为http或https。代码如下：
+</code></pre>
+<pre><code class="xml">&lt;intent-filter android:autoVerify=&quot;true&quot;&gt;
+    &lt;action android:name=&quot;android.intent.action.VIEW&quot; /&gt;
+
+    &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+    &lt;category android:name=&quot;android.intent.category.BROWSABLE&quot; /&gt;
+
+    &lt;data
+        android:host=&quot;yuwen.ggl.cn&quot;
+        android:scheme=&quot;http&quot; /&gt;
+    &lt;data
+        android:host=&quot;yuwen.ggl.cn&quot;
+        android:scheme=&quot;https&quot; /&gt;
+&lt;/intent-filter&gt;
+</code></pre>
+<h4 id="2-2-2-生成assetlinks-json文件"><a href="#2-2-2-生成assetlinks-json文件" class="headerlink" title="2.2.2 生成assetlinks.json文件"></a>2.2.2 生成assetlinks.json文件</h4><pre><code>assetlinks.json文件共有两种生成方式，一种是对已有的assetlinks.json文件中的核心参数进行替换，一种是使用Android Studio生成assetlinks.json文件。
+</code></pre>
+<p><strong>1）对已有的assetlinks.json文件中的核心参数进行替换</strong>     assetlinks.json文件格式如下：</p>
+<pre><code class="xml">[
+  &#123;
+    &quot;relation&quot;: [
+      &quot;delegate_permission/common.handle_all_urls&quot;
+    ],
+    &quot;target&quot;: &#123;
+      &quot;namespace&quot;: &quot;android_app&quot;,
+      &quot;package_name&quot;: &quot;build.gradle里定义的application ID&quot;,
+      &quot;sha256_cert_fingerprints&quot;: [应用签名的SHA256指纹信息]
+    &#125;
+  &#125;
+]
+</code></pre>
+<pre><code>使用指令生成JSON文件中需要的指纹信息，代码如下：
+</code></pre>
+<pre><code class="bash">$ keytool -list -v -keystore my-release-key.keystore
+</code></pre>
+<pre><code>替换指纹信息和App包名。
+</code></pre>
+<p><strong>2）使用Android Studio生成assetlinks.json文件</strong>     在Android Studio中点击Tools，然后在弹出的列表中选择App Links Assistant，弹出窗口如下： <img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7222a5e023c74b6daffa821783659fd8~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1280&h=680&s=210911&e=png&b=3d4041" alt="image.png">     窗口中四个选项的功能如下：</p>
+<ul>
+<li><p>1️⃣ 帮助添加需要监听的链接到AndroidManifest中指定的Activity。</p>
+</li>
+<li><p>2️⃣ 帮助向处理对应链接的Activity中添加解析Intent中携带的参数的代码。</p>
+</li>
+<li><p>3️⃣ 帮助生成assetlinks.json文件</p>
+</li>
+<li><p>4️⃣ 验证链接对应域名是否正确部署JSON文件</p>
+<p>  选择第三项，帮助生成assetlinks.json文件，如下图所示： <img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d9e16bba8f9e4a2eb36dd2d6d1e8ff69~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=1280&h=636&s=183155&e=png&b=3d4041" alt="image.png">     在当前窗口中填写域名和应用ID，选择对应的密钥库，最后生成文件并保存，生成文件如下所示：</p>
+</li>
+</ul>
+<pre><code class="xml">[&#123;
+  &quot;relation&quot;: [&quot;delegate_permission/common.handle_all_urls&quot;],
+  &quot;target&quot;: &#123;
+    &quot;namespace&quot;: &quot;android_app&quot;,
+    &quot;package_name&quot;: &quot;com.prek.android.ef&quot;,
+    &quot;sha256_cert_fingerprints&quot;:[&quot;FA:89:53:F3:5E:8D:AD:CF:EC:9A:79:6B:B5:48:50:CC:8A:BC:85:9E:21:9C:03:91:38:88:AA:39:6B:83:6C:3A&quot;]
+  &#125;
+&#125;]
+</code></pre>
+<h4 id="2-2-3-部署assetlinks-json文件"><a href="#2-2-3-部署assetlinks-json文件" class="headerlink" title="2.2.3 部署assetlinks.json文件"></a>2.2.3 部署assetlinks.json文件</h4><pre><code>将生成的assetlinks.json文件放到对应监听的域名的.well-known目录下。可通过浏览器进行访问： [yuwen.ggl.cn/.well-known…](https://link.juejin.cn?target=https%3A%2F%2Fyuwen.ggl.cn%2F.well-known%2Fassetlinks.json &quot;https://yuwen.ggl.cn/.well-known/assetlinks.json&quot;)。
+</code></pre>
+<h4 id="2-2-4-查看验证状态"><a href="#2-2-4-查看验证状态" class="headerlink" title="2.2.4 查看验证状态"></a>2.2.4 查看验证状态</h4><pre><code>通过adb指令查看验证状态，代码如下：
+</code></pre>
+<pre><code class="bash">adb shell dumpsys package d
+</code></pre>
+<pre><code>得到手机中所有App的AppLink验证信息，如下所示：
+</code></pre>
+<pre><code class="bash">Package: com.prek.android.ef
+  Domains: yuwen.ggl.cn
+  Status:  ask
+
+  Package: com.zhihu.android
+  Domains: www.zhihu.com promotion.zhihu.com oia.zhihu.com zhuanlan.zhihu.com ms.zhihu.com
+  Status:  always : 200000000
+
+  Package: com.taptap
+  Domains: d.taptap.com www.taptap.com
+  Status:  always : 200000000
+</code></pre>
+<pre><code>ask未通过验证，always已通过验证。
+</code></pre>
+<h3 id="2-3-注意事项"><a href="#2-3-注意事项" class="headerlink" title="2.3 注意事项"></a>2.3 注意事项</h3><h4 id="2-3-1-assetlinks-json文件的部署要求"><a href="#2-3-1-assetlinks-json文件的部署要求" class="headerlink" title="2.3.1 assetlinks.json文件的部署要求"></a>2.3.1 assetlinks.json文件的部署要求</h4><ul>
+<li>assetlinks.json文件的content-type必须为application&#x2F;json。</li>
+<li>不管监听链接的scheme为http或https，assetlinks.json必须能通过HTTPS链接访问。</li>
+<li>assetlinks.json必须能不经过任何重定向被访问到，同时可以被爬虫访问到(robot.txt必须允许抓取&#x2F;.well-known&#x2F;assetlinks.json)。</li>
+<li>如果应用支持多种域名，需要把assetlinks.json发布在这几个域名的服务器上。</li>
+</ul>
+<h4 id="2-3-2-assetlinks-json文件的验证时机"><a href="#2-3-2-assetlinks-json文件的验证时机" class="headerlink" title="2.3.2 assetlinks.json文件的验证时机"></a>2.3.2 assetlinks.json文件的验证时机</h4><ul>
+<li>App安装后(没有–&gt;有)，系统对会进行验证。若验证状态为通过，则覆盖安装后，不会进行验证。若验证状态为不通过，则每次覆盖安装后，会重新进行验证，直到验证状态为通过。</li>
+<li>App卸载再安装后会进行验证。</li>
+<li>新版本中域名发生变化，覆盖安装后会进行验证。</li>
+<li>验证过程需要联网，否则验证不通过。若验证不通过，则AppLink退化为DeepLink。</li>
+<li>通过在浏览器中输入网址访问&#x2F;.well-known文件夹下JSON文件的方式，无法触发验证。</li>
+</ul>
+<h1 id="三-总结"><a href="#三-总结" class="headerlink" title="三.总结"></a>三.总结</h1><h2 id="1-DeepLink-1"><a href="#1-DeepLink-1" class="headerlink" title="1.DeepLink"></a>1.DeepLink</h2><p><img src="/./resource/applink_02.png" alt="image.png"></p>
+<h2 id="2-AppLink-1"><a href="#2-AppLink-1" class="headerlink" title="2.AppLink"></a>2.AppLink</h2><p><img src="/./resource/applink_01.png" alt="image.png"></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

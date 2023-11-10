@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>用一个RecyclerView实现抖音二级评论 | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="用一个RecyclerView实现抖音二级评论 | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-ping" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">用一个RecyclerView实现抖音二级评论</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2022-12-16 14:46:23'>2022-12-16 14:46</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E4%B8%80%E4%B8%AARecyclerView%E5%AE%9E%E7%8E%B0%E6%8A%96%E9%9F%B3%E4%BA%8C%E7%BA%A7%E8%AF%84%E8%AE%BA"><span class="toc-text">用一个RecyclerView实现抖音二级评论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E6%8B%86%E5%88%86"><span class="toc-text">需求拆分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-text">技术选型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95RecyclerView-%E5%A4%9AItemType-ListAdapter"><span class="toc-text">单RecyclerView + 多ItemType + ListAdapter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E8%BD%AC%E6%8D%A2"><span class="toc-text">数据源的转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="toc-text">实现细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MainActivity"><span class="toc-text">MainActivity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommentAdapter"><span class="toc-text">CommentAdapter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ViewHolder"><span class="toc-text">ViewHolder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reducer"><span class="toc-text">Reducer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data-class"><span class="toc-text">data class</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="用一个RecyclerView实现抖音二级评论"><a href="#用一个RecyclerView实现抖音二级评论" class="headerlink" title="用一个RecyclerView实现抖音二级评论"></a>用一个RecyclerView实现抖音二级评论</h1><p>前一阵，看到一位掘友分享了一篇文章： <a target="_blank" rel="noopener" href="https://juejin.cn/post/7271991667246694437" title="https://juejin.cn/post/7271991667246694437">Android简单的两级评论功能实现</a>，看得出来，是一位Android萌新记录的学习过程。我当时还留了一条建议：</p>
+<blockquote>
+<p>建议用单RecyclerView+多ItemType+ListAdapter实现，保持UI层的清洁，把逻辑处理集中在数据源的转换上，比如展开&#x2F;收起二级评论可以利用flatMap和groupBy等操作符转换</p>
+</blockquote>
+<p>其实我之前在工作中，也曾经做过类似抖音的二级评论的需求。但那个时候自己很菜，还没有用过Kotlin，协程更是没有接触过，这个功能和另一位同事一起开发了两周才搞定。</p>
+<p>刚好这个周末没啥事，就想着写一个简单实现抖音二级评论基本功能的Demo。一方面，想试试自己现在开发这样一个需求会是什么样的体验；另一方面，也算是给Android掘友，尤其是萌新，分享一点业务开发的心得。</p>
+<p>先上个效果图（没有UI，将就看吧），写代码的整个过程花了4个小时左右，相比当初自己开发需求已经快了很多了哈。</p>
+<blockquote>
+<p>给产品估个两天时间，摸一天半的鱼不过分吧（手动斜眼）</p>
+</blockquote>
+<p><img src="/./resource/pinglun_01.png" alt="评论.gif"></p>
+<h2 id="需求拆分"><a href="#需求拆分" class="headerlink" title="需求拆分"></a>需求拆分</h2><p>这种大家常用的评论功能其实也就没啥好拆分的了，简单列一下：</p>
+<ul>
+<li>默认展示一级评论和二级评论中的热评，可以上拉加载更多。</li>
+<li>二级评论超过两条时，可以点击展开加载更多二级评论，展开后可以点击收起折叠到初始状态。</li>
+<li>回复评论后插入到该评论的下方。</li>
+</ul>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>前面我在给掘友的评论中，也提到了技术选型的要点：</p>
+<h3 id="单RecyclerView-多ItemType-ListAdapter"><a href="#单RecyclerView-多ItemType-ListAdapter" class="headerlink" title="单RecyclerView + 多ItemType + ListAdapter"></a>单RecyclerView + 多ItemType + ListAdapter</h3><p>这是基本的UI框架。</p>
+<p>为啥要只用一个 <code>RecyclerView</code>？最重要的原因，就是在 <code>RecyclerView</code> 中嵌套同方向 <code>RecyclerView</code>，会有性能问题和滑动冲突。其次，当下 <strong>声明式UI</strong> 正是各方大佬推崇的最佳开发实践之一，虽然我们没有使用声明式UI基础上开发的 <code>Compose</code>&#x2F; <code>Flutter</code> 技术，但其构建思想仍然对我们的开发具有一定的指导意义。我猜测， <code>androidx.recyclerview.widget.ListAdapter</code> 可能也是响应声明式UI号召的一个针对 <code>RecyclerView</code> 的解决方案吧。</p>
+<h3 id="数据源的转换"><a href="#数据源的转换" class="headerlink" title="数据源的转换"></a>数据源的转换</h3><p><strong>数据驱动UI！</strong></p>
+<p>既然选用了 <code>ListAdapter</code>，那么我们就不应该再手动操作 <code>adapter</code> 的数据，再用各种 <code>notifyXxx</code> 方法来更新列表了。更提倡的做法是，基于 <code>data class</code> 的 <strong>浅拷贝</strong>，用 <code>Collection</code> 操作符对数据源的进行转换，然后将转换后的数据提交到 <code>adapter</code>。为了提高数据转换性能，我们可以基于协程进行异步处理。</p>
+<pre><code class="mermaid">graph LR
+start[原List] --异步数据处理--&gt; 新List --&gt; stop[ListAdapter.submitList]
+stop --&gt; start
+</code></pre>
+<p><strong>要点：</strong></p>
+<ul>
+<li><strong>浅拷贝</strong></li>
+</ul>
+<p>低成本生成一个全新的对象，以保证数据源的安全性。</p>
+<pre><code class="kotlin">data class Foo(val id: Int, val content: String)
+
+val foo1 = Foo(0, &quot;content&quot;)
+val foo2 = foo1.copy(content = &quot;updated content&quot;)
+</code></pre>
+<ul>
+<li><strong><code>Collection</code> 操作符</strong></li>
+</ul>
+<p><code>Kotlin</code> 中提供了大量非常好用的 <code>Collection</code> 操作符，能灵活使用的话，非常有利于咱们向声明式UI转型。</p>
+<p>前面我提到了 <code>groupBy</code> 和 <code>flatMap</code> 这两个操作符。怎么使用呢？</p>
+<p>以这个需求为例，我们需要显示一级评论、二级评论和展开更多按钮，想要分别用一个 <code>data class</code> 来表示，但是后端返回的数据中又没有“展开更多”这样的数据，就可以这样处理：</p>
+<pre><code class="kotlin">// 从后端获取的数据List，包括有一级评论和二级评论，二级评论的parentId就等于一级评论的id
+val loaded: List&lt;CommentItem&gt; = ...
+val grouped = loaded.groupBy &#123;
+    // (1) 以一级评论的id为key，把源list分组为一个Map&lt;Int, List&lt;CommentItem&gt;&gt;
+    (it as? CommentItem.Level1)?.id ?: (it as? CommentItem.Level2)?.parentId
+    ?: throw IllegalArgumentException(&quot;invalid comment item&quot;)
+&#125;.flatMap &#123;
+    // (2) 展开前面的map，展开时就可以在每级一级评论的二级评论后面添加一个控制“展开更多”的Item
+    it.value + CommentItem.Folding(
+        parentId = it.key,
+    )
+&#125;
+</code></pre>
+<ul>
+<li><strong>异步处理</strong></li>
+</ul>
+<p>前面我们描述的数据源的转换过程，在Kotlin中，可以简单地被抽象为一个操作：</p>
+<pre><code class="kotlin">List&lt;CommentItem&gt;.() -&gt; List&lt;CommentItem&gt;
+</code></pre>
+<p>对于这个需求，数据源转换操作就包括了：分页加载，展开二级评论，收起二级评论，回复评论等。按照惯例，抽象一个接口出来。既然我们要在协程框架下进行异步处理，需要给这个操作加一个 <code>suspend</code> 关键字。</p>
+<pre><code class="kotlin">interface Reducer &#123;
+    val reduce: suspend List&lt;CommentItem&gt;.() -&gt; List&lt;CommentItem&gt;
+&#125;
+</code></pre>
+<p>为啥我给这个接口取名 <code>Reducer</code>？如果你知道它的意思，说明你可能已经了解过 <code>MVI</code> 架构了；如果你还不知道它的意思，说明你可以去了解一下 <code>MVI</code> 了。哈哈！</p>
+<p>不过今天不谈 <code>MVI</code>，对于这样一个小Demo，完全没必要上架构。但是，优秀架构为我们提供的代码构建思路是有必要的！</p>
+<p><strong>这个 <code>Reducer</code>，在这里就算是咱们的小小业务架构了。</strong></p>
+<ul>
+<li><strong>异步2.0</strong></li>
+</ul>
+<p>前面谈到 <strong>异步</strong>，我们印象中可能主要是网络请求、数据库&#x2F;文件读写等IO操作。</p>
+<p>这里我想要延伸一下。</p>
+<p><code>Activity</code> 的 <code>startActivityForResult</code>&#x2F; <code>onActivityResult</code>， <code>Dialog</code> 的拉起&#x2F;回调，其实也可以看着是异步操作。异步与是否在主线程无关，而在于是否是实时返回结果。毕竟在主线程上跳转到其他页面，获取数据再回调回去使用，也是花了时间的啊。所以在协程的框架下，有一个更适合描述异步的词语： **挂起(<code>suspend</code>)**。</p>
+<p>说这有啥用呢？仍以这个需求为例，我们点击“回复”后拉起一个对话框，输入评论确认后回调给 <code>Activity</code>，再进行网络请求：</p>
+<pre><code class="scss">class ReplyDialog(context: Context, private val callback: (String) -&gt; Unit) : Dialog(context) &#123;
+    override fun onCreate(savedInstanceState: Bundle?) &#123;
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.dialog_reply)
+        val editText = findViewById&lt;EditText&gt;(R.id.content)
+        findViewById&lt;Button&gt;(R.id.submit).setOnClickListener &#123;
+            if (editText.text.toString().isBlank()) &#123;
+                Toast.makeText(context, &quot;评论不能为空&quot;, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            &#125;
+            callback.invoke(editText.text.toString())
+            dismiss()
+        &#125;
+    &#125;
+&#125;
+
+suspend List&lt;CommentItem&gt;.() -&gt; List&lt;CommentItem&gt; = &#123;
+    val content = withContext(Dispatchers.Main) &#123;
+        // 由于整个转换过程是在IO线程进行，Dialog相关操作需要转换到主线程操作
+        suspendCoroutine &#123; continuation -&gt;
+            ReplyDialog(context) &#123;
+                continuation.resume(it)
+            &#125;.show()
+        &#125;
+    &#125;
+    ...进行其他操作，如网络请求
+&#125;
+</code></pre>
+<p>技术选型，或者说技术框架，咱们就实现了，甚至还谈到了部分细节了。接下来进行完整实现细节分享。</p>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><h3 id="MainActivity"><a href="#MainActivity" class="headerlink" title="MainActivity"></a><code>MainActivity</code></h3><p>基于上一章节的技术选型，咱们的 <code>MainActivity</code> 的完整代码就是这样了。</p>
+<pre><code class="kotlin">class MainActivity : AppCompatActivity() &#123;
+    private lateinit var commentAdapter: CommentAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) &#123;
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val recyclerView = findViewById&lt;RecyclerView&gt;(R.id.recyclerView)
+        commentAdapter = CommentAdapter &#123;
+            lifecycleScope.launchWhenResumed &#123;
+                val newList = withContext(Dispatchers.IO) &#123;
+                    reduce.invoke(commentAdapter.currentList)
+                &#125;
+                val firstSubmit = commentAdapter.itemCount == 1
+                commentAdapter.submitList(newList) &#123;
+                    // 这里是为了处理submitList后，列表滑动位置不对的问题
+                    if (firstSubmit) &#123;
+                        recyclerView.scrollToPosition(0)
+                    &#125; else if (this@CommentAdapter is FoldReducer) &#123;
+                        val index = commentAdapter.currentList.indexOf(this@CommentAdapter.folding)
+                        recyclerView.scrollToPosition(index)
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        recyclerView.adapter = commentAdapter
+    &#125;
+&#125;
+</code></pre>
+<p>给 <code>RecyclerView</code> 设置一个 <code>CommentAdapter</code> 就行了，回调时也只需要把回调过来的 <code>Reducer</code> 调度到IO线程跑一下，得到新的数据 <code>list</code> 再 <code>submitList</code> 就完事了。如果不是 <code>submitList</code> 后有列表的定位问题，代码还能更精简。 <strong>如果有知道更好的解决办法的朋友，麻烦留言分享一下，感谢！</strong></p>
+<h3 id="CommentAdapter"><a href="#CommentAdapter" class="headerlink" title="CommentAdapter"></a><code>CommentAdapter</code></h3><p>别以为我把逻辑处理扔到 <code>adapter</code> 中了哦！</p>
+<p><code>Adapter</code> 和 <code>ViewHolder</code> 都是UI组件，我们也需要尽量保持它们的清洁。</p>
+<p>贴一下 <code>CommentAdapter</code> 的</p>
+<pre><code class="kotlin">class CommentAdapter(private val reduceBlock: Reducer.() -&gt; Unit) :
+    ListAdapter&lt;CommentItem, VH&gt;(object : DiffUtil.ItemCallback&lt;CommentItem&gt;() &#123;
+        override fun areItemsTheSame(oldItem: CommentItem, newItem: CommentItem): Boolean &#123;
+            return oldItem.id == newItem.id
+        &#125;
+
+        override fun areContentsTheSame(oldItem: CommentItem, newItem: CommentItem): Boolean &#123;
+            if (oldItem::class.java != newItem::class.java) return false
+            return (oldItem as? CommentItem.Level1) == (newItem as? CommentItem.Level1)
+                    || (oldItem as? CommentItem.Level2) == (newItem as? CommentItem.Level2)
+                    || (oldItem as? CommentItem.Folding) == (newItem as? CommentItem.Folding)
+                    || (oldItem as? CommentItem.Loading) == (newItem as? CommentItem.Loading)
+        &#125;
+    &#125;) &#123;
+
+    init &#123;
+        submitList(listOf(CommentItem.Loading(page = 0, CommentItem.Loading.State.IDLE)))
+    &#125;
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH &#123;
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) &#123;
+            TYPE_LEVEL1 -&gt; Level1VH(
+                inflater.inflate(R.layout.item_comment_level_1, parent, false),
+                reduceBlock
+            )
+
+            TYPE_LEVEL2 -&gt; Level2VH(
+                inflater.inflate(R.layout.item_comment_level_2, parent, false),
+                reduceBlock
+            )
+
+            TYPE_LOADING -&gt; LoadingVH(
+                inflater.inflate(
+                    R.layout.item_comment_loading,
+                    parent,
+                    false
+                ), reduceBlock
+            )
+
+            else -&gt; FoldingVH(
+                inflater.inflate(R.layout.item_comment_folding, parent, false),
+                reduceBlock
+            )
+        &#125;
+    &#125;
+
+    override fun onBindViewHolder(holder: VH, position: Int) &#123;
+        holder.onBind(getItem(position))
+    &#125;
+
+    override fun getItemViewType(position: Int): Int &#123;
+        return when (getItem(position)) &#123;
+            is CommentItem.Level1 -&gt; TYPE_LEVEL1
+            is CommentItem.Level2 -&gt; TYPE_LEVEL2
+            is CommentItem.Loading -&gt; TYPE_LOADING
+            else -&gt; TYPE_FOLDING
+        &#125;
+    &#125;
+
+    companion object &#123;
+        private const val TYPE_LEVEL1 = 0
+        private const val TYPE_LEVEL2 = 1
+        private const val TYPE_FOLDING = 2
+        private const val TYPE_LOADING = 3
+    &#125;
+&#125;
+</code></pre>
+<p>可以看到，就是一个简单的多 <code>ItemType</code> 的 <code>Adapter</code>，唯一需要注意的就是，在 <code>Activity</code> 里传入的 <code>reduceBlock: Reducer.() -&gt; Unit</code>，也要传给每个 <code>ViewHolder</code>。</p>
+<h3 id="ViewHolder"><a href="#ViewHolder" class="headerlink" title="ViewHolder"></a><code>ViewHolder</code></h3><p>篇幅原因，就只贴其中一个：</p>
+<pre><code class="kotlin">abstract class VH(itemView: View, protected val reduceBlock: Reducer.() -&gt; Unit) :
+    ViewHolder(itemView) &#123;
+    abstract fun onBind(item: CommentItem)
+&#125;
+
+class Level1VH(itemView: View, reduceBlock: Reducer.() -&gt; Unit) : VH(itemView, reduceBlock) &#123;
+    private val avatar: TextView = itemView.findViewById(R.id.avatar)
+    private val username: TextView = itemView.findViewById(R.id.username)
+    private val content: TextView = itemView.findViewById(R.id.content)
+    private val reply: TextView = itemView.findViewById(R.id.reply)
+    override fun onBind(item: CommentItem) &#123;
+        avatar.text = item.userName.subSequence(0, 1)
+        username.text = item.userName
+        content.text = item.content
+        reply.setOnClickListener &#123;
+            reduceBlock.invoke(ReplyReducer(item, itemView.context))
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>也是很简单，唯一特别一点的处理，就是在 <code>onClickListener</code> 中，让 <code>reduceBlock</code> 去 <code>invoke</code> 一个 <code>Reducer</code> 实现。</p>
+<h3 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a><code>Reducer</code></h3><p>刚才在技术选型章节，已经提前展示了“回复评论”这一操作的 <code>Reducer</code> 实现了，其他 <code>Reducer</code> 也差不多，比如展开评论操作，也封装在一个 <code>Reducer</code> 实现 <code>ExpandReducer</code> 中，以下是完整代码：</p>
+<pre><code class="kotlin">data class ExpandReducer(
+    val folding: CommentItem.Folding,
+) : Reducer &#123;
+    private val mapper by lazy &#123; Entity2ItemMapper() &#125;
+    override val reduce: suspend List&lt;CommentItem&gt;.() -&gt; List&lt;CommentItem&gt; = &#123;
+        val foldingIndex = indexOf(folding)
+        val loaded =
+            FakeApi.getLevel2Comments(folding.parentId, folding.page, folding.pageSize).getOrNull()
+                ?.map(mapper::invoke) ?: emptyList()
+        toMutableList().apply &#123;
+            addAll(foldingIndex, loaded)
+        &#125;.map &#123;
+            if (it is CommentItem.Folding &amp;&amp; it == folding) &#123;
+                val state =
+                    if (it.page &gt; 5) CommentItem.Folding.State.LOADED_ALL else CommentItem.Folding.State.IDLE
+                it.copy(page = it.page + 1, state = state)
+            &#125; else &#123;
+                it
+            &#125;
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+<p>短短一段代码，我们做了这些事：</p>
+<ul>
+<li>请求网络数据 <code>Entity list</code>（假数据）</li>
+<li>通过 <code>mapper</code> 转换成显示用的 <code>Item</code> 数据list</li>
+<li>将 <code>Item</code> 数据插入到“展开更多”按钮前面</li>
+<li>最后，根据二级评论加载是否完成，将“展开更多”的状态置为 <code>IDLE</code> 或 <code>LOADED_ALL</code></li>
+</ul>
+<p><strong>一个字：丝滑！</strong></p>
+<p>用于转换 <code>Entity</code> 到 <code>Item</code> 的 <code>mapper</code> 的代码也贴一下吧：</p>
+<pre><code class="kotlin">// 抽象
+typealias Mapper&lt;I, O&gt; = (I) -&gt; O
+// 实现
+class Entity2ItemMapper : Mapper&lt;ICommentEntity, CommentItem&gt; &#123;
+    override fun invoke(entity: ICommentEntity): CommentItem &#123;
+        return when (entity) &#123;
+            is CommentLevel1 -&gt; &#123;
+                CommentItem.Level1(
+                    id = entity.id,
+                    content = entity.content,
+                    userId = entity.userId,
+                    userName = entity.userName,
+                    level2Count = entity.level2Count,
+                )
+            &#125;
+
+            is CommentLevel2 -&gt; &#123;
+                CommentItem.Level2(
+                    id = entity.id,
+                    content = if (entity.hot) entity.content.makeHot() else entity.content,
+                    userId = entity.userId,
+                    userName = entity.userName,
+                    parentId = entity.parentId,
+                )
+            &#125;
+
+            else -&gt; &#123;
+                throw IllegalArgumentException(&quot;not implemented entity: $entity&quot;)
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>细心的朋友可以看到，在这里我顺便也将热评也处理了：</p>
+<pre><code class="kotlin">if (entity.hot) entity.content.makeHot() else entity.content
+</code></pre>
+<p><code>makeHot()</code> 就是用 <code>buildSpannedString</code> 来实现的：</p>
+<pre><code class="kotlin">fun CharSequence.makeHot(): CharSequence &#123;
+    return buildSpannedString &#123;
+        color(Color.RED) &#123;
+            append(&quot;热评  &quot;)
+        &#125;
+        append(this@makeHot)
+    &#125;
+&#125;
+</code></pre>
+<p>这里可以提一句： <strong>尽量用 <code>CharSequence</code> 来抽象表示字符串，可以方便我们灵活地使用 <code>Span</code> 来减少UI代码。</strong></p>
+<h3 id="data-class"><a href="#data-class" class="headerlink" title="data class"></a><code>data class</code></h3><p>也贴一下相关的数据实体得了。</p>
+<ul>
+<li>网络数据（假数据）</li>
+</ul>
+<pre><code class="kotlin">interface ICommentEntity &#123;
+    val id: Int
+    val content: CharSequence
+    val userId: Int
+    val userName: CharSequence
+&#125;
+
+data class CommentLevel1(
+    override val id: Int,
+    override val content: CharSequence,
+    override val userId: Int,
+    override val userName: CharSequence,
+    val level2Count: Int,
+) : ICommentEntity
+</code></pre>
+<ul>
+<li><code>RecyclerView Item</code> 数据</li>
+</ul>
+<pre><code class="kotlin">sealed interface CommentItem &#123;
+    val id: Int
+    val content: CharSequence
+    val userId: Int
+    val userName: CharSequence
+
+    data class Loading(
+        val page: Int = 0,
+        val state: State = State.LOADING
+    ) : CommentItem &#123;
+        override val id: Int=0
+        override val content: CharSequence
+            get() = when(state) &#123;
+                State.LOADED_ALL -&gt; &quot;全部加载&quot;
+                else -&gt; &quot;加载中...&quot;
+            &#125;
+        override val userId: Int=0
+        override val userName: CharSequence=&quot;&quot;
+
+        enum class State &#123;
+            IDLE, LOADING, LOADED_ALL
+        &#125;
+    &#125;
+
+    data class Level1(
+        override val id: Int,
+        override val content: CharSequence,
+        override val userId: Int,
+        override val userName: CharSequence,
+        val level2Count: Int,
+    ) : CommentItem
+
+    data class Level2(
+        override val id: Int,
+        override val content: CharSequence,
+        override val userId: Int,
+        override val userName: CharSequence,
+        val parentId: Int,
+    ) : CommentItem
+
+    data class Folding(
+        val parentId: Int,
+        val page: Int = 1,
+        val pageSize: Int = 3,
+        val state: State = State.IDLE
+    ) : CommentItem &#123;
+        override val id: Int
+            get() = hashCode()
+        override val content: CharSequence
+            get() = when  &#123;
+                page &lt;= 1 -&gt; &quot;展开20条回复&quot;
+                page &gt;= 5 -&gt; &quot;&quot;
+                else -&gt; &quot;展开更多&quot;
+            &#125;
+        override val userId: Int = 0
+        override val userName: CharSequence = &quot;&quot;
+
+        enum class State &#123;
+            IDLE, LOADING, LOADED_ALL
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这部分没啥好说的，可以注意两个点：</p>
+<ul>
+<li><code>data class</code> 也是可以抽象的。但这边我处理不是很严谨，比如 <code>CommentItem</code> 我把 <code>userId</code> 和 <code>userName</code> 也抽象出来了，其实不应该抽象出来。</li>
+<li>在基于 <code>Reducer</code> 的框架下，最好是把 <code>data class</code> 的属性都定义为 <code>val</code>。</li>
+</ul>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>如何做到在 5 分钟之内将应用大小减少 60% 的？ | 一个happy的安卓攻城狮</title>
+  <meta name="keywords" content=" Android ">
+  <meta name="description" content="如何做到在 5 分钟之内将应用大小减少 60% 的？ | 一个happy的安卓攻城狮">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://example.com/categories/index.html">
+<meta property="og:site_name" content="一个happy的安卓攻城狮">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T11:35:29.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:24:40.071Z">
+<meta property="article:author" content="一个happy的安卓攻城狮">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/avatar.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/avatar.jpg"/>
+</a>
+<div class="author">
+    <span>一个happy的安卓攻城狮</span>
+</div>
+
+<div class="icon">
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(19)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="Android">
+            
+            Android
+            <small>(14)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="iOS">
+            
+            iOS
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="Network">
+            
+            Network
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+            <a class="about  hasFriend  site_url"
+               
+               href="/about">About</a>
+        
+        <a style="width: 50%"
+                
+                                           class="friends">Friends</a>
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="19">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">大纲</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Android</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>APISIX</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Http</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iOS</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All Android "
+           href="/2023/08/07/diffutil/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="RecyclerView 之 DiffUtil">RecyclerView 之 DiffUtil</span>
+            <span class="post-date" title="2023-08-07 11:17:07">2023/08/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/13/kotlin/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Java切换到Kotlin，Crash率上升了？">Java切换到Kotlin，Crash率上升了？</span>
+            <span class="post-date" title="2023-07-12 22:34:18">2023/07/12</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/07/08/kotlin_02/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="两个Kotlin优化小技巧，你绝对用的上">两个Kotlin优化小技巧，你绝对用的上</span>
+            <span class="post-date" title="2023-07-07 21:28:12">2023/07/07</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/06/19/android_add/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android 增量构建的科技与狠活">Android 增量构建的科技与狠活</span>
+            <span class="post-date" title="2023-06-18 22:26:23">2023/06/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/05/19/handler/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Handler真的难？看完这篇文章你就懂了！">Handler真的难？看完这篇文章你就懂了！</span>
+            <span class="post-date" title="2023-05-18 23:54:12">2023/05/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2023/02/17/lan/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="launchWhenX 给我弃用了，这可咋整？">launchWhenX 给我弃用了，这可咋整？</span>
+            <span class="post-date" title="2023-02-16 23:57:18">2023/02/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2023/01/21/Apisix/"
+           data-tag="APISIX"
+           data-author="" >
+            <span class="post-title" title="APISIX介绍以及集群部署">APISIX介绍以及集群部署</span>
+            <span class="post-date" title="2023-01-20 21:33:53">2023/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/23/recyclerView_load/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-22 23:28:11">2022/12/22</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/20/pkg/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="如何做到在 5 分钟之内将应用大小减少 60% 的？">如何做到在 5 分钟之内将应用大小减少 60% 的？</span>
+            <span class="post-date" title="2022-12-19 21:18:23">2022/12/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/12/16/ping/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="用一个RecyclerView实现抖音二级评论">用一个RecyclerView实现抖音二级评论</span>
+            <span class="post-date" title="2022-12-16 14:46:23">2022/12/16</span>
+        </a>
+        
+        
+        <a  class="All Network "
+           href="/2022/10/18/http/"
+           data-tag="Http"
+           data-author="" >
+            <span class="post-title" title="HttpCode码解析">HttpCode码解析</span>
+            <span class="post-date" title="2022-10-18 12:32:12">2022/10/18</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/08/24/board/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:实现带边框的输入框">Android:实现带边框的输入框</span>
+            <span class="post-date" title="2022-08-23 23:28:07">2022/08/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/07/24/blue/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-07-23 22:55:53">2022/07/23</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/03/20/binder/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android Binder传输大文件">Android Binder传输大文件</span>
+            <span class="post-date" title="2022-03-19 19:33:53">2022/03/19</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2022/01/21/applink/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="【Android】点击短信链接唤起APP的方案实践">【Android】点击短信链接唤起APP的方案实践</span>
+            <span class="post-date" title="2022-01-20 18:36:23">2022/01/20</span>
+        </a>
+        
+        
+        <a  class="All Android "
+           href="/2021/11/24/compose/"
+           data-tag="Android"
+           data-author="" >
+            <span class="post-title" title="Android:Compose 日历弹框">Android:Compose 日历弹框</span>
+            <span class="post-date" title="2021-11-23 22:28:07">2021/11/23</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/08/06/cipher_03_rsa/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="RSA">RSA</span>
+            <span class="post-date" title="2021-08-05 22:38:29">2021/08/05</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/31/cipher_04_aes/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="AES">AES</span>
+            <span class="post-date" title="2021-07-30 18:26:16">2021/07/30</span>
+        </a>
+        
+        
+        <a  class="All iOS "
+           href="/2021/07/21/cipher_02_keychain/"
+           data-tag="iOS"
+           data-author="" >
+            <span class="post-title" title="钥匙串">钥匙串</span>
+            <span class="post-date" title="2021-07-20 21:39:53">2021/07/20</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-pkg" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">如何做到在 5 分钟之内将应用大小减少 60% 的？</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Android">Android</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color3">Android</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2022-12-19 21:18:23'>2022-12-19 21:18</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E5%9C%A8-5-%E5%88%86%E9%92%9F%E4%B9%8B%E5%86%85%E5%B0%86%E5%BA%94%E7%94%A8%E5%A4%A7%E5%B0%8F%E5%87%8F%E5%B0%91-60-%E7%9A%84%EF%BC%9F"><span class="toc-text">如何做到在 5 分钟之内将应用大小减少 60% 的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%8A%E5%B0%8F%E8%B6%8A%E5%A5%BD"><span class="toc-text">越小越好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-APK-Analyser-%E5%88%86%E8%A7%A3%E4%BD%A0%E7%9A%84-APK"><span class="toc-text">使用 APK Analyser 分解你的 APK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%8F-classes-dex"><span class="toc-text">减小 classes.dex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%8F-res%EF%BC%9A"><span class="toc-text">减小 res：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TL-DR"><span class="toc-text">TL;DR:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">总结：</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="如何做到在-5-分钟之内将应用大小减少-60-的？"><a href="#如何做到在-5-分钟之内将应用大小减少-60-的？" class="headerlink" title="如何做到在 5 分钟之内将应用大小减少 60% 的？"></a>如何做到在 5 分钟之内将应用大小减少 60% 的？</h1><p>移动设备的资源总是有限的。有限的电量，有限的存储，有限的处理能力，有限的内存，有限的网络带宽……无论你面对的是 Android 还是 iOS，这都是真理。</p>
+<p>在前几个月，我在开发一个安卓应用。当有人尝试用错误的密码解锁设备时，这个应用会通过前置摄像头拍照并播放警示音。</p>
+<p>今天在这篇文章教大家一些我用来减小应用体积的技巧。这些技巧都简单且易用，会在现在或将来为大家提供一些帮助。</p>
+<h3 id="越小越好"><a href="#越小越好" class="headerlink" title="越小越好"></a>越小越好</h3><p>作为一个开发者我们总是更关心应用的性能，设计和用户体验。但是，大多数开发者都忘了（或低估）一件事： <strong>应用体积</strong>。如果你希望你的应用能吸引大量用户，这是非常核心的一点。</p>
+<p>市场上大概有 11000 种安卓机型，而其中大部分都是低端机，有限的存储（1GB 到 8GB），甚至用的还是 2G 或者 3G 网络。这些设备在印度，巴其尔等非洲发展中国家占有大量市场，你可以在这些地方获得大量的用户。</p>
+<p>让你的应用大小保持最佳变得尤其重要。 <strong>你的应用体积越小，你的用户就有更多的空间来存储他们的视频和图片</strong>。说实话，你肯定不希望用户因为“存储空间不足”的提示删除你的应用。</p>
+<p><img src="/./resource/pkg_01.png" alt="img"></p>
+<p>如果用户的存储空间不够的话，他们会卸载你的应用。 这些发展中国家用户使用的依然是速度有限的 2G&#x2F;3G 网。所以，如果你的应用体积太大，将会需要更多的时间来下载（更可能的情况时用户根本不会去下载）。同样的，大多数用户流量有限，用户下载的每个字节都是在花钱。</p>
+<p>所以，很明显了，应用程序界的真理就是：</p>
+<blockquote>
+<p>越小越好</p>
+</blockquote>
+<h3 id="使用-APK-Analyser-分解你的-APK"><a href="#使用-APK-Analyser-分解你的-APK" class="headerlink" title="使用 APK Analyser 分解你的 APK"></a>使用 APK Analyser 分解你的 APK</h3><p>Android Studio 提供了一个有用的工具： [<strong>APK Analyser</strong>]。APK Analyser 将会拆解你的应用并让你知道 .apk 文件中的那个部分占据了大量空间。让我们看一下 Anti-Theft 在没有经过优化之前的截图。<br><img src="/./resource/pkg_02.png" alt="img"></p>
+<p>从 Apk Analyser 的输出来看，应用的原大小是 3.1MB。经过 Play 商店的压缩，大致是 2.5MB。</p>
+<p>从截图中可以看出主要有 3 个文件夹占据了应用的大多数空间。</p>
+<ul>
+<li><p><strong>classes.dex</strong> —— 这是 dex 文件，包含了所有会运行在你的 DVM 或 ART 里的字节码文件。</p>
+</li>
+<li><p><strong>res</strong> —— 这个文件夹包含了所有在 res 文件夹下的文件。大部分情况下它包含所有图片，图标和源文件，菜单文件和布局。<br><img src="/./resource/pkg_03.png" alt="img"></p>
+</li>
+<li><p><strong>resources.arsc</strong> —— 这个文件包含了所有 value 资源。这个文件包含了你 value 目录下的所有数据。包括 strings、dimensions、styles、intergers、ids 等等。<br><img src="/./resource/pkg_05.png" alt="img"></p>
+</li>
+</ul>
+<hr>
+<p>所以，现在你知道 APK 是怎么组成的了。让我们接着看看该怎么一块块的优化它以减小应用体积。</p>
+<h3 id="减小-classes-dex"><a href="#减小-classes-dex" class="headerlink" title="减小 classes.dex"></a><strong>减小 classes.dex</strong></h3><p>classes.dex 包含了所有 Java 代码。当你编译你的应用时，gradle 会将你的所有模块里的 .class 文件转换成 .dex 文件并将这些文件合成一个 classes.dex 文件。</p>
+<p>单个的 classes.dex 文件可以容纳大约 64K 方法。如果你达到了这个限制，你必须要在你的工程中启用 [multidexing]。这将会创建另一个 classes1.dex 文件去存储剩下的方法。所以 classes.dex 文件数目由你的方法数而定。</p>
+<p>你可以看到现在的 “Anti-Theft Screen Lock” 包含 4392 个类和 29897 个方法。这个结果是没有经过混淆的。你有两个默认的混淆文件。</p>
+<ul>
+<li><strong>proguard-android-optimize.txt</strong></li>
+<li><strong>proguard-android.txt</strong></li>
+</ul>
+<p>就像文件名写的那样，“_proguard-android-optimize.txt_”是更积极的混淆选项。我们将这个作为默认的混淆配置。你可以在 <em>&#x2F;app</em> 目录下的 <em>proguard-rules.pro</em> 里添加自定义的混淆配置。</p>
+<pre><code class="javascript"> release &#123;
+    //Enable the proguard
+    minifyEnabled true
+    proguardFiles getDefaultProguardFile(&#39;proguard-android-optimize.txt&#39;), &quot;proguard-rules.pro&quot;
+
+    //Other parameters
+    debuggable false
+    jniDebuggable false
+    renderscriptDebuggable false
+    signingConfig playStoreConfig //Add your own signing config
+    pseudoLocalesEnabled false
+    zipAlignEnabled true
+&#125;
+</code></pre>
+<p>通过设置 <em>minifyEnabled</em> 为 true，混淆将会移除所有未使用的方法、指令以减小 classes.dex 文件。</p>
+<p>这是启用了 minify 之后的 APK。</p>
+<p>你可以看到在为每个模块启用了混淆之后我们的 classes.dex 大小减小了几乎 50%。同时你可以看到方法数从 29897 降到了 15168（几乎 50%）。恭喜……??</p>
+<blockquote>
+<p>体积从 3.1MB 降到了 1.98MB。 <strong>(缩小约 50%)</strong></p>
+</blockquote>
+<h3 id="减小-res："><a href="#减小-res：" class="headerlink" title="减小 res："></a>减小 res：</h3><p>下一大块就是 res 文件夹，它包括了所有的图片，raw 文件和 XML。你不能添加&#x2F;删除&#x2F;修改你的 XML，因为它们包含了你的布局。但是我们可以减小图片文件。</p>
+<ul>
+<li>“* **shrinkResources***” 属性将会移除所有在工程中没有用到的资源。在 build.gradle 中像下面这样启用它：</li>
+</ul>
+<pre><code class="javascript">release&#123;
+  //...
+  //...
+  shrinkResources true
+  //...
+&#125;
+</code></pre>
+<ul>
+<li>“* **resConfigs***” 属性将会在构建过程中移除所有本地化资源。app “Anti-Theft Screen Lock” 只需要支持英语。而很多的支持库都可能有其它语言的本地化文件夹。这些是我不需要的。所以，添加下面的这些代码让应用只支持英语。</li>
+</ul>
+<pre><code class="javascript">defaultConfig &#123;
+    //...
+    //...
+    //...
+
+    //strip other than english resources
+    resConfigs &quot;en&quot;
+&#125;
+</code></pre>
+<ul>
+<li>如果你在用 Android Studio 2.3，并且你的应用的最低支持版本大于 18，你可以使用webp 替代 png。webp 图片比 png 体积更小但质量一样。而且 Android 支持 webp。所以你可以在 ImageView 中像加载其它光栅图片一样加载 webp 图片。这不需要改变你的布局。</li>
+</ul>
+<p>你可以在工程选择 drawable 和 mipmap 文件夹，右击并选择 <strong>convert to webp</strong>。这将会打开下面这样的配置弹框。<br><img src="/./resource/pkg_06.png" alt="img"></p>
+<p>点击 ok，将会将所有 png 图片转成 webp。如果 webp 图片比 png 更大，Android Studio 将会自动跳过这个文件。</p>
+<p>让我们看下最终效果：</p>
+<p><img src="/./resource/pkg_07.png" alt="img"></p>
+<p><strong>喔！！！res 文件夹从 710KB 降到了 597KB。</strong></p>
+<blockquote>
+<p>体积减小了 105KB。（降低了 16%） 你也可以将图片转为矢量图。但是这样你需要对它的向后兼容性进行一些处理。</p>
+</blockquote>
+<h3 id="TL-DR"><a href="#TL-DR" class="headerlink" title="TL;DR:"></a>TL;DR:</h3><ul>
+<li>通过在你的 release build type 中加上下面这些代码启用混淆。</li>
+<li>启用 shrinkResources。</li>
+<li>通过在 “resConfigs” 里添加需要的资源名移除所有不需要的本地化资源。</li>
+<li>将所有图片转为 webp 或者矢量图。</li>
+</ul>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>通过使用上面这些简单的技巧我将应用体积从 3.19MB 降至了 1.89MB。</p>
+<p>这些只是最简单的方式，还有很多减小应用体积的方法。但是，你应该始终使用上面这些简单的方法来保证已经尽可能的减小了应用体积。</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jaytp@qq.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2020 Yelog
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
