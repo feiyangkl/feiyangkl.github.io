@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="linux安装prometheus一、什么是PrometheusPrometheus（普罗米修斯）是由SoundCloud开发的开源监控报警系统和时序列数据库(TSDB)。Prometheus使用Go语言开发，是Google BorgMon监控系统的开源版本。2012年成为社区开源项目，拥有非常活跃的开发人员和用户社区。2016年由Google发起Linux基金会旗下的原生云基金会(Cloud N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux安装prometheus">
+<meta property="og:url" content="http://example.com/2022/09/18/prometheus/index.html">
+<meta property="og:site_name" content="我是一条鱼">
+<meta property="og:description" content="linux安装prometheus一、什么是PrometheusPrometheus（普罗米修斯）是由SoundCloud开发的开源监控报警系统和时序列数据库(TSDB)。Prometheus使用Go语言开发，是Google BorgMon监控系统的开源版本。2012年成为社区开源项目，拥有非常活跃的开发人员和用户社区。2016年由Google发起Linux基金会旗下的原生云基金会(Cloud N">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/Resource/ps.png">
+<meta property="og:image" content="http://example.com/Resource/ps_2.png">
+<meta property="article:published_time" content="2022-09-17T23:43:17.000Z">
+<meta property="article:modified_time" content="2022-09-17T23:43:17.000Z">
+<meta property="article:author" content="我是一条鱼">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/Resource/ps.png">
+
+
+<link rel="canonical" href="http://example.com/2022/09/18/prometheus/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/09/18/prometheus/","path":"2022/09/18/prometheus/","title":"linux安装prometheus"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linux安装prometheus | 我是一条鱼</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我是一条鱼</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">想做一个发光的鱼</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E5%AE%89%E8%A3%85prometheus"><span class="nav-number">1.</span> <span class="nav-text">linux安装prometheus</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFPrometheus"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、什么是Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Prometheus%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、Prometheus的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、 基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%8D%E5%8A%A1%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.4.</span> <span class="nav-text">四、服务过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E5%A4%A7%E5%A5%97%E4%BB%B6"><span class="nav-number">1.0.5.</span> <span class="nav-text">五、三大套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%8B%E8%BD%BDPrometheus"><span class="nav-number">1.0.6.</span> <span class="nav-text">六、下载Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%B0%86Prometheus%E9%85%8D%E7%BD%AE%E4%B8%BA%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.0.7.</span> <span class="nav-text">七、将Prometheus配置为系统服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%90%AF%E5%8A%A8Prometheus"><span class="nav-number">1.0.8.</span> <span class="nav-text">八、启动Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E8%AE%BF%E9%97%AEprometheus"><span class="nav-number">1.0.9.</span> <span class="nav-text">九、访问prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E9%85%8D%E7%BD%AE%E6%88%AA%E5%9B%BE"><span class="nav-number">1.0.10.</span> <span class="nav-text">十、配置截图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0"><span class="nav-number">1.0.11.</span> <span class="nav-text">配置更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.12.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">我是一条鱼</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/18/prometheus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="我是一条鱼">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是一条鱼">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="linux安装prometheus | 我是一条鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux安装prometheus
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-17 23:43:17" itemprop="dateCreated datePublished" datetime="2022-09-17T23:43:17Z">2022-09-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="linux安装prometheus"><a href="#linux安装prometheus" class="headerlink" title="linux安装prometheus"></a>linux安装prometheus</h1><h3 id="一、什么是Prometheus"><a href="#一、什么是Prometheus" class="headerlink" title="一、什么是Prometheus"></a>一、什么是Prometheus</h3><p>Prometheus（普罗米修斯）是由SoundCloud开发的开源监控报警系统和时序列数据库(TSDB)。Prometheus使用Go语言开发，是Google BorgMon监控系统的开源版本。<br>2012年成为社区开源项目，拥有非常活跃的开发人员和用户社区。<br>2016年由Google发起Linux基金会旗下的原生云基金会(Cloud Native Computing Foundation), 将Prometheus纳入其下第二大开源项目。<br>Prometheus目前在开源社区相当活跃。<br>Prometheus和Heapster(Heapster是K8S的一个子项目，用于获取集群的性能数据。)相比功能更完善、更全面。Prometheus性能也足够支撑上万台规模的集群。</p>
+<h3 id="二、Prometheus的特点"><a href="#二、Prometheus的特点" class="headerlink" title="二、Prometheus的特点"></a>二、Prometheus的特点</h3><ul>
+<li>多维度数据模型。</li>
+<li>灵活的查询语言。</li>
+<li>不依赖分布式存储，单个服务器节点是自主的。</li>
+<li>通过基于HTTP的pull方式采集时序数据。</li>
+<li>可以通过中间网关进行时序列数据推送。</li>
+<li>通过服务发现或者静态配置来发现目标服务对象。</li>
+<li>支持多种多样的图表和界面展示，比如Grafana等。### 创建log文件<br><a href="./Resource/ps.png"><img src="/../Resource/ps.png" alt="ps.png"></a></li>
+</ul>
+<h3 id="三、-基本原理"><a href="#三、-基本原理" class="headerlink" title="三、 基本原理"></a>三、 基本原理</h3><p>Prometheus的基本原理是通过HTTP协议周期性抓取被监控组件的状态，任意组件只要提供对应的HTTP接口就可以接入监控。不需要任何SDK或者其他的集成过程。这样做非常适合做虚拟化环境监控系统，比如VM、Docker、Kubernetes等。输出被监控组件信息的HTTP接口被叫做exporter 。目前互联网公司常用的组件大部分都有exporter可以直接使用，比如Varnish、Haproxy、Nginx、MySQL、Linux系统信息(包括磁盘、内存、CPU、网络等等)。</p>
+<h3 id="四、服务过程"><a href="#四、服务过程" class="headerlink" title="四、服务过程"></a>四、服务过程</h3><ul>
+<li>Prometheus Daemon负责定时去目标上抓取metrics(指标)数据，每个抓取目标需要暴露一个http服务的接口给它定时抓取。Prometheus支持通过配置文件、文本文件、Zookeeper、Consul、DNS SRV Lookup等方式指定抓取目标。Prometheus采用PULL的方式进行监控，即服务器可以直接通过目标PULL数据或者间接地通过中间网关来Push数据。</li>
+<li>Prometheus在本地存储抓取的所有数据，并通过一定规则进行清理和整理数据，并把得到的结果存储到新的时间序列中。</li>
+<li>Prometheus通过PromQL和其他API可视化地展示收集的数据。</li>
+<li>Prometheus支持很多方式的图表可视化，例如Grafana、自带的Promdash以及自身提供的模版引擎等等。Prometheus还提供HTTP API的查询方式，自定义所需要的输出。</li>
+<li>PushGateway支持Client主动推送metrics到PushGateway，而Prometheus只是定时去Gateway上抓取数据。</li>
+<li>Alertmanager是独立于Prometheus的一个组件，可以支持Prometheus的查询语句，提供十分灵活的报警方式。</li>
+</ul>
+<h3 id="五、三大套件"><a href="#五、三大套件" class="headerlink" title="五、三大套件"></a>五、三大套件</h3><ul>
+<li>Server 主要负责数据采集和存储，提供PromQL查询语言的支持。</li>
+<li>Alertmanager 警告管理器，用来进行报警。</li>
+<li>Push Gateway 支持临时性Job主动推送指标的中间网关。</li>
+</ul>
+<h3 id="六、下载Prometheus"><a href="#六、下载Prometheus" class="headerlink" title="六、下载Prometheus"></a>六、下载Prometheus</h3><p>1、官网下载地址：<a target="_blank" rel="noopener" href="https://prometheus.io/download/">https://prometheus.io/download/</a></p>
+<p>2、直接在linux服务器上wget方式下载</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 新建目录</span><br><span class="line">mkdir -p /data/prometheus/</span><br><span class="line"></span><br><span class="line">// 进入目标目录</span><br><span class="line">cd /data/prometheus/</span><br><span class="line"></span><br><span class="line">// 下载</span><br><span class="line">wget -c https://github.com/prometheus/prometheus/releases/download/v2.28.1/prometheus-2.28.1.linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line">// 解压</span><br><span class="line">tar -vxzf prometheus-2.28.1.linux-amd64.tar.gz</span><br><span class="line"></span><br><span class="line">// 移动到安装目录</span><br><span class="line">mv prometheus-2.28.1.linux-amd64 /usr/local/prometheus</span><br><span class="line"></span><br><span class="line">// 进入目录</span><br><span class="line">cd /usr/local/prometheus</span><br></pre></td></tr></table></figure>
+
+<h3 id="七、将Prometheus配置为系统服务"><a href="#七、将Prometheus配置为系统服务" class="headerlink" title="七、将Prometheus配置为系统服务"></a>七、将Prometheus配置为系统服务</h3><p>1、进入systemd目录</p>
+<p><code>cd /usr/lib/systemd/system</code></p>
+<p>2、创建文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">vim prometheus.service</span><br><span class="line"> </span><br><span class="line"># 添加如下内容</span><br><span class="line">[Unit]</span><br><span class="line">Description=https://prometheus.io</span><br><span class="line">  </span><br><span class="line">[Service]</span><br><span class="line">Restart=on-failure</span><br><span class="line">ExecStart=/root/prometheus/prometheus --config.file=/root/prometheus/prometheus.yml</span><br><span class="line"> </span><br><span class="line">[Install]                      </span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>3、生效系统文件</p>
+<p><code>systemctl daemon-reload</code></p>
+<p>4、启动服务停止服务</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 启动</span><br><span class="line">systemctl start prometheus.service</span><br><span class="line"># 停止</span><br><span class="line">systemctl stop prometheus.service</span><br></pre></td></tr></table></figure>
+
+<h3 id="八、启动Prometheus"><a href="#八、启动Prometheus" class="headerlink" title="八、启动Prometheus"></a>八、启动Prometheus</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 进入解压后的文件夹</span><br><span class="line">cd /data/prometheus/prometheus-2.28.1.linux-amd64</span><br><span class="line"># 前台启动</span><br><span class="line">./prometheus --config.file=prometheus.yml</span><br><span class="line"># 后台启动prometheus，并且重定向输入日志到当前目录的prometheus.out</span><br><span class="line">nohup ./prometheus --config.file=prometheus.yml &gt;&gt; /data/prometheus/prometheus-2.28.1.linux-amd64/prometheus.out 2&gt;&amp;1 &amp;</span><br><span class="line"></span><br><span class="line">//Mark 修改端口</span><br><span class="line">./prometheus --config.file=prometheus.yml --web.listen-address=:9091</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="九、访问prometheus"><a href="#九、访问prometheus" class="headerlink" title="九、访问prometheus"></a>九、访问prometheus</h3><p>http:192.168.0.102:9090，默认端口为 9090<br><a href="./Resource/ps.png"><img src="/../Resource/ps_2.png" alt="ps.png"></a></p>
+<h3 id="十、配置截图"><a href="#十、配置截图" class="headerlink" title="十、配置截图"></a>十、配置截图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># 此片段指定的是prometheus的全局配置，比如采集间隔，抓取超时时间等。如果有内部单独设定，会覆盖这个参数。</span><br><span class="line">global:</span><br><span class="line">  scrape_interval:     15s # 抓取间隔，默认继承global值（默认15s 全局每次数据收集的间隔）</span><br><span class="line">  evaluation_interval: 15s # 评估规则间隔（规则扫描时间间隔是15秒，默认不填写是1分钟）</span><br><span class="line">  # scrape_timeout 抓取超时时间，默认继承global值。</span><br><span class="line"> </span><br><span class="line"># 此片段指定告警配置，这里会设定alertmanager这个报警插件。</span><br><span class="line">alerting:</span><br><span class="line">  alertmanagers:</span><br><span class="line">  - static_configs:</span><br><span class="line">    - targets: [&#x27;localhost:9093&#x27;]</span><br><span class="line"> </span><br><span class="line"># 此片段指定报警规则文件，按照设定参数进行扫描加载，用于自定义报警规则，其报警媒介和route路由由alertmanager插件实现。</span><br><span class="line">rule_files:</span><br><span class="line">  - &quot;rules/*.yml&quot;</span><br><span class="line">  # - &quot;first_rules.yml&quot;</span><br><span class="line">  # - &quot;second_rules.yml&quot;</span><br><span class="line"> </span><br><span class="line"># 此片段指定抓取配置。配置数据源，包含分组job_name以及具体target。又分为静态配置和服务发现。</span><br><span class="line">scrape_configs:</span><br><span class="line">  - job_name: &#x27;prometheus&#x27;</span><br><span class="line"> </span><br><span class="line">    # metrics_path defaults to &#x27;/metrics&#x27; # 监控项访问的url路径</span><br><span class="line">    # scheme defaults to &#x27;http&#x27;.</span><br><span class="line"> </span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&#x27;localhost:9090&#x27;] # 监控目标访问地址</span><br><span class="line"> </span><br><span class="line">  - job_name: &#x27;suyuan&#x27; # 任务目标名，可以理解成分组，每个分组包含具体的target组员。</span><br><span class="line">    scrape_interval: 30s # 这里如果单独设定的话，会覆盖global设定的参数，拉取时间间隔为30s</span><br><span class="line">    static_configs:</span><br><span class="line">    - targets: [&#x27;39.99.254.135:30101&#x27;]</span><br><span class="line">      labels:</span><br><span class="line">        instance: &#x27;bigdata(39.99.254.135:9000)&#x27;</span><br><span class="line"> </span><br><span class="line">    - targets: [&#x27;39.99.254.135:30102&#x27;]</span><br><span class="line">      labels:</span><br><span class="line">        instance: &#x27;web(39.99.254.135:9999)&#x27;</span><br><span class="line"> </span><br><span class="line">    - targets: [&#x27;39.99.254.135:30103&#x27;]</span><br><span class="line">      labels:</span><br><span class="line">        instance: &#x27;user(39.99.254.135:9003)&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>告警配置 targets 和抓取配置 targets 的 localhost 最好替换成服务器的 ip，job_name 的名字对应的就是 grafana dashboard 的 job 的名称，instance 如果不通过 labels 单独指定，默认取的是 targets 的值，建议单独指定别名。</p>
+<p>上述为静态规则，没有设置自动发现。这种情况下增加主机需要自行修改规则，通过 supervisor reload 对应任务，也是缺点：每次静态规则添加都要重启prometheus服务，不利于运维自动化。</p>
+<p>prometheus支持服务发现（也是运维最佳实践经常采用的）：<br>文件服务发现<br>基于文件的服务发现方式不需要依赖其他平台与第三方服务，用户只需将 要新的target信息以yaml或json文件格式添加到target文件中 ，prometheus会定期从指定文件中读取target信息并更新<br>好处：<br>（1）不需要一个一个的手工去添加到主配置文件，只需要提交到要加载目录里边的json或yaml文件就可以了；<br>（2）方便维护，且不需要每次都重启prometheus服务端。</p>
+<h3 id="配置更新"><a href="#配置更新" class="headerlink" title="配置更新"></a>配置更新</h3><p>在更新完Prometheus的配置文件后，我们需要更新我们的配置到程序内存里，这里的更新方式有两种，第一种简单粗暴，就是重启Prometheus，第二种是动态更新的方式。如何实现动态的更新Prometheus配置。</p>
+<p>步骤<br>第一步：首先要保证启动Prometheus的时候带上启动参数：–web.enable-lifecycle。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prometheus --config.file=/usr/local/etc/prometheus.yml --web.enable-lifecycle</span><br></pre></td></tr></table></figure>
+<p>第二步：去更新我们的Prometheus配置。</p>
+<p>第三步：更新完配置后，我们可以通过POS请求的方式，动态更新配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v --request POST &#x27;http://localhost:9090/-/reload&#x27;</span><br></pre></td></tr></table></figure>
+
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Prometheus在web模块中，注册了一个handler。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if o.EnableLifecycle &#123;</span><br><span class="line">   router.Post(&quot;/-/quit&quot;, h.quit)</span><br><span class="line">   router.Put(&quot;/-/quit&quot;, h.quit)</span><br><span class="line">   router.Post(&quot;/-/reload&quot;, h.reload)  // reload配置</span><br><span class="line">   router.Put(&quot;/-/reload&quot;, h.reload)   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过h.reload这个handler方法实现：这个handler就是往一个channle中发送一个信号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">func (h *Handler) reload(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">   rc := make(chan error)</span><br><span class="line">   h.reloadCh &lt;- rc    // 发送一个信号到channe了中</span><br><span class="line">   if err := &lt;-rc; err != nil &#123;</span><br><span class="line">      http.Error(w, fmt.Sprintf(&quot;failed to reload config: %s&quot;, err), http.StatusInternalServerError)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在main函数中会去监听这个channel，只要有监听到信号，就会做配置的reload，重新将新配置加载到内存中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">case rc := &lt;-webHandler.Reload():</span><br><span class="line">   if err := reloadConfig(cfg.configFile, cfg.enableExpandExternalLabels, cfg.tsdb.EnableExemplarStorage, logger, noStepSubqueryInterval, reloaders...); err != nil &#123;</span><br><span class="line">      level.Error(logger).Log(&quot;msg&quot;, &quot;Error reloading config&quot;, &quot;err&quot;, err)</span><br><span class="line">      rc &lt;- err</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">      rc &lt;- nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/03/kvm/" rel="prev" title="Android App 迁移 KMM 实践">
+                  <i class="fa fa-angle-left"></i> Android App 迁移 KMM 实践
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/01/20/unit/" rel="next" title="一文全面了解Android单元测试">
+                  一文全面了解Android单元测试 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">我是一条鱼</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

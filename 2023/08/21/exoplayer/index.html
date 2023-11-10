@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="谷歌官方推荐的ExoPlayer的基本使用简介在日常开发中，自然少不了使用播放器，特别是现在短视频流行的情况下，几乎所有的App都有播放视频的功能，一提到播放器，相信很多开发者都知道GSYPlayer和IjkPlayer。这两款开源的播放器功能强大，能满足日常开发需要。但是需要引入第三方依赖，加载一些很多不必要的资源，我们现在的App由于历史原因还有很多不同的播放器，导致包体积直线上升。 使用过G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谷歌官方推荐的ExoPlayer的基本使用">
+<meta property="og:url" content="http://example.com/2023/08/21/exoplayer/index.html">
+<meta property="og:site_name" content="我是一条鱼">
+<meta property="og:description" content="谷歌官方推荐的ExoPlayer的基本使用简介在日常开发中，自然少不了使用播放器，特别是现在短视频流行的情况下，几乎所有的App都有播放视频的功能，一提到播放器，相信很多开发者都知道GSYPlayer和IjkPlayer。这两款开源的播放器功能强大，能满足日常开发需要。但是需要引入第三方依赖，加载一些很多不必要的资源，我们现在的App由于历史原因还有很多不同的播放器，导致包体积直线上升。 使用过G">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-08-20T18:29:20.000Z">
+<meta property="article:modified_time" content="2023-08-20T18:29:20.000Z">
+<meta property="article:author" content="我是一条鱼">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/08/21/exoplayer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/08/21/exoplayer/","path":"2023/08/21/exoplayer/","title":"谷歌官方推荐的ExoPlayer的基本使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>谷歌官方推荐的ExoPlayer的基本使用 | 我是一条鱼</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我是一条鱼</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">想做一个发光的鱼</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%B7%E6%AD%8C%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84ExoPlayer%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">谷歌官方推荐的ExoPlayer的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="nav-number">1.2.1.</span> <span class="nav-text">引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAExoPlayer"><span class="nav-number">1.2.2.</span> <span class="nav-text">创建ExoPlayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A7%86%E9%A2%91%E8%B5%84%E6%BA%90"><span class="nav-number">1.2.3.</span> <span class="nav-text">设置视频资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E8%A7%86%E9%A2%91"><span class="nav-number">1.2.4.</span> <span class="nav-text">播放视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%82%E5%81%9C%E8%A7%86%E9%A2%91"><span class="nav-number">1.2.5.</span> <span class="nav-text">暂停视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E6%92%AD%E6%94%BE"><span class="nav-number">1.2.6.</span> <span class="nav-text">停止播放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9ASurface-SurfaceView-TextureView"><span class="nav-number">1.2.7.</span> <span class="nav-text">绑定Surface&#x2F;SurfaceView&#x2F;TextureView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#seekTo"><span class="nav-number">1.2.8.</span> <span class="nav-text">seekTo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%8C%BA%E9%97%B4%E6%92%AD%E6%94%BE"><span class="nav-number">1.2.9.</span> <span class="nav-text">指定区间播放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">我是一条鱼</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/21/exoplayer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="我是一条鱼">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是一条鱼">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="谷歌官方推荐的ExoPlayer的基本使用 | 我是一条鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          谷歌官方推荐的ExoPlayer的基本使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-08-20 18:29:20" itemprop="dateCreated datePublished" datetime="2023-08-20T18:29:20Z">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="谷歌官方推荐的ExoPlayer的基本使用"><a href="#谷歌官方推荐的ExoPlayer的基本使用" class="headerlink" title="谷歌官方推荐的ExoPlayer的基本使用"></a>谷歌官方推荐的ExoPlayer的基本使用</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在日常开发中，自然少不了使用播放器，特别是现在短视频流行的情况下，几乎所有的App都有播放视频的功能，一提到播放器，相信很多开发者都知道GSYPlayer和IjkPlayer。这两款开源的播放器功能强大，能满足日常开发需要。但是需要引入第三方依赖，加载一些很多不必要的资源，我们现在的App由于历史原因还有很多不同的播放器，导致包体积直线上升。</p>
+<p>使用过GSYPlayer的小伙伴都知道，这个播放器是支持切换内核的。一个是ijkPlayer内核和一个ExoPlayer的内核。其实认真了解ExoPlayer的小伙伴都知道，使用ExoPlayer更简单，更方便。毕竟 谷歌出品，必属精品！下面我们就来介绍一下怎么使用ExoPlayer？</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p>ExoPlayer最新版本是media3，这里使用的版本较低，主要是因为主线App的targetSDK版本是30，一旦超过了2.15.1就必须升级Android SDK版本。话不多说，直接上代码。</p>
+<h3 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">&#x27;com.google.android.exoplayer:exoplayer:2.15.1&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建ExoPlayer"><a href="#创建ExoPlayer" class="headerlink" title="创建ExoPlayer"></a>创建ExoPlayer</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">val loadControl = DefaultLoadControl<span class="selector-class">.Builder</span>()</span><br><span class="line">     <span class="selector-class">.setPrioritizeTimeOverSizeThresholds</span>(true)<span class="comment">//缓冲时时间优先级高于大小</span></span><br><span class="line">     <span class="selector-class">.setBufferDurationsMs</span>(MIN_BUFFER_MS, MAX_BUFFER_MS, PLAYBACK_BUFFER_MS, REBUFFER_MS)</span><br><span class="line">     <span class="selector-class">.build</span>()</span><br><span class="line"> if (mPlayer == null)&#123;</span><br><span class="line">     mPlayer = activity?<span class="selector-class">.let</span> &#123; SimpleExoPlayer<span class="selector-class">.Builder</span>(activity)<span class="selector-class">.setLoadControl</span>(loadControl)<span class="selector-class">.build</span>() &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//重复模式</span></span><br><span class="line"> mPlayer?<span class="selector-class">.repeatMode</span> = Player<span class="selector-class">.REPEAT_MODE_ALL</span></span><br><span class="line"> <span class="comment">//设置seekto参数</span></span><br><span class="line"> mPlayer?<span class="selector-class">.setSeekParameters</span>(SeekParameters.EXACT)</span><br><span class="line"> <span class="comment">//设置监听</span></span><br><span class="line"> mPlayer?<span class="selector-class">.setVideoFrameMetadataListener</span>(this)</span><br><span class="line"> mPlayer?<span class="selector-class">.addListener</span>(this)</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置视频资源"><a href="#设置视频资源" class="headerlink" title="设置视频资源"></a>设置视频资源</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">list.forEach &#123;</span><br><span class="line">   val <span class="attr">newMediaItem</span> = MediaItem.Builder()</span><br><span class="line">      .setUri(it.path)</span><br><span class="line">      .build()</span><br><span class="line">      mPlayer?.addMediaItem(newMediaItem)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">    mPlayer?.<span class="attr">playWhenReady</span> = <span class="literal">true</span></span><br><span class="line">    mPlayer?.prepare()</span><br></pre></td></tr></table></figure>
+
+<h3 id="播放视频"><a href="#播放视频" class="headerlink" title="播放视频"></a>播放视频</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mPlayer?<span class="selector-class">.play</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="暂停视频"><a href="#暂停视频" class="headerlink" title="暂停视频"></a>暂停视频</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mPlayer?<span class="selector-class">.pause</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="停止播放"><a href="#停止播放" class="headerlink" title="停止播放"></a>停止播放</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mPlayer?<span class="selector-class">.stop</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="绑定Surface-SurfaceView-TextureView"><a href="#绑定Surface-SurfaceView-TextureView" class="headerlink" title="绑定Surface&#x2F;SurfaceView&#x2F;TextureView"></a>绑定Surface&#x2F;SurfaceView&#x2F;TextureView</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//绑定surface</span></span><br><span class="line">mPlayer?<span class="selector-class">.setVideoSurface</span>(surface)</span><br><span class="line"><span class="comment">//绑定surfaceView</span></span><br><span class="line">mPlayer?<span class="selector-class">.setVideoSurfaceView</span>(surfaceView)</span><br><span class="line"><span class="comment">//绑定TextureView</span></span><br><span class="line">mPlayer?<span class="selector-class">.setVideoSurfaceView</span>(textureView)</span><br></pre></td></tr></table></figure>
+
+<h3 id="seekTo"><a href="#seekTo" class="headerlink" title="seekTo"></a>seekTo</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//seekto指定时间</span></span><br><span class="line">mPlayer?<span class="selector-class">.seekTo</span>(time)</span><br><span class="line"><span class="comment">//seekto指定视频的时间</span></span><br><span class="line">mPlayer?<span class="selector-class">.seekTo</span>(currentIndex,time)</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定区间播放"><a href="#指定区间播放" class="headerlink" title="指定区间播放"></a>指定区间播放</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MediaItem<span class="selector-class">.Builder</span>()</span><br><span class="line">              <span class="selector-class">.setUri</span>(it.path)</span><br><span class="line">              <span class="selector-class">.setClipStartPositionMs</span>(it.imageStartTime)</span><br><span class="line">              <span class="selector-class">.setClipEndPositionMs</span>(it.imageEndTime)</span><br><span class="line">              <span class="selector-class">.build</span>()</span><br></pre></td></tr></table></figure>
+
+<p>优点：使用简单，谷歌出品，懂得都懂。最低支持API 14，支持的格式丰富。</p>
+<p>缺点：需要自己计算视频播放进度。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>ExoPlayer不仅支持单个视频播放，也支持视频列表播放，切换下一个视频和指定时间段播放视频等丰富的功能。ExoPlayer还提供了UI框架，小编这里使用surface是因为需要自定义渲染效果。</p>
+<p>小编在使用过程中踩了很多坑，如果读者在使用ExoPlayer的过程中，遇到无法解决的问题可以私信小编。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/07/06/wifi/" rel="prev" title="Android WiFi工具类">
+                  <i class="fa fa-angle-left"></i> Android WiFi工具类
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">我是一条鱼</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

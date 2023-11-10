@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="怎样检测函数执行是否卡顿 ？卡顿意味着我们的App发生了掉帧，被使用者所感知。 而导致App卡顿的原因很多：UI绘制慢、内存使用不当（内存抖动）等等情况都会导致程序出现卡顿，而这些卡顿又分为：可重现与不可重现。 可重现的卡顿有一部分的卡顿是可本地复现的，对于这种容易重现的场景，一般我们在开发及体验测试阶段容易注意得到，而定位卡顿的根源，我们常用的方法是通过 TraceView、Systrace 工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 怎样检测函数执行是否卡顿">
+<meta property="og:url" content="http://example.com/2022/03/28/kadun/index.html">
+<meta property="og:site_name" content="我是一条鱼">
+<meta property="og:description" content="怎样检测函数执行是否卡顿 ？卡顿意味着我们的App发生了掉帧，被使用者所感知。 而导致App卡顿的原因很多：UI绘制慢、内存使用不当（内存抖动）等等情况都会导致程序出现卡顿，而这些卡顿又分为：可重现与不可重现。 可重现的卡顿有一部分的卡顿是可本地复现的，对于这种容易重现的场景，一般我们在开发及体验测试阶段容易注意得到，而定位卡顿的根源，我们常用的方法是通过 TraceView、Systrace 工">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-27T23:19:30.000Z">
+<meta property="article:modified_time" content="2022-03-27T23:19:30.000Z">
+<meta property="article:author" content="我是一条鱼">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/03/28/kadun/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/03/28/kadun/","path":"2022/03/28/kadun/","title":"Android 怎样检测函数执行是否卡顿"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android 怎样检测函数执行是否卡顿 | 我是一条鱼</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我是一条鱼</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">想做一个发光的鱼</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%8E%E6%A0%B7%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E5%8D%A1%E9%A1%BF-%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">怎样检测函数执行是否卡顿 ？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E7%8E%B0%E7%9A%84%E5%8D%A1%E9%A1%BF"><span class="nav-number">1.1.</span> <span class="nav-text">可重现的卡顿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E9%87%8D%E7%8E%B0%E7%9A%84%E5%8D%A1%E9%A1%BF"><span class="nav-number">1.2.</span> <span class="nav-text">不可重现的卡顿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">我是一条鱼</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/28/kadun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="我是一条鱼">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是一条鱼">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android 怎样检测函数执行是否卡顿 | 我是一条鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android 怎样检测函数执行是否卡顿
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-27 23:19:30" itemprop="dateCreated datePublished" datetime="2022-03-27T23:19:30Z">2022-03-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="怎样检测函数执行是否卡顿-？"><a href="#怎样检测函数执行是否卡顿-？" class="headerlink" title="怎样检测函数执行是否卡顿 ？"></a>怎样检测函数执行是否卡顿 ？</h1><p>卡顿意味着我们的App发生了掉帧，被使用者所感知。 而导致App卡顿的原因很多：UI绘制慢、内存使用不当（内存抖动）等等情况都会导致程序出现卡顿，而这些卡顿又分为：可重现与不可重现。</p>
+<h2 id="可重现的卡顿"><a href="#可重现的卡顿" class="headerlink" title="可重现的卡顿"></a>可重现的卡顿</h2><p>有一部分的卡顿是可本地复现的，对于这种容易重现的场景，一般我们在开发及体验测试阶段容易注意得到，而定位卡顿的根源，我们常用的方法是通过 TraceView、Systrace 工具来抓取卡顿过程中函数的执行情况（堆栈，耗时，调用次数等）。 通过 TraceView 的可视化界面，我们可以具体知道某个过程中的调用栈信息及各个函数的执行次数与耗时，能比较直观的找到严重耗时的函数，帮助我们快速解决卡顿问题。</p>
+<blockquote>
+<p>目前 <strong>Traceview 已弃用</strong>。如果使用 Android Studio 3.2 或更高版本，则应改为使用 CPU Profiler</p>
+</blockquote>
+<h2 id="不可重现的卡顿"><a href="#不可重现的卡顿" class="headerlink" title="不可重现的卡顿"></a>不可重现的卡顿</h2><p>但往往大部分卡顿是很难及时发现的，不可重现的卡顿，经常出现在线上用户的真实使用过程中，这种卡顿往往跟机器性能，手机环境，甚至是操作偏好等因素息息相关。一般也是从用户反馈中得到，通常表述为“你们APP好卡”，我们很难在这种描述中，直接洞察到卡顿的根源，甚至有些连卡顿的场景都不知道，很难准确重现，所以这种卡顿容易让人摸不着头脑。 当然作为开发者，我更希望用户反馈的是，“某某函数耗时666ms，请解决它。” 那么面对这种卡顿，我们怎么办呢？</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>造成卡顿的直接原因通常是，主线程执行繁重的UI绘制、大量的计算或IO等耗时操作。</p>
+<p>业界有几种常见解决方案，都可以从一定程度上，帮助开发者快速定位到卡顿的堆栈，如 <code>BlockCanary</code>、LogMonitor 。这些方案的主要思想是，监控主线程执行耗时，当超过阈值时，dump出当前主线程的执行堆栈，通过堆栈分析找到卡顿原因。</p>
+<p>从监控主线程的实现原理上，主要分为两种：</p>
+<p>1、依赖主线程 Looper，监控每次 dispatchMessage 的执行耗时。（BlockCanary）</p>
+<p>2、依赖 Choreographer 模块，监控相邻两次 Vsync 事件通知的时间差。（ArgusAPM、LogMonitor）</p>
+<p>第一种方案，看下 Looper#loop 代码片段：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loop</span>()</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">// This must be in a local variable, in case a UI event sets the logger</span></span><br><span class="line">        Printer logging = me.mLogging;</span><br><span class="line">        <span class="keyword">if</span> (logging != <span class="literal">null</span>) &#123;</span><br><span class="line">            logging.println(<span class="string">&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot;</span> + msg.target + <span class="string">&quot; &quot;</span> +</span><br><span class="line">                    msg.callback + <span class="string">&quot;: &quot;</span> + msg.what);</span><br><span class="line">        &#125;</span><br><span class="line">        msg.target.dispatchMessage(msg);</span><br><span class="line">        <span class="keyword">if</span> (logging != <span class="literal">null</span>) &#123;</span><br><span class="line">            logging.println(<span class="string">&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot;</span> + msg.target + <span class="string">&quot; &quot;</span> + msg.callback);</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主线程所有执行的任务都在 <code>dispatchMessage</code> 方法中派发执行完成，我们通过 <code>setMessageLogging</code> 的方式给主线程的 Looper 设置一个 Printer ，因为 <code>dispatchMessage</code> 执行前后都会打印对应信息，在执行前利用另外一条线程，通过 <code>Thread#getStackTrace</code> 接口，以轮询的方式获取主线程执行堆栈信息并记录起来，同时统计每次 <code>dispatchMessage</code> 方法执行耗时，当超出阈值时，将该次获取的堆栈进行分析上报，从而来捕捉卡顿信息，否则丢弃此次记录的堆栈信息。</p>
+<p>第二种方案，利用系统 Choreographer 模块，向该模块注册一个 FrameCallback 监听对象，同时通过另外一条线程循环记录主线程堆栈信息，并在每次 Vsync 事件 doFrame 通知回来时，循环注册该监听对象，间接统计两次 Vsync 事件的时间间隔，当超出阈值时，取出记录的堆栈进行分析上报。</p>
+<p>简单代码实现如下：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Choreographer<span class="selector-class">.getInstance</span>()<span class="selector-class">.postFrameCallback</span>(new Choreographer.FrameCallback() &#123;</span><br><span class="line">    <span class="keyword">@Override</span></span><br><span class="line">    public void doFrame(long frameTimeNanos) &#123;</span><br><span class="line">        <span class="built_in">if</span>(frameTimeNanos - mLastFrameNanos &gt; <span class="number">100</span>) &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        mLastFrameNanos = frameTimeNanos;</span><br><span class="line">        Choreographer<span class="selector-class">.getInstance</span>()<span class="selector-class">.postFrameCallback</span>(this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这两种方案，可以较方便的捕捉到卡顿的堆栈，但其最大的不足在于，无法获取到各个函数的执行耗时，对于稍微复杂一点的堆栈，很难找出可能耗时的函数，也就很难找到卡顿的原因。另外，通过其他线程循环获取主线程的堆栈，如果稍微处理不及时，很容易导致获取的堆栈有所偏移，不够准确，加上没有耗时信息，卡顿也就不好定位。</p>
+<p>所以怎么更准确地捕捉卡顿堆栈，又能计算出各个函数执行耗时的方案。 而要计算函数的执行耗时，最关键的点在于如何对执行过程中的函数进行打点监控。</p>
+<p>1、字节码插桩，修改字节码，在编译期修改所有 class 文件中的函数字节码，对所有函数前后进行打点插桩。</p>
+<p>2、使用JVMTI监听函数进入与退出，JVMTI全称是Java Virtual Machine Tool Interface，Java虚拟机工具接口，在Android 8.0及以上可用，可以让我们监控与控制虚拟机的某种行为。</p>
+<blockquote>
+<p>在应用启动时，默认打开 Trace 功能（Debug.startMethodTracing），应用内所有函数在执行前后将会经过alvik 上 dvmMethodTraceAdd 函数 或 art 上 Trace::LogMethodTraceEvent 函数， 通过hack手段代理该函数，在每个执行方法前后进行打点记录。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/14/04_mac_appache/" rel="prev" title="配置 Apache 服务器">
+                  <i class="fa fa-angle-left"></i> 配置 Apache 服务器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/03/kvm/" rel="next" title="Android App 迁移 KMM 实践">
+                  Android App 迁移 KMM 实践 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">我是一条鱼</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

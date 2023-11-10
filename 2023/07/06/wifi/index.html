@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Android WiFi工具类当开发基于WiFi的Android应用时，对WiFi连接、管理和配置的操作非常重要。为了简化这些操作，我们可以使用一个名为 WifiUtils 的工具类。这个工具类提供了一系列方法，可以方便地执行诸如检查WiFi状态、打开或关闭WiFi、扫描可用的WiFi网络、连接到指定的WiFi网络、断开当前连接的WiFi网络等操作。 这个工具类还提供了一些辅助方法，比如获取当前连">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android WiFi工具类">
+<meta property="og:url" content="http://example.com/2023/07/06/wifi/index.html">
+<meta property="og:site_name" content="我是一条鱼">
+<meta property="og:description" content="Android WiFi工具类当开发基于WiFi的Android应用时，对WiFi连接、管理和配置的操作非常重要。为了简化这些操作，我们可以使用一个名为 WifiUtils 的工具类。这个工具类提供了一系列方法，可以方便地执行诸如检查WiFi状态、打开或关闭WiFi、扫描可用的WiFi网络、连接到指定的WiFi网络、断开当前连接的WiFi网络等操作。 这个工具类还提供了一些辅助方法，比如获取当前连">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-05T21:39:08.000Z">
+<meta property="article:modified_time" content="2023-07-05T21:39:08.000Z">
+<meta property="article:author" content="我是一条鱼">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/07/06/wifi/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2023/07/06/wifi/","path":"2023/07/06/wifi/","title":"Android WiFi工具类"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android WiFi工具类 | 我是一条鱼</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">我是一条鱼</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">想做一个发光的鱼</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-WiFi%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">Android WiFi工具类</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">我是一条鱼</p>
+  <div class="site-description" itemprop="description">个人博客</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/06/wifi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="我是一条鱼">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我是一条鱼">
+      <meta itemprop="description" content="个人博客">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android WiFi工具类 | 我是一条鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android WiFi工具类
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-05 21:39:08" itemprop="dateCreated datePublished" datetime="2023-07-05T21:39:08Z">2023-07-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Android-WiFi工具类"><a href="#Android-WiFi工具类" class="headerlink" title="Android WiFi工具类"></a>Android WiFi工具类</h1><p>当开发基于WiFi的Android应用时，对WiFi连接、管理和配置的操作非常重要。为了简化这些操作，我们可以使用一个名为 <code>WifiUtils</code> 的工具类。这个工具类提供了一系列方法，可以方便地执行诸如检查WiFi状态、打开或关闭WiFi、扫描可用的WiFi网络、连接到指定的WiFi网络、断开当前连接的WiFi网络等操作。</p>
+<p>这个工具类还提供了一些辅助方法，比如获取当前连接的WiFi信息、检查是否有当前可用的WiFi连接、添加WiFi配置到系统、创建WiFi配置、获取是否已经存在的配置、移除同名WiFi、判断扫描结果中是否包含了特定名称的WiFi等。这些方法使得WiFi的管理和配置变得更加便捷和灵活。</p>
+<p>使用这个 <code>WifiUtils</code> 工具类，我们可以轻松地在Android应用中执行WiFi相关的操作，无论是连接到特定的WiFi网络，还是管理已经连接的网络，都可以通过简单的调用实现。这样可以极大地简化了开发过程，提高了应用的可靠性和用户体验。 <code>WifiUtils</code> 工具类为Android开发人员提供了一个简单而强大的工具，可以在开发过程中更方便地管理和配置WiFi网络。通过使用这个工具类，开发人员可以更专注于应用的核心功能，而无需过多关注底层的WiFi管理细节。</p>
+<p>1.WifiUtils 工具类</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.<span class="property">content</span>.<span class="property">Context</span>;</span><br><span class="line"><span class="keyword">import</span> android.<span class="property">net</span>.<span class="property">wifi</span>.<span class="property">WifiConfiguration</span>;</span><br><span class="line"><span class="keyword">import</span> android.<span class="property">net</span>.<span class="property">wifi</span>.<span class="property">WifiInfo</span>;</span><br><span class="line"><span class="keyword">import</span> android.<span class="property">net</span>.<span class="property">wifi</span>.<span class="property">WifiManager</span>;</span><br><span class="line"><span class="keyword">import</span> java.<span class="property">util</span>.<span class="property">List</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WifiUtils</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> final <span class="title class_">WifiManager</span> wifiManager;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title class_">WifiUtils</span>(<span class="title class_">Context</span> context) &#123;</span><br><span class="line">        wifiManager = (<span class="title class_">WifiManager</span>) context.<span class="title function_">getApplicationContext</span>().<span class="title function_">getSystemService</span>(<span class="title class_">Context</span>.<span class="property">WIFI_SERVICE</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查WiFi是否可用</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">boolean</span> <span class="title function_">isWifiEnabled</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> wifiManager.<span class="title function_">isWifiEnabled</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打开WiFi</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">openWifi</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!wifiManager.<span class="title function_">isWifiEnabled</span>()) &#123;</span><br><span class="line">            wifiManager.<span class="title function_">setWifiEnabled</span>(<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关闭WiFi</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">closeWifi</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (wifiManager.<span class="title function_">isWifiEnabled</span>()) &#123;</span><br><span class="line">            wifiManager.<span class="title function_">setWifiEnabled</span>(<span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 扫描WiFi网络</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">scanWifi</span>(<span class="params"></span>) &#123;</span><br><span class="line">        wifiManager.<span class="title function_">startScan</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取扫描到的WiFi列表</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title class_">List</span>&lt;<span class="title class_">WifiConfiguration</span>&gt; <span class="title function_">getScanResults</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> wifiManager.<span class="title function_">getConfiguredNetworks</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取当前连接的WiFi</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title class_">WifiInfo</span> <span class="title function_">getConnectedWifiInfo</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> wifiManager.<span class="title function_">getConnectionInfo</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否有当前可用的WiFi连接</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">boolean</span> <span class="title function_">isWifiConnected</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title class_">WifiInfo</span> wifiInfo = wifiManager.<span class="title function_">getConnectionInfo</span>();</span><br><span class="line">        <span class="keyword">return</span> wifiInfo != <span class="literal">null</span> &amp;&amp; wifiInfo.<span class="title function_">getNetworkId</span>() != -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 关闭所有连接</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">disconnectWifi</span>(<span class="params"></span>) &#123;</span><br><span class="line">        wifiManager.<span class="title function_">disconnect</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 连接WiFi</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">connectToWifi</span>(<span class="params">WifiConfiguration wifiConfig</span>) &#123;</span><br><span class="line">        int netId = wifiManager.<span class="title function_">addNetwork</span>(wifiConfig);</span><br><span class="line">        wifiManager.<span class="title function_">enableNetwork</span>(netId, <span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 移除WiFi</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">removeWifi</span>(<span class="params">int netId</span>) &#123;</span><br><span class="line">        wifiManager.<span class="title function_">removeNetwork</span>(netId);</span><br><span class="line">        wifiManager.<span class="title function_">saveConfiguration</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加WiFi到系统</span></span><br><span class="line">    <span class="keyword">public</span> int <span class="title function_">addNetwork</span>(<span class="params">WifiConfiguration wifiConfig</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> wifiManager.<span class="title function_">addNetwork</span>(wifiConfig);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建配置</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title class_">WifiConfiguration</span> <span class="title function_">createWifiConfig</span>(<span class="params"><span class="built_in">String</span> ssid, <span class="built_in">String</span> password, int <span class="keyword">type</span></span>) &#123;</span><br><span class="line">        <span class="title class_">WifiConfiguration</span> config = <span class="keyword">new</span> <span class="title class_">WifiConfiguration</span>();</span><br><span class="line">        config.<span class="property">SSID</span> = <span class="string">&quot;\&quot;&quot;</span> + ssid + <span class="string">&quot;\&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                config.<span class="property">hiddenSSID</span> = <span class="literal">true</span>;</span><br><span class="line">                config.<span class="property">allowedKeyManagement</span>.<span class="title function_">set</span>(<span class="title class_">WifiConfiguration</span>.<span class="property">KeyMgmt</span>.<span class="property">NONE</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                config.<span class="property">hiddenSSID</span> = <span class="literal">true</span>;</span><br><span class="line">                config.<span class="property">wepKeys</span>[<span class="number">0</span>] = <span class="string">&quot;\&quot;&quot;</span> + password + <span class="string">&quot;\&quot;&quot;</span>;</span><br><span class="line">                config.<span class="property">allowedAuthAlgorithms</span>.<span class="title function_">set</span>(<span class="title class_">WifiConfiguration</span>.<span class="property">AuthAlgorithm</span>.<span class="property">OPEN</span>);</span><br><span class="line">                config.<span class="property">allowedAuthAlgorithms</span>.<span class="title function_">set</span>(<span class="title class_">WifiConfiguration</span>.<span class="property">AuthAlgorithm</span>.<span class="property">SHARED</span>);</span><br><span class="line">                config.<span class="property">allowedKeyManagement</span>.<span class="title function_">set</span>(<span class="title class_">WifiConfiguration</span>.<span class="property">KeyMgmt</span>.<span class="property">NONE</span>);</span><br><span class="line">                config.<span class="property">wepTxKeyIndex</span> = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                config.<span class="property">preSharedKey</span> = <span class="string">&quot;\&quot;&quot;</span> + password + <span class="string">&quot;\&quot;&quot;</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> config;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取是否已经存在的配置</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title class_">WifiConfiguration</span> <span class="title function_">isExist</span>(<span class="params"><span class="built_in">String</span> ssid</span>) &#123;</span><br><span class="line">        <span class="title class_">List</span>&lt;<span class="title class_">WifiConfiguration</span>&gt; existingConfigs = wifiManager.<span class="title function_">getConfiguredNetworks</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="title class_">WifiConfiguration</span> existingConfig : existingConfigs) &#123;</span><br><span class="line">            <span class="keyword">if</span> (existingConfig.<span class="property">SSID</span>.<span class="title function_">equals</span>(<span class="string">&quot;\&quot;&quot;</span> + ssid + <span class="string">&quot;\&quot;&quot;</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> existingConfig;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 去除同名WIFI</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">removeSameWifi</span>(<span class="params"><span class="built_in">String</span> ssid</span>) &#123;</span><br><span class="line">        <span class="title class_">List</span>&lt;<span class="title class_">WifiConfiguration</span>&gt; existingConfigs = wifiManager.<span class="title function_">getConfiguredNetworks</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="title class_">WifiConfiguration</span> existingConfig : existingConfigs) &#123;</span><br><span class="line">            <span class="keyword">if</span> (existingConfig.<span class="property">SSID</span>.<span class="title function_">equals</span>(<span class="string">&quot;\&quot;&quot;</span> + ssid + <span class="string">&quot;\&quot;&quot;</span>)) &#123;</span><br><span class="line">                wifiManager.<span class="title function_">removeNetwork</span>(existingConfig.<span class="property">networkId</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断一个扫描结果中，是否包含了某个名称的WIFI</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">boolean</span> <span class="title function_">isScanResultExist</span>(<span class="params"><span class="built_in">String</span> ssid, List&lt;WifiConfiguration&gt; existingConfigs</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="title class_">WifiConfiguration</span> existingConfig : existingConfigs) &#123;</span><br><span class="line">            <span class="keyword">if</span> (existingConfig.<span class="property">SSID</span>.<span class="title function_">equals</span>(<span class="string">&quot;\&quot;&quot;</span> + ssid + <span class="string">&quot;\&quot;&quot;</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// WiFi安全类型枚举</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">WifiSecurityType</span> &#123;</span><br><span class="line">        <span class="variable constant_">OPEN</span>, <span class="variable constant_">WEP</span>, <span class="variable constant_">WPA</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2.WifiUtils 简单使用实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line"></span><br><span class="line">    WifiUtils wifiUtils;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        wifiUtils = <span class="keyword">new</span> <span class="title class_">WifiUtils</span>(<span class="built_in">this</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查WiFi是否可用</span></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isWifiEnabled</span> <span class="operator">=</span> wifiUtils.isWifiEnabled();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 打开WiFi</span></span><br><span class="line">        wifiUtils.openWifi();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 关闭WiFi</span></span><br><span class="line">        wifiUtils.closeWifi();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 扫描WiFi网络</span></span><br><span class="line">        wifiUtils.scanWifi();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取扫描到的WiFi列表</span></span><br><span class="line">        List&lt;WifiConfiguration&gt; scanResults = wifiUtils.getScanResults();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取当前连接的WiFi</span></span><br><span class="line">        wifiUtils.getConnectedWifiInfo();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否有当前可用的WiFi连接</span></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isWifiConnected</span> <span class="operator">=</span> wifiUtils.isWifiConnected();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 关闭所有连接</span></span><br><span class="line">        wifiUtils.disconnectWifi();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个新的WiFi配置</span></span><br><span class="line">        WifiUtils.<span class="type">WifiConfiguration</span> <span class="variable">wifiConfig</span> <span class="operator">=</span> wifiUtils.createWifiConfig(<span class="string">&quot;YourSSID&quot;</span>, <span class="string">&quot;YourPassword&quot;</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 连接到WiFi</span></span><br><span class="line">        wifiUtils.connectToWifi(wifiConfig);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移除WiFi</span></span><br><span class="line">        wifiUtils.removeWifi(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加WiFi到系统</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">netId</span> <span class="operator">=</span> wifiUtils.addNetwork(wifiConfig);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取是否已经存在的配置</span></span><br><span class="line">        WifiUtils.<span class="type">WifiConfiguration</span> <span class="variable">existingConfig</span> <span class="operator">=</span> wifiUtils.isExist(<span class="string">&quot;YourSSID&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 去除同名WIFI</span></span><br><span class="line">        wifiUtils.removeSameWifi(<span class="string">&quot;YourSSID&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断一个扫描结果中，是否包含了某个名称的WIFI</span></span><br><span class="line">        <span class="type">boolean</span> <span class="variable">isScanResultExist</span> <span class="operator">=</span> wifiUtils.isScanResultExist(<span class="string">&quot;YourSSID&quot;</span>, scanResults);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在这里根据需要进行其他操作</span></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 示例：显示Toast提示信息</span></span><br><span class="line">        Toast.makeText(<span class="built_in">this</span>, <span class="string">&quot;WiFi Enabled: &quot;</span> + isWifiEnabled, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/21/Android_12_23.6/" rel="prev" title="Android 12 适配简介">
+                  <i class="fa fa-angle-left"></i> Android 12 适配简介
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/08/21/exoplayer/" rel="next" title="谷歌官方推荐的ExoPlayer的基本使用">
+                  谷歌官方推荐的ExoPlayer的基本使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">我是一条鱼</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
