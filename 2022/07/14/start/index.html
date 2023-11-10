@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Android性能优化----启动优化 | Xu的博客的空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Android性能优化—-启动优化启动优化的目的 APP启动如果得到很好的优化，增强用户体验增加用户流量；如果app启动时间过长影响用户体验，从而会造成流失用户。所以做启动优化是有必须的。  谷歌官方针对以下三种启动方式做了详细的介绍，具体可以参考 developer.android.com&#x2F;topic&#x2F;perfo…。 从官网得知APP启动所需的时间为：冷启动时间&gt;温启动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android性能优化----启动优化">
+<meta property="og:url" content="http://example.com/2022/07/14/start/index.html">
+<meta property="og:site_name" content="Xu的博客的空间">
+<meta property="og:description" content="Android性能优化—-启动优化启动优化的目的 APP启动如果得到很好的优化，增强用户体验增加用户流量；如果app启动时间过长影响用户体验，从而会造成流失用户。所以做启动优化是有必须的。  谷歌官方针对以下三种启动方式做了详细的介绍，具体可以参考 developer.android.com&#x2F;topic&#x2F;perfo…。 从官网得知APP启动所需的时间为：冷启动时间&gt;温启动">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ooo.0x0.ooo/2023/11/10/OenvQl.png">
+<meta property="article:published_time" content="2022-07-13T20:46:25.000Z">
+<meta property="article:modified_time" content="2023-11-09T16:47:48.507Z">
+<meta property="article:author" content="Xu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ooo.0x0.ooo/2023/11/10/OenvQl.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Xu的博客的空间" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xu的博客的空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">欢迎光临</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-start" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/07/14/start/" class="article-date">
+  <time class="dt-published" datetime="2022-07-13T20:46:25.000Z" itemprop="datePublished">2022-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Android性能优化----启动优化
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Android性能优化—-启动优化"><a href="#Android性能优化—-启动优化" class="headerlink" title="Android性能优化—-启动优化"></a>Android性能优化—-启动优化</h1><h2 id="启动优化的目的"><a href="#启动优化的目的" class="headerlink" title="启动优化的目的"></a>启动优化的目的</h2><blockquote>
+<p>APP启动如果得到很好的优化，增强用户体验增加用户流量；如果app启动时间过长影响用户体验，从而会造成流失用户。所以做启动优化是有必须的。</p>
+</blockquote>
+<p>谷歌官方针对以下三种启动方式做了详细的介绍，具体可以参考 <a target="_blank" rel="noopener" href="https://developer.android.com/topic/performance/vitals/launch-time">developer.android.com&#x2F;topic&#x2F;perfo…</a>。</p>
+<p>从官网得知APP启动所需的时间为：冷启动时间&gt;温启动时间&gt;热启动时间</p>
+<p>启动分三种:</p>
+<ul>
+<li><p>冷启动</p>
+<blockquote>
+<p>当应用在设备开机或者系统主动 kill APP 进程之后，用户点击桌面icon图标启动，称之为冷启动。</p>
+</blockquote>
+</li>
+<li><p>温启动</p>
+<blockquote>
+<p>温启动是APP进程还存活，因为内存不足Activity被回收了，当再次启动APP时就会重新执行Activity生命周期，布局绘制等操作。</p>
+</blockquote>
+</li>
+<li><p>热启动</p>
+<blockquote>
+<p>当后台存在该应用的进程或者服务时，用户点击icon图标启动，称之为热启动。一般是用户按了home键回到桌面，或者返回键没有杀进程，或者app本身做了进程重启的机制。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h2><p>冷启动的的过程：</p>
+<ul>
+<li>加载和启动APP</li>
+<li>显示一个白色的Window窗口</li>
+<li>创建APP进程</li>
+<li>创建Application</li>
+<li>创建MainActivity</li>
+<li>加载布局</li>
+<li>首帧绘制</li>
+</ul>
+<h2 id="应用的启动过程"><a href="#应用的启动过程" class="headerlink" title="应用的启动过程"></a>应用的启动过程</h2><p>  冷启动启动流程——当点击app的启动图标时，安卓系统会从Zygote进程中fork创建出一个新的进程分配给该应用，之后会依次创建和初始化Application类（attachBaseContext()–&gt;OnCreate()）、创建MainActivity类、加载主题样式Theme中的　windowBackground等属性设置给MainActivity以及配置Activity层级上的一些属性、再inflate布局、当onCreate&#x2F;onStart&#x2F;onResume方法都走完了，最后才进行contentView的measure&#x2F;layout&#x2F;draw显示在界面上，所以直到这里，应用的第一次启动才算完成，这时候看到的界面也就是首帧。</p>
+<p><a target="_blank" rel="noopener" href="https://img.tg/image/OenvQl"><img src="https://ooo.0x0.ooo/2023/11/10/OenvQl.png" alt="OenvQl.png"></a></p>
+<p><strong>大致流程如下：</strong></p>
+<ul>
+<li><p>点击桌面图标，Launcher会启动程序默认的Acticity，之后再按照程序的逻辑启动各种Activity。</p>
+</li>
+<li><p>启动Activity通过应用程序框架层的ActivityManagerService服务启动(Service也是由ActivityManagerService来启动的)。ActivityManagerService是一个非常重要的接口，它负责启动和管理Activity和Service。</p>
+<ol>
+<li>无论是通过Launcher来启动Activity，还是通过Activity内部调用startActivity接口来启动新的Activity，都通过Binder进程间通信进入到ActivityManagerService进程中，并且调用ActivityManagerService.startActivity接口。</li>
+<li>ActivityManagerService调用ActivityStack.startActivityMayWait来做准备要启动的Activity的相关信息。</li>
+<li>ActivityStack通知ApplicationThread要进行Activity启动调度了，这里的ApplicationThread代表的是调用ActivityManagerService.startActivity接口的进程，对于通过点击应用程序图标的情景来说，这个进程就是Launcher了，而对于通过在Activity内部调用startActivity的情景来说，这个进程就是这个Activity所在的进程了。</li>
+<li>ApplicationThread不执行真正的启动操作，它通过调用ActivityManagerService.activityPaused接口进入到ActivityManagerService进程中，看看是否需要创建新的进程来启动Activity。</li>
+<li>对于通过点击应用程序图标来启动Activity的情景来说，ActivityManagerService在这一步中，会调用startProcessLocked来创建一个新的进程，而对于通过在Activity内部调用startActivity来启动新的Activity来说，这一步是不需要执行的，因为新的Activity就在原来的Activity所在的进程中进行启动。</li>
+<li>ActivityManagerServic调用ApplicationThread.scheduleLaunchActivity接口，通知相应的进程执行启动Activity的操作。</li>
+<li>ApplicationThread把这个启动Activity的操作转发给ActivityThread，ActivityThread通过ClassLoader导入相应的Activity类，然后把它启动起来。</li>
+</ol>
+</li>
+</ul>
+<p><strong>所以相应的优化方案</strong></p>
+<ul>
+<li>减少 onCreate方法的工作量。</li>
+<li>不要让Application参与业务逻辑。</li>
+<li>不要在Application中做耗时操作，一些初始化操作可以开启子线程来完成。</li>
+<li>不要以静态变量方式在Application中保存数据。</li>
+<li>布局优化&#x2F;mainThread尽量延迟初始化。</li>
+<li>启动画面的初始化可以使用设置主题背景的方式，速度回更快。</li>
+</ul>
+<h2 id="启动主题优化"><a href="#启动主题优化" class="headerlink" title="启动主题优化"></a>启动主题优化</h2><p><strong>冷启动阶段:</strong></p>
+<ol>
+<li>加载并启动应用程序。</li>
+<li>启动后立即显示应用程序空白的启动窗口。</li>
+<li>创建应用程序进程。</li>
+</ol>
+<p>  启动主题优化，就是应用程序在冷启动的时候(1~2阶段)，设置启动窗口的主题。因为现在 App 应用启动都会先进入一个闪屏页(LaunchActivity) 来展示应用信息。</p>
+<p><strong>默认主题情况</strong></p>
+<p>  如果我们对App没有做处理(设置了默认主题)，并且在 Application 的onCreate()初始化了其它第三方的服务(假设需要加载2000ms)，那么系统默认会在启动应用程序的时候启动空白窗口 （产生一个白屏），直到 App 应用程序的入口 Activity 创建成功，视图绘制完毕。( 大概是onWindowFocusChanged方法回调的时候 )</p>
+<p><strong>解决白屏或黑屏问题</strong></p>
+<p>在默认主题的情况下并且Application初始化服务耗时过长就会出现白屏。如果出现白屏或黑屏闪现，查看设置Style的Theme。</p>
+<p><strong>透明主题优化</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=<span class="string">&quot;AppTheme2&quot;</span> parent=<span class="string">&quot;Theme.AppCompat.Light.DarkActionBar&quot;</span>&gt;</span><br><span class="line">  ......</span><br><span class="line">  &lt;item name=<span class="string">&quot;android:windowIsTranslucent&quot;</span>&gt;<span class="literal">true</span>&lt;/item&gt;</span><br><span class="line">  &lt;item name=<span class="string">&quot;android:windowNoTitle&quot;</span>&gt;<span class="literal">true</span>&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>  为了解决启动窗口白屏问题，许多开发者都是使用透明主题来解决这个问题，但是治标不治本。虽然解决了上面这个问题，但是仍然有些不足。已经测试虽然无白屏了，不过从点击到App仍然存在视觉延迟。</p>
+<p><strong>设置闪屏图片主题</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=<span class="string">&quot;AppTheme1&quot;</span> parent=<span class="string">&quot;Theme.AppCompat.Light.DarkActionBar&quot;</span>&gt;</span><br><span class="line">      &lt;item name=<span class="string">&quot;android:windowBackground&quot;</span>&gt;<span class="meta">@drawable</span>/icon_bg&lt;/item&gt;<span class="comment">//闪屏页图片</span></span><br><span class="line">      &lt;item name=<span class="string">&quot;android:windowFullscreen&quot;</span>&gt;<span class="literal">true</span>&lt;/item&gt;</span><br><span class="line">      &lt;item name=<span class="string">&quot;android:windowContentOverlay&quot;</span>&gt;<span class="meta">@null</span>&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>  为了更顺滑无缝衔接闪屏页，可以在启动 Activity 的 Theme中设置闪屏页图片（如上面代码），这样启动窗口的图片就会是闪屏页图片，而不是白屏。这样设置的话，就会在冷启动的时候，展示闪屏页的图片，等App进程初始化加载入口 Activity (也是闪屏页) 就可以无缝衔接。其实这种方式并没有真正的加速应用进程的启动速度，而只是通过用户视觉效果带来的优化体验。</p>
+<h2 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h2><p>  当然上面使用设置主题的方式优化用户体验效果治标不治本，关键还在于对代码的优化。首先我们可以统计一下应用冷启动的时间。</p>
+<h3 id="启动耗时的测量方式"><a href="#启动耗时的测量方式" class="headerlink" title="启动耗时的测量方式"></a>启动耗时的测量方式</h3><ul>
+<li>通过adb 命令统计启动耗时时间</li>
+<li>手动埋点计算时间差</li>
+</ul>
+<p><strong>adb 命令统计</strong></p>
+<p>adb命令 : adb shell am start -S -W 包名&#x2F;启动类的全限定名 ， -S 表示重启当前应用</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mzlogin/awesome-adb">更多的ADB命令</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">G:\AS_Project_Work\Demo&gt;adb shell am start -S -W com.lu.demo/com.lu.demo.MainActivity</span><br><span class="line">Stopping: com.lu.demo</span><br><span class="line">Starting: Intent &#123; act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.lu.demo/.MainActivity &#125;</span><br><span class="line">Status: ok</span><br><span class="line">Activity: com.lu.demo/.MainActivity</span><br><span class="line">ThisTime: <span class="number">508</span></span><br><span class="line">TotalTime: <span class="number">508</span></span><br><span class="line">WaitTime: <span class="number">586</span></span><br><span class="line">Complete</span><br></pre></td></tr></table></figure>
+
+<p>ThisTime : 最后一个 Activity 的启动耗时(例如从 LaunchActivity - &gt;MainActivity「adb命令输入的Activity」 , 只统计 MainActivity 的启动耗时)。 TotalTime : 启动一连串的 Activity 总耗时.(有几个Activity 就统计几个)。 WaitTime : 应用进程的创建过程 + TotalTime 。</p>
+<p>ThisTime&lt;&#x3D;TotalTime&lt;&#x3D;WaitTime</p>
+<p>这时应用就启动了 <code>(注意：此时是冷启动)</code>，当我点击home将应用切到后台之后，再次执行adb shell am start -W 包名&#x2F;启动类的全限定名的命令，这时可以发现，这三个时间都缩短了，而且提示 <code>Warning: Activity not started, its current task has been brought to the front</code> 表示当 <code>前启动是一个热启动</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">G:\AS_Project_Work\Demo&gt;adb shell am start -W com.lu.demo/com.lu.demo.MainActivity</span><br><span class="line">Stopping: com.lu.demo</span><br><span class="line">Starting: Intent &#123; act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.lu.demo/.MainActivity &#125;</span><br><span class="line">Warning: Activity not started, its current task has been brought to the front</span><br><span class="line">Status: ok</span><br><span class="line">Activity: com.lu.demo/.MainActivity</span><br><span class="line">ThisTime: <span class="number">508</span></span><br><span class="line">TotalTime: <span class="number">508</span></span><br><span class="line">WaitTime: <span class="number">586</span></span><br><span class="line">Complete</span><br></pre></td></tr></table></figure>
+
+<p><strong>手动埋点计算时间差</strong></p>
+<p>手动埋点在什么时机开始计算时间，什么时候结束计算时间？一般会在 Application attachBaseContext 中开始埋点计算开始时间，然后在 Activity 中第一个 View 中preDraw 时结束埋点计算结束时间，两者之差就是启动耗时时间。从上面的启动过程得知，一般会在 Application attachBaseContext 中开始埋点计算开始时间，然后在启动MainActivity 中第一个 View 中preDraw 时结束埋点计算结束时间。参照启动过程下面开始代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Application.java</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">attachBaseContext</span><span class="params">(Context base)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.attachBaseContext(base);</span><br><span class="line">    <span class="comment">//开始计算启动时间（埋点）</span></span><br><span class="line">    LaunchTime.startRecord();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MainActivity.java</span></span><br><span class="line"><span class="type">TextView</span> <span class="variable">text</span> <span class="operator">=</span> findViewById(R.id.text);</span><br><span class="line">text.getViewTreeObserver().addOnPreDrawListener(<span class="keyword">new</span> <span class="title class_">ViewTreeObserver</span>.OnPreDrawListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onPreDraw</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 结束计算启动时间(埋点)</span></span><br><span class="line">        LaunchTime.stopRecord(<span class="string">&quot;TextView preDraw&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//LaunchTime.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LaunchTime</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">TAG</span> <span class="operator">=</span> LaunchTime.class.getSimpleName();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">long</span> <span class="variable">startTime</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//开始记录计时</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">startRecord</span><span class="params">()</span> &#123;</span><br><span class="line">        startTime = System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//停止计时 打印出时间差</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">stopRecord</span><span class="params">(String tag)</span> &#123;</span><br><span class="line">        <span class="comment">//打印日志</span></span><br><span class="line">        Log.e(TAG, tag + <span class="string">&quot;CostTime:&quot;</span> + (System.currentTimeMillis() - startTime));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印日志</span></span><br><span class="line"><span class="number">06</span>-<span class="number">1267</span> <span class="number">21</span>:<span class="number">38</span>:<span class="number">37.230</span> <span class="number">1701</span>-<span class="number">1701</span>/? E/LaunchTime: TextView preDrawCostTime:<span class="number">398</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>手动计算启动耗时时间是比较精确的方式，可以带到线上使用，不过需要注意结束埋点的时机，这个时机也可以选择 addOnDrawListener 但是这个是在API16以上才能使用。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>记录启动优化日后好复习。</li>
+<li>了解APP启动过程，更好设置优化方案。</li>
+<li>了解主题启动优化方案处理白屏黑屏闪现等问题。</li>
+<li>代码优化及启动耗时测量方式，方案选择。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/07/14/start/" data-id="clorfqbl00004fsfy93pn45m6" data-title="Android性能优化----启动优化" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/10/01/targetSdkVersion/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android14 适配之——targetSdkVersion 升级到 34 需要注意些什么？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/14/table/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android Room 数据库升级</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/26/viewModel_alloc/">ViewModel实例什么时候被回收</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/20/ViewModel/">ViewModel 如何做到 Activity 重启不丢失数据</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/12/wen/">Android 让程序更稳定、更灵活 —— 开闭原则</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/01/targetSdkVersion/">Android14 适配之——targetSdkVersion 升级到 34 需要注意些什么？</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/14/start/">Android性能优化----启动优化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Xu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>无悬浮窗权限实现全局Dialog | Xu的博客的空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="无悬浮窗权限实现全局Dialog有些场景下需要显示一些提示弹窗，但把握不好弹出时机容易先弹出弹窗然后界面马上被杀掉进而看不到提示内容，例如强制下线：客户端退回登录界面并弹出提示弹窗。 如果是直接拿的栈顶activity去弹出，没有将弹窗逻辑写到具体activity中，或不好确定activty的变化就容易出现这种现象。 由于applicationContext没有 AppWindowToken，所以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无悬浮窗权限实现全局Dialog">
+<meta property="og:url" content="http://example.com/2022/01/13/tan/index.html">
+<meta property="og:site_name" content="Xu的博客的空间">
+<meta property="og:description" content="无悬浮窗权限实现全局Dialog有些场景下需要显示一些提示弹窗，但把握不好弹出时机容易先弹出弹窗然后界面马上被杀掉进而看不到提示内容，例如强制下线：客户端退回登录界面并弹出提示弹窗。 如果是直接拿的栈顶activity去弹出，没有将弹窗逻辑写到具体activity中，或不好确定activty的变化就容易出现这种现象。 由于applicationContext没有 AppWindowToken，所以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ooo.0x0.ooo/2023/11/10/OenmnB.png">
+<meta property="og:image" content="https://ooo.0x0.ooo/2023/11/10/OenmnB.png">
+<meta property="article:published_time" content="2022-01-13T10:23:19.000Z">
+<meta property="article:modified_time" content="2023-11-09T16:51:31.636Z">
+<meta property="article:author" content="Xu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ooo.0x0.ooo/2023/11/10/OenmnB.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Xu的博客的空间" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xu的博客的空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">欢迎光临</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-tan" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/13/tan/" class="article-date">
+  <time class="dt-published" datetime="2022-01-13T10:23:19.000Z" itemprop="datePublished">2022-01-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      无悬浮窗权限实现全局Dialog
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="无悬浮窗权限实现全局Dialog"><a href="#无悬浮窗权限实现全局Dialog" class="headerlink" title="无悬浮窗权限实现全局Dialog"></a>无悬浮窗权限实现全局Dialog</h1><p>有些场景下需要显示一些提示弹窗，但把握不好弹出时机容易先弹出弹窗然后界面马上被杀掉进而看不到提示内容，例如强制下线：客户端退回登录界面并弹出提示弹窗。</p>
+<p>如果是直接拿的栈顶activity去弹出，没有将弹窗逻辑写到具体activity中，或不好确定activty的变化就容易出现这种现象。</p>
+<p>由于applicationContext没有 <code>AppWindowToken</code>，所以dialog无法使用applicationContext创建，要么就使用windowManager配合 <code>WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY</code> 使用创建全局悬浮窗。但是这种做法需要申请权限。那么，在没有悬浮权限情况下如何做到让dialog不受栈顶activity变化的影响？</p>
+<p>我的想法是通过 <code>application.registerActivityLifecycleCallbacks</code> 在activity变化时，关闭原来的弹窗，并重新创建一个一样的dialog并显示。</p>
+<p>效果演示：</p>
+<h3 id="1-栈顶界面被杀"><a href="#1-栈顶界面被杀" class="headerlink" title="1. 栈顶界面被杀"></a>1. 栈顶界面被杀</h3><p><img src="https://ooo.0x0.ooo/2023/11/10/OenmnB.png" alt="OenmnB.png"></p>
+<h3 id="2-有新界面弹出"><a href="#2-有新界面弹出" class="headerlink" title="2. 有新界面弹出"></a>2. 有新界面弹出</h3><p><img src="https://ooo.0x0.ooo/2023/11/10/OenmnB.png" alt="OenmnB.png"></p>
+<p>以下是代码实现：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> 无需悬浮权限的全局弹窗，栈顶activity变化后通过反射重建，所以子类构造方法需无参</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">open</span> <span class="keyword">class</span> <span class="title class_">BaseAppDialog</span>&lt;<span class="type">T : ViewModel</span>&gt;() : Dialog(topActivity!!.<span class="keyword">get</span>()!!), ViewModelStoreOwner &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> TAG = BaseAppDialog::<span class="keyword">class</span>.java.simpleName</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">var</span> topActivity: WeakReference&lt;Activity&gt;? = <span class="literal">null</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> staticRestoreList = linkedMapOf&lt;Class&lt;*&gt;, <span class="built_in">Boolean</span>&gt;()    <span class="comment">//第二个参数：是否临时关闭</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> staticViewModelStore: ViewModelStore = ViewModelStore()</span><br><span class="line"></span><br><span class="line">        <span class="meta">@JvmStatic</span></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">init</span><span class="params">(application: <span class="type">Application</span>)</span></span> &#123;</span><br><span class="line">            application.registerActivityLifecycleCallbacks(<span class="keyword">object</span> : Application.ActivityLifecycleCallbacks &#123;</span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityCreated</span><span class="params">(activity: <span class="type">Activity</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">                    topActivity = WeakReference(activity)</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityStarted</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityResumed</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">                    topActivity = WeakReference(activity)</span><br><span class="line">                    <span class="keyword">val</span> tempList = arrayListOf&lt;BaseAppDialog&lt;*&gt;&gt;()</span><br><span class="line">                    <span class="keyword">val</span> iterator = staticRestoreList.iterator()</span><br><span class="line">                    <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">                        <span class="keyword">val</span> next = iterator.next()</span><br><span class="line">                        <span class="keyword">val</span> topName = (topActivity?.<span class="keyword">get</span>() ?: <span class="string">&quot;&quot;</span>)::<span class="keyword">class</span>.java.name</span><br><span class="line">                        <span class="keyword">if</span> (next.value == <span class="literal">true</span>) &#123;  <span class="comment">//避免onCreate创建的弹窗重复弹出</span></span><br><span class="line">                            <span class="keyword">val</span> newInstance = Class.forName(next.key.name).getConstructor().newInstance() <span class="keyword">as</span> BaseAppDialog&lt;*&gt;</span><br><span class="line">                            tempList.add(newInstance)</span><br><span class="line">                            Log.e(TAG, <span class="string">&quot;重新创建<span class="subst">$&#123;next.key.name&#125;</span>，于<span class="variable">$topName</span>&quot;</span>)</span><br><span class="line">                            iterator.remove()</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    tempList.forEach &#123;</span><br><span class="line">                        it.show()</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (staticRestoreList.size == <span class="number">0</span>) &#123;</span><br><span class="line">                        staticViewModelStore.clear()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityPaused</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityStopped</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivitySaveInstanceState</span><span class="params">(activity: <span class="type">Activity</span>, outState: <span class="type">Bundle</span>)</span></span> &#123;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityDestroyed</span><span class="params">(activity: <span class="type">Activity</span>)</span></span> &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> vm: T? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> genericClass = getGenericClass()</span><br><span class="line">        <span class="keyword">if</span> (vm == <span class="literal">null</span>) &#123;</span><br><span class="line">            (genericClass <span class="keyword">as</span>? Class&lt;T&gt;)?.let &#123;</span><br><span class="line">                vm = ViewModelProvider(<span class="keyword">this</span>)[it]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        topActivity?.<span class="keyword">get</span>()?.let &#123;</span><br><span class="line">            (it <span class="keyword">as</span> LifecycleOwner).lifecycle.addObserver(<span class="keyword">object</span> : DefaultLifecycleObserver &#123;</span><br><span class="line">                <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onPause</span><span class="params">(owner: <span class="type">LifecycleOwner</span>)</span></span> &#123;</span><br><span class="line">                    <span class="keyword">super</span>.onPause(owner)</span><br><span class="line">                    dismissSilent()</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//用于栈顶变化时的关闭</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">dismissSilent</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.dismiss()</span><br><span class="line">        staticRestoreList.replace(<span class="keyword">this</span>::<span class="keyword">class</span>.java, <span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">show</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.show()</span><br><span class="line">        staticRestoreList.put(<span class="keyword">this</span>::<span class="keyword">class</span>.java, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">dismiss</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.dismiss()</span><br><span class="line">        staticRestoreList.remove(<span class="keyword">this</span>::<span class="keyword">class</span>.java)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取泛型实际类型</span></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">getGenericClass</span><span class="params">()</span></span>: Class&lt;*&gt;? &#123;</span><br><span class="line">        <span class="keyword">val</span> superclass = javaClass.genericSuper<span class="keyword">class</span></span><br><span class="line">        <span class="title class_">if</span> (<span class="keyword">super</span><span class="keyword">class</span> <span class="title class_">is</span> <span class="title">ParameterizedType</span>) &#123;</span><br><span class="line">            <span class="keyword">val</span> actualTypeArguments: Array&lt;Type&gt;? = superclass.actualTypeArguments</span><br><span class="line">            <span class="keyword">if</span> (!actualTypeArguments.isNullOrEmpty()) &#123;</span><br><span class="line">                <span class="keyword">val</span> type: Type = actualTypeArguments[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">if</span> (type <span class="keyword">is</span> Class&lt;*&gt;) &#123;</span><br><span class="line">                    <span class="keyword">return</span> type</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ViewModel::<span class="keyword">class</span>.java</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自己管理viewModel以便恢复数据</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getViewModelStore</span><span class="params">()</span></span>: ViewModelStore &#123;</span><br><span class="line">        <span class="keyword">return</span> staticViewModelStore</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参数传递的话，直接通过修改dialog的viewmodel变量或调用其方法来实现。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">TipDialogVm</span> : <span class="type">ViewModel</span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> content = MutableLiveData&lt;String&gt;(<span class="string">&quot;&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TipDialog2</span> : <span class="type">BaseAppDialog</span>&lt;<span class="type">TipDialogVm</span>&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> binding : DialogTip2Binding? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_tip2, <span class="literal">null</span>, <span class="literal">false</span>)</span><br><span class="line">        binding?.lifecycleOwner = context <span class="keyword">as</span>? LifecycleOwner</span><br><span class="line">        binding?.vm = vm</span><br><span class="line">        setContentView(binding!!.root)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>弹出弹窗</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TipDialog2().apply &#123;</span><br><span class="line">    vm?.content?.value = <span class="string">&quot;嗨嗨嗨&quot;</span></span><br><span class="line">&#125;.show()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/13/tan/" data-id="clorfqbkz0002fsfy4scsdsvk" data-title="无悬浮窗权限实现全局Dialog" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/14/table/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Android Room 数据库升级
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/26/viewModel_alloc/">ViewModel实例什么时候被回收</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/20/ViewModel/">ViewModel 如何做到 Activity 重启不丢失数据</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/12/wen/">Android 让程序更稳定、更灵活 —— 开闭原则</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/01/targetSdkVersion/">Android14 适配之——targetSdkVersion 升级到 34 需要注意些什么？</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/14/start/">Android性能优化----启动优化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Xu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

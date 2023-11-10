@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>ViewModel 如何做到 Activity 重启不丢失数据 | Xu的博客的空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="[Framework] ViewModel 如何做到 Activity 重启不丢失数据在 Android 屏幕旋转和手机配置改变都有可能造成 Activity 重启，在这个过程中旧的 Activity 数据就需要保存，然后需要把旧的数据传递给新的 Activity，然后恢复重启前的状态，开发中处理这种重启的情况非常烦人😡，新手开发经常不会处理，然后导致状态丢失，严重的还会有一些崩溃， Andro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ViewModel 如何做到 Activity 重启不丢失数据">
+<meta property="og:url" content="http://example.com/2023/07/20/ViewModel/index.html">
+<meta property="og:site_name" content="Xu的博客的空间">
+<meta property="og:description" content="[Framework] ViewModel 如何做到 Activity 重启不丢失数据在 Android 屏幕旋转和手机配置改变都有可能造成 Activity 重启，在这个过程中旧的 Activity 数据就需要保存，然后需要把旧的数据传递给新的 Activity，然后恢复重启前的状态，开发中处理这种重启的情况非常烦人😡，新手开发经常不会处理，然后导致状态丢失，严重的还会有一些崩溃， Andro">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-20T11:50:35.000Z">
+<meta property="article:modified_time" content="2023-11-09T16:24:27.005Z">
+<meta property="article:author" content="Xu">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Xu的博客的空间" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xu的博客的空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">欢迎光临</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ViewModel" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/20/ViewModel/" class="article-date">
+  <time class="dt-published" datetime="2023-07-20T11:50:35.000Z" itemprop="datePublished">2023-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      ViewModel 如何做到 Activity 重启不丢失数据
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Framework-ViewModel-如何做到-Activity-重启不丢失数据"><a href="#Framework-ViewModel-如何做到-Activity-重启不丢失数据" class="headerlink" title="[Framework] ViewModel 如何做到 Activity 重启不丢失数据"></a>[Framework] ViewModel 如何做到 Activity 重启不丢失数据</h1><p>在 <code>Android</code> 屏幕旋转和手机配置改变都有可能造成 <code>Activity</code> 重启，在这个过程中旧的 <code>Activity</code> 数据就需要保存，然后需要把旧的数据传递给新的 <code>Activity</code>，然后恢复重启前的状态，开发中处理这种重启的情况非常烦人😡，新手开发经常不会处理，然后导致状态丢失，严重的还会有一些崩溃， <code>Android</code> 官方自己也发现了这个问题然后提供了 <code>ViewModel</code>，并告诉大家 <code>Activity</code> 中状态相关的数据都可以放在里面，并保证屏幕旋转等重启不会导致它的数据丢失。好了这就引出了我们今天的主题，我们来看看 <code>ViewModel</code> 是如何做到 <code>Activity</code> 重启数据不丢失的。</p>
+<h2 id="ViewModel-是如何保存数据的"><a href="#ViewModel-是如何保存数据的" class="headerlink" title="ViewModel 是如何保存数据的"></a>ViewModel 是如何保存数据的</h2><p>我们一般像如下方式使用 <code>ViewModel</code> ：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">ComponentActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> myViewModel: MyViewModel <span class="keyword">by</span> lazy &#123;</span><br><span class="line">        ViewModelProvider(<span class="keyword">this</span>).<span class="keyword">get</span>(MyViewModel::<span class="keyword">class</span>.java)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先创建一个 <code>ViewModelProvider</code> 实例，构造函数中需要传递一个 <code>ViewModelStoreOwner</code> 对象，好巧不巧，我们使用的 <code>jitpack</code> 中的 <code>Activity</code> 和 <code>Fragment</code> 他们都是 <code>ViewModelStoreOwner</code>，后续我们也都用 <code>Activity</code> 作为分析源码的标准。然后通过 <code>ViewModelProvider#get()</code> 方法来获取我们想要的 <code>ViewModel</code> 实例。</p>
+<p>首先看看 <code>ViewModelProvider</code> 的构造函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">constructor</span>(</span><br><span class="line">    owner: ViewModelStoreOwner</span><br><span class="line">) : <span class="keyword">this</span>(owner.viewModelStore, defaultFactory(owner), defaultCreationExtras(owner))</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">constructor</span>(owner: ViewModelStoreOwner, factory: Factory) : <span class="keyword">this</span>(</span><br><span class="line">    owner.viewModelStore,</span><br><span class="line">    factory,</span><br><span class="line">    defaultCreationExtras(owner)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="meta">@JvmOverloads</span></span><br><span class="line"><span class="keyword">constructor</span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> store: ViewModelStore,</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> factory: Factory,</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> defaultCreationExtras: CreationExtras = CreationExtras.Empty,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>朴实无华的构造函数，会直接通过我们的 <code>ViewModelStoreOwner</code> 来直接获取 <code>ViewModelStore</code>，然后创建一个 <code>defaultFactory</code> 他就是我们用来生成 <code>ViewModel</code> 实例的仓库，后续我们再看看它。忽略掉 <code>defaultCreationExtras</code> 变量。</p>
+<p>然后再看看 <code>ViewModelProvider#get()</code> 方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">open</span> <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ViewModel&gt;</span> <span class="title">get</span><span class="params">(modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">val</span> canonicalName = modelClass.canonicalName</span><br><span class="line">        ?: <span class="keyword">throw</span> IllegalArgumentException(<span class="string">&quot;Local and anonymous classes can not be ViewModels&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">get</span>(<span class="string">&quot;<span class="variable">$DEFAULT_KEY</span>:<span class="variable">$canonicalName</span>&quot;</span>, modelClass)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Suppress(<span class="string">&quot;UNCHECKED_CAST&quot;</span>)</span></span><br><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">open</span> <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ViewModel&gt;</span> <span class="title">get</span><span class="params">(key: <span class="type">String</span>, modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">val</span> viewModel = store[key]</span><br><span class="line">    <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</span><br><span class="line">        (factory <span class="keyword">as</span>? OnRequeryFactory)?.onRequery(viewModel!!)</span><br><span class="line">        <span class="keyword">return</span> viewModel <span class="keyword">as</span> T</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="meta">@Suppress(<span class="string">&quot;ControlFlowWithEmptyBody&quot;</span>)</span></span><br><span class="line">        <span class="keyword">if</span> (viewModel != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> log a warning.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> extras = MutableCreationExtras(defaultCreationExtras)</span><br><span class="line">    extras[VIEW_MODEL_KEY] = key</span><br><span class="line">    <span class="comment">// AGP has some desugaring issues associated with compileOnly dependencies so we need to</span></span><br><span class="line">    <span class="comment">// fall back to the other create method to keep from crashing.</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">try</span> &#123;</span><br><span class="line">        factory.create(modelClass, extras)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: AbstractMethodError) &#123;</span><br><span class="line">        factory.create(modelClass)</span><br><span class="line">    &#125;.also &#123; store.put(key, it) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认的 <code>key</code> 的构建方式是 <code>DEFAULT_KEY</code> + <code>ViewModel</code> 的类名，直接从 <code>ViewModelStore</code> 中根据这个 <code>key</code> 去查找这个对象，同时还会判断它的类型，如果都没有问题会通知 <code>OnRequeryFactory#onRequery()</code> 方法，然后直接返回；如果从 <code>ViewModelStore</code> 中查询失败了，就通过 <code>Factory</code> 创建一个然后储存到 <code>ViewModelStore</code> 中，然后再返回。</p>
+<p>我们再看看 <code>AndroidViewModelFactory</code> 是如何创建 <code>ViewModel</code> 的。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Suppress(<span class="string">&quot;DocumentExceptions&quot;</span>)</span></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ViewModel&gt;</span> <span class="title">create</span><span class="params">(modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">if</span> (application == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> UnsupportedOperationException(</span><br><span class="line">            <span class="string">&quot;AndroidViewModelFactory constructed &quot;</span> +</span><br><span class="line">                <span class="string">&quot;with empty constructor works only with &quot;</span> +</span><br><span class="line">                <span class="string">&quot;create(modelClass: Class&lt;T&gt;, extras: CreationExtras).&quot;</span></span><br><span class="line">        )</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        create(modelClass, application)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Suppress(<span class="string">&quot;DocumentExceptions&quot;</span>)</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ViewModel&gt;</span> <span class="title">create</span><span class="params">(modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;, app: <span class="type">Application</span>)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">if</span> (AndroidViewModel::<span class="keyword">class</span>.java.isAssignableFrom(modelClass)) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            modelClass.getConstructor(Application::<span class="keyword">class</span>.java).newInstance(app)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: NoSuchMethodException) &#123;</span><br><span class="line">            <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: IllegalAccessException) &#123;</span><br><span class="line">            <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: InstantiationException) &#123;</span><br><span class="line">            <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: InvocationTargetException) &#123;</span><br><span class="line">            <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">super</span>.create(modelClass)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ViewModel&gt;</span> <span class="title">create</span><span class="params">(modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">try</span> &#123;</span><br><span class="line">        modelClass.getDeclaredConstructor().newInstance()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: NoSuchMethodException) &#123;</span><br><span class="line">        <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: InstantiationException) &#123;</span><br><span class="line">        <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: IllegalAccessException) &#123;</span><br><span class="line">        <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>创建 <code>ViewModel</code> 都是通过反射的方式创建，支持无参数和只有一个 <code>Application</code> 的构造函数的 <code>ViewModel</code>。</p>
+<p>我们再来看看 <code>ComponentActivity</code>（它实现了 <code>ViewModelStoreOwner</code> 接口） 中是如何来创建 <code>ViewModelStore</code> 的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@NonNull</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> ViewModelStore <span class="title function_">getViewModelStore</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (getApplication() == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Your activity is not yet attached to the &quot;</span></span><br><span class="line">                + <span class="string">&quot;Application instance. You can&#x27;t request ViewModel before onCreate call.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ensureViewModelStore();</span><br><span class="line">    <span class="keyword">return</span> mViewModelStore;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">ensureViewModelStore</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (mViewModelStore == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="type">NonConfigurationInstances</span> <span class="variable">nc</span> <span class="operator">=</span></span><br><span class="line">                (NonConfigurationInstances) getLastNonConfigurationInstance();</span><br><span class="line">        <span class="keyword">if</span> (nc != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// Restore the ViewModelStore from NonConfigurationInstances</span></span><br><span class="line">            mViewModelStore = nc.viewModelStore;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mViewModelStore == <span class="literal">null</span>) &#123;</span><br><span class="line">            mViewModelStore = <span class="keyword">new</span> <span class="title class_">ViewModelStore</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>OK 我们的主角出现了，通过 <code>getLastNonConfigurationInstance()</code> 方法来获取 <code>ViewModelStore</code> 的，如果没有获取到就创建一个。他也是 <code>Activity</code> 中的标准方法哦，他就相当于 <code>onRestoreInstanceState()</code> (也就是用来获取上次保存的数据)，而对应的 <code>onSaveInstanceState()</code> (保存数据) 方法就是 <code>onRetainNonConfigurationInstance()</code>，他们在某些方面和 <code>onSaveInstanceState()</code> &#x2F; <code>onRestoreInstanceState()</code> 确实很像（可以参考我的另外一篇文章： <a target="_blank" rel="noopener" href="https://juejin.cn/post/7296011286091923475" title="https://juejin.cn/post/7296011286091923475">关于 Activity#onSaveInstanceState() 的笔记</a>）。</p>
+<p>我们来看看 <code>ComponentActivity</code> 对应的 <code>onRetainNonConfigurationInstance()</code> 和 <code>getLastNonConfigurationInstance()</code> 的实现：</p>
+<p><code>onRetainNonConfigurationInstance()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title function_">onRetainNonConfigurationInstance</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// Maintain backward compatibility.</span></span><br><span class="line">    <span class="type">Object</span> <span class="variable">custom</span> <span class="operator">=</span> onRetainCustomNonConfigurationInstance();</span><br><span class="line"></span><br><span class="line">    <span class="type">ViewModelStore</span> <span class="variable">viewModelStore</span> <span class="operator">=</span> mViewModelStore;</span><br><span class="line">    <span class="keyword">if</span> (viewModelStore == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="comment">// No one called getViewModelStore(), so see if there was an existing</span></span><br><span class="line">        <span class="comment">// ViewModelStore from our last NonConfigurationInstance</span></span><br><span class="line">        <span class="type">NonConfigurationInstances</span> <span class="variable">nc</span> <span class="operator">=</span></span><br><span class="line">                (NonConfigurationInstances) getLastNonConfigurationInstance();</span><br><span class="line">        <span class="keyword">if</span> (nc != <span class="literal">null</span>) &#123;</span><br><span class="line">            viewModelStore = nc.viewModelStore;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (viewModelStore == <span class="literal">null</span> &amp;&amp; custom == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">NonConfigurationInstances</span> <span class="variable">nci</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NonConfigurationInstances</span>();</span><br><span class="line">    nci.custom = custom;</span><br><span class="line">    nci.viewModelStore = viewModelStore;</span><br><span class="line">    <span class="keyword">return</span> nci;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>他这里还添加了一个 <code>onRetainCustomNonConfigurationInstance()</code> 方法来保存自定义的数据，因为 <code>onRetainNonConfigurationInstance()</code> 已经被 <code>final</code> 修饰了，不让重写，自定义的数据和 <code>ViewModelStore</code> 都会被存放在 <code>NonConfigurationInstances()</code> 中。</p>
+<p><code>getLastNonConfigurationInstance()</code> 直接是 <code>Activity</code> 的默认实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Object <span class="title function_">getLastNonConfigurationInstance</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> mLastNonConfigurationInstances != <span class="literal">null</span></span><br><span class="line">            ? mLastNonConfigurationInstances.activity : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><p><code>onRetainNonConfigurationInstance()</code> 的官方文档：</p>
+<blockquote>
+<p>Called by the system, as part of destroying an activity due to a configuration change, when it is known that a new instance will immediately be created for the new configuration. You can return any object you like here, including the activity instance itself, which can later be retrieved by calling getLastNonConfigurationInstance() in the new activity instance. If you are targeting Build.VERSION_CODES.HONEYCOMB or later, consider instead using a Fragment with Fragment.setRetainInstance(boolean.</p>
+<p> This function is called purely as an optimization, and you must not rely on it being called. When it is called, a number of guarantees will be made to help optimize configuration switching:</p>
+</blockquote>
+<blockquote>
+<p>The function will be called between onStop and onDestroy.</p>
+</blockquote>
+<blockquote>
+<p>A new instance of the activity will always be immediately created after this one’s onDestroy() is called. In particular, no messages will be dispatched during this time (when the returned object does not have an activity to be associated with).</p>
+</blockquote>
+<blockquote>
+<p>The object you return here will always be available from the getLastNonConfigurationInstance() method of the following activity instance as described there.</p>
+</blockquote>
+<blockquote>
+<p>These guarantees are designed so that an activity can use this API to propagate extensive state from the old to new activity instance, from loaded bitmaps, to network connections, to evenly actively running threads. Note that you should not propagate any data that may change based on the configuration, including any data loaded from resources such as strings, layouts, or drawables.</p>
+<p> The guarantee of no message handling during the switch to the next activity simplifies use with active objects. For example if your retained state is an android.os.AsyncTask you are guaranteed that its call back functions (like android.os.AsyncTask.onPostExecute) will not be called from the call here until you execute the next instance’s onCreate(Bundle). (Note however that there is of course no such guarantee for android.os.AsyncTask.doInBackground since that is running in a separate thread.)</p>
+<p> Note: For most cases you should use the Fragment API Fragment.setRetainInstance(boolean) instead; this is also available on older platforms through the Android support libraries.</p>
+<p> Returns: any Object holding the desired state to propagate to the next activity instance</p>
+</blockquote>
+<p>我来说说我对文档的理解：</p>
+<p>该方法被系统调用，由于配置改变需要销毁当前 <code>Activity</code>，然后立马会创建一个新配置的 <code>Activity</code>，你就可以通过这个方法来保存销毁的 <code>Activity</code> 的数据，你可以返回任何对象来保存数据，在新的 <code>Activity</code> 中可以通过 <code>getLastNonConfigurationInstance()</code> 方法来获取旧 <code>Activity</code> 中保存的数据 （注意对比和 <code>onSaveInstanceState()</code> 方法的描述）。</p>
+<p>该方法只是纯粹的优化，你不能依赖它的调用，当它被调用时会有以下几点保证帮助你优化配置切换：</p>
+<ul>
+<li>该方法会在 <code>onStop</code> 和 <code>onDestroy</code> 之间调用。</li>
+<li>旧的 <code>Activity</code> <code>onDestroy()</code> 方法被调用后，新的 <code>Activity</code> 会被立即创建。</li>
+<li>旧的 <code>Activity</code> 返回的数据，在新的 <code>Activity</code> 可以通过 <code>getLastNonConfigurationInstance()</code> 获取。</li>
+</ul>
+<p>该 API 是设计用来从旧的 <code>Activity</code> 向新的 <code>Activity</code> 来传递状态（针对配置改变这种情况），从 <code>bitmap</code> 到网络连接再到运行的线程，都是可以的。但是你不能传递和配置改变相关的数据，其中包括从 <code>resources</code> 中获取的数据，比如 <code>string</code>, <code>layout</code> 和 <code>drawable</code> 等。（这也很好理解本来 <code>string</code> 这些都依赖配置，比如你切换语言了，你还用之前语言对应的 <code>string</code> 这肯定不对，这也解决了我的一个疑问为什么叫 <code>onRetainNonConfigurationInstance</code>，哈哈哈哈😂）</p>
+<p>最后还说到 <code>Framget</code> 可以通过 <code>setRetainInstance()</code> 方法来保存对应的实例。</p>
+<p>然后再看看 <code>getLastNonConfigurationInstance</code> 的文档描述：</p>
+<blockquote>
+<p>Retrieve the non-configuration instance data that was previously returned by onRetainNonConfigurationInstance(). This will be available from the initial onCreate and onStart calls to the new instance, allowing you to extract any useful dynamic state from the previous instance.</p>
+<p> Note that the data you retrieve here should only be used as an optimization for handling configuration changes. You should always be able to handle getting a null pointer back, and an activity must still be able to restore itself to its previous state (through the normal onSaveInstanceState(Bundle) mechanism) even if this function returns null.</p>
+<p> Note: For most cases you should use the Fragment API Fragment.setRetainInstance(boolean) instead; this is also available on older platforms through the Android support libraries.</p>
+<p> Returns:</p>
+<p> the object previously returned by onRetainNonConfigurationInstance()</p>
+</blockquote>
+<p>都没什么好看的了， <code>onRetainNonConfigurationInstatce()</code> 方法中已经讲得很清楚了，我不想再翻译了😂 (只是因为强迫症贴出来)</p>
+<h2 id="从源码来看看-Activity-重启过程"><a href="#从源码来看看-Activity-重启过程" class="headerlink" title="从源码来看看 Activity 重启过程"></a>从源码来看看 Activity 重启过程</h2><p><em>源码阅读基于 Android 9</em></p>
+<p>在 <a target="_blank" rel="noopener" href="https://juejin.cn/post/7296011286091923475" title="https://juejin.cn/post/7296011286091923475">关于 Activity#onSaveInstanceState() 的笔记</a>）这篇文章中我有讲到 <code>AMS</code> 控制 <code>Activity</code> 的 <code>onStop</code> 生命流程， <code>AMS</code> 会通过 <code>binder</code> 向应用进程发送一个 <code>Transaction</code>，这个 <code>Transaction</code> 中会包含一个和对应生命周期的对象叫 <code>StopActivityItem</code>，应用进程收到这个任务后就会在主线程执行相关的生命周期，具体的执行流程如果不清楚的话，可以看看前面提到的文章。</p>
+<p>重启过程也是和 <code>onStop</code> 生命周期类似的，只是对应的执行生命周期的对象是 <code>ActivityRelaunchItem</code>，我们也是从 <code>ActivityRelaunchItem#execute()</code> 方法当入口函数来分析：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">(ClientTransactionHandler client, IBinder token,</span></span><br><span class="line"><span class="params">PendingTransactionActions pendingActions)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (mActivityClientRecord == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG_ORDER) Slog.d(TAG, <span class="string">&quot;Activity relaunch cancelled&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">&quot;activityRestart&quot;</span>);</span><br><span class="line">    client.handleRelaunchActivity(mActivityClientRecord, pendingActions);</span><br><span class="line">    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>client</code> 就是对应的 <code>ActivityThread</code> 对象，这里直接调用了它的 <code>handleRelauchActivity()</code> 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleRelaunchActivity</span><span class="params">(ActivityClientRecord tmp,</span></span><br><span class="line"><span class="params">PendingTransactionActions pendingActions)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    handleRelaunchActivityInner(r, configChanges, tmp.pendingResults, tmp.pendingIntents,</span><br><span class="line">        pendingActions, tmp.startsNotResumed, tmp.overrideConfig, <span class="string">&quot;handleRelaunchActivity&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>handleRelaunchActivity()</code> 中又调用了一个关键方法 <code>handleRelaunchActivityInner()</code> 方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">handleRelaunchActivityInner</span><span class="params">(ActivityClientRecord r, <span class="type">int</span> configChanges,</span></span><br><span class="line"><span class="params">List&lt;ResultInfo&gt; pendingResults, List&lt;ReferrerIntent&gt; pendingIntents,</span></span><br><span class="line"><span class="params">PendingTransactionActions pendingActions, <span class="type">boolean</span> startsNotResumed,</span></span><br><span class="line"><span class="params">Configuration overrideConfig, String reason)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    handleDestroyActivity(r.token, <span class="literal">false</span>, configChanges, <span class="literal">true</span>, reason);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    handleLaunchActivity(r, pendingActions, customIntent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个地方就很关键了，首先会调用 <code>handleDestroyActivity()</code> 方法来销毁当前的 <code>Activity</code>，注意它这里传递的 <code>getNonConfigInstance</code> 参数为 <code>true</code>，对，这就是控制 <code>onRetainNonConfigurationInstance()</code> 方法的回调，如果是正常销毁这个参数是 <code>false</code>；然后接着就是通过 <code>handleLaunchActivity()</code> 方法立马启动新的 <code>Activity</code>。</p>
+<p>重启 <code>Activity</code> 和其他正常情况创建 <code>Activity</code> 和销毁 <code>Activity</code> 还是有一些区别。正常的销毁 <code>Activity</code>， <code>onPause</code> 与 <code>onStop()</code> 都需要单独等待 <code>AMS</code> 发送过来的 <code>Transaction</code>，新的 <code>Activity</code> 创建也是要单独等待 <code>AMS</code> 发送过来的 <code>Transaction</code>；而在重启流程中 <code>handleDestroyActivity</code> 会直接调用销毁的 <code>Activity</code> 的 <code>onPause()</code>， <code>onStop()</code>， <code>onDestroy()</code> 生命周期，然后再创建新的 <code>Activity</code> 然后调用 <code>onCreate()</code>， <code>onStart()</code>， <code>onResume()</code> 生命周期。</p>
+<p>我在 <code>Activity#onDestroy()</code> 延迟回调的文章中有提到 <code>Activity</code> 的销毁过程，感兴趣可以看看： <a target="_blank" rel="noopener" href="https://juejin.cn/post/7288963208395915322" title="https://juejin.cn/post/7288963208395915322">Activity onDestroy 生命周期延迟回调原理</a></p>
+<p>我们先看旧 <code>Acitivity</code> 销毁方法 <code>handleDestroyActivity()</code> 的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleDestroyActivity</span><span class="params">(IBinder token, <span class="type">boolean</span> finishing, <span class="type">int</span> configChanges,</span></span><br><span class="line"><span class="params"><span class="type">boolean</span> getNonConfigInstance, String reason)</span> &#123;</span><br><span class="line">    <span class="type">ActivityClientRecord</span> <span class="variable">r</span> <span class="operator">=</span> performDestroyActivity(token, finishing,</span><br><span class="line">    configChanges, getNonConfigInstance, reason);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着看 <code>performDestroyActivity()</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">ActivityClientRecord <span class="title function_">performDestroyActivity</span><span class="params">(IBinder token, <span class="type">boolean</span> finishing,</span></span><br><span class="line"><span class="params"><span class="type">int</span> configChanges, <span class="type">boolean</span> getNonConfigInstance, String reason)</span> &#123;</span><br><span class="line">    <span class="type">ActivityClientRecord</span> <span class="variable">r</span> <span class="operator">=</span> mActivities.get(token);</span><br><span class="line">    Class&lt;? <span class="keyword">extends</span> <span class="title class_">Activity</span>&gt; activityClass = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (localLOGV) Slog.v(TAG, <span class="string">&quot;Performing finish of &quot;</span> + r);</span><br><span class="line">    <span class="keyword">if</span> (r != <span class="literal">null</span>) &#123;</span><br><span class="line">        activityClass = r.activity.getClass();</span><br><span class="line">        r.activity.mConfigChangeFlags |= configChanges;</span><br><span class="line">        <span class="keyword">if</span> (finishing) &#123;</span><br><span class="line">            r.activity.mFinished = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        performPauseActivityIfNeeded(r, <span class="string">&quot;destroy&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!r.stopped) &#123;</span><br><span class="line">            callActivityOnStop(r, <span class="literal">false</span> <span class="comment">/* saveState */</span>, <span class="string">&quot;destroy&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (getNonConfigInstance) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                r.lastNonConfigurationInstances</span><br><span class="line">                = r.activity.retainNonConfigurationInstances();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            r.activity.mCalled = <span class="literal">false</span>;</span><br><span class="line">            mInstrumentation.callActivityOnDestroy(r.activity);</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (SuperNotCalledException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">        &#125;</span><br><span class="line">        r.setState(ON_DESTROY);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果没有执行 <code>onPause()</code> 就先执行，如果没有执行 <code>onStop()</code> 就先执行，前面说到我们的这种情况下 <code>getNonConfigInstance</code> 为 <code>true</code>，然后会调用 <code>Activity#retainNonConfigurationInstances()</code> 方法，最终返回的对象就包含我们在 <code>onRetainNonConfigurationInstances()</code> 返回的对象，然后存放在 <code>ActivityClientRecord</code> 中的 <code>lastNonConfigurationinstances</code> 变量中，最后执行 <code>onDestroy()</code> 流程。</p>
+<p>我们继续看看创建新的 <code>Activity</code> 的 <code>handleLaunchActivity()</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Activity <span class="title function_">handleLaunchActivity</span><span class="params">(ActivityClientRecord r,</span></span><br><span class="line"><span class="params">PendingTransactionActions pendingActions, Intent customIntent)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">Activity</span> <span class="variable">a</span> <span class="operator">=</span> performLaunchActivity(r, customIntent);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后我们继续看 <code>performLaunchActivity()</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Activity <span class="title function_">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        java.lang.<span class="type">ClassLoader</span> <span class="variable">cl</span> <span class="operator">=</span> appContext.getClassLoader();</span><br><span class="line">        activity = mInstrumentation.newActivity(</span><br><span class="line">            cl, component.getClassName(), r.intent);</span><br><span class="line">        StrictMode.incrementExpectedActivityCount(activity.getClass());</span><br><span class="line">        r.intent.setExtrasClassLoader(cl);</span><br><span class="line">        r.intent.prepareToEnterProcess();</span><br><span class="line">        <span class="keyword">if</span> (r.state != <span class="literal">null</span>) &#123;</span><br><span class="line">            r.state.setClassLoader(cl);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">Application</span> <span class="variable">app</span> <span class="operator">=</span> r.packageInfo.makeApplication(<span class="literal">false</span>, mInstrumentation);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (activity != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            activity.attach(appContext, <span class="built_in">this</span>, getInstrumentation(), r.token,</span><br><span class="line">                r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">                r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">                r.referrer, r.voiceInteractor, window, r.configCallback);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (customIntent != <span class="literal">null</span>) &#123;</span><br><span class="line">                activity.mIntent = customIntent;</span><br><span class="line">            &#125;</span><br><span class="line">            r.lastNonConfigurationInstances = <span class="literal">null</span>;</span><br><span class="line">            <span class="comment">// ...</span></span><br><span class="line">            <span class="keyword">if</span> (r.isPersistable()) &#123;</span><br><span class="line">                mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mInstrumentation.callActivityOnCreate(activity, r.state);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!activity.mCalled) &#123;</span><br><span class="line">                <span class="comment">// ...</span></span><br><span class="line">            &#125;</span><br><span class="line">            r.activity = activity;</span><br><span class="line">        &#125;</span><br><span class="line">        r.setState(ON_CREATE);</span><br><span class="line"></span><br><span class="line">        mActivities.put(r.token, r);</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (SuperNotCalledException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> activity;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先通过反射创建一个 <code>Activity</code> 对象，然后调用 <code>attach()</code> 方法，在这个方法中就会传递前面在 <code>ActivityClientRecord.lastNonConfigurationInstances</code> 赋值的对象，然后执行 <code>onCreate()</code> 生命周期。</p>
+<p>我们看看 <code>Activity</code> 的 <code>attach()</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">attach</span><span class="params">(Context context, ActivityThread aThread,</span></span><br><span class="line"><span class="params">Instrumentation instr, IBinder token, <span class="type">int</span> ident,</span></span><br><span class="line"><span class="params">Application application, Intent intent, ActivityInfo info,</span></span><br><span class="line"><span class="params">CharSequence title, Activity parent, String id,</span></span><br><span class="line"><span class="params">NonConfigurationInstances lastNonConfigurationInstances,</span></span><br><span class="line"><span class="params">Configuration config, String referrer, IVoiceInteractor voiceInteractor,</span></span><br><span class="line"><span class="params">Window window, ActivityConfigCallback activityConfigCallback)</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    mLastNonConfigurationInstances = lastNonConfigurationInstances;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">getLastNonConfigurationInstance</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> mLastNonConfigurationInstances != <span class="literal">null</span></span><br><span class="line">    ? mLastNonConfigurationInstances.activity : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码朴实无华，不想多解释。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>ViewModel</code> 能够保存重建 <code>Activity</code> 的数据是因为使用了 <code>onRetainNonConfigurationInstances()</code> 这个接口来保存数据，主要的工作逻辑就是 <code>AMS</code> 通知应用进程重建后，应用进程会销毁当前的 <code>Activity</code> 同时通过 <code>onRetainNonConfigurationInstances()</code> 接口来获取需要保存的对象，然后把他赋值到 <code>ActivityClientRecord</code> 中，销毁旧的 <code>Activity</code> 后会立即重建新的 <code>Activity</code>，在新的 <code>Activity</code> 的 <code>attach()</code> 把之前保存的数据传递过去，这样新的 <code>Activity</code> 就拿到了上次的数据。</p>
+<p>它和 <code>onSaveInstanceState()</code> 方法也有很多相似与不同，我们再来对比一下他们。</p>
+<h3 id="触发时机不同"><a href="#触发时机不同" class="headerlink" title="触发时机不同"></a>触发时机不同</h3><p><code>onRetainNonConfigurationInstantces()</code> 明确了是由于 <strong>配置改变</strong> 导致的 <code>Activity</code> 会被 <strong>立即销毁</strong>，然后立即重建的时候才会触发而且是 <strong>一定会触发</strong>，比如旋转屏幕、屏幕大小改变还有设置中语言等等改变时。</p>
+<p><code>onSaveInstantceState()</code> 当 <code>Activity</code> <strong>有可能被回收但后续需要恢复的情况下会触发</strong>，官方有一个很好例子来说明 <code>A</code> 启动 <code>B</code> 后，由于系统资源不足就会回收 <code>A</code>，但是有可能后续还要使用 <code>A</code>，然后就会触发 <code>A</code> 的 <code>onSaveInstantceState()</code> 方法来保存数据，当 <code>B</code> 退出后，就需要重建 <code>A</code>，然后把上次的数据传递给新的 <code>A</code>。</p>
+<p><code>onSaveInstantceState()</code> 的触发范围比 <code>onRetainNonConfigurationInstantces()</code> 要广，配置改变引起的重建 <code>onSaveInstantceState()</code> 与 <code>onRetainNonConfigurationInstantces()</code> 都会触发（这个我有测试）； 当系统资源不足引起回收只有 <code>onSaveInstantceState()</code> 会触发（这点我没有验证，有可能是错的，你可以自己去试试看）。</p>
+<h3 id="数据保存的方式不同"><a href="#数据保存的方式不同" class="headerlink" title="数据保存的方式不同"></a>数据保存的方式不同</h3><p><code>onRetainNonConfigurationInstantces()</code> 直接把对象保存在当前进程的 <code>ActivityClientRecord</code> 中，回收时和恢复时都是同一个对象。</p>
+<p><code>onSaveInstanceState()</code> 需要通过 <code>binder</code> 跨进程通信保存在系统进程 <code>AMS</code> 的 <code>ActivityRecorder</code> 中，回收前和恢复时不是同一个对象，但是数据是一样的。</p>
+<p>这也解释了为什么 <code>onSaveInstanceState()</code> 中存储的对象是需要支持序列化的，而 <code>onRetainNoConfigurationInstantces()</code> 是可以保存任意对象的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/07/20/ViewModel/" data-id="clorfqbkx0000fsfy2o3telkc" data-title="ViewModel 如何做到 Activity 重启不丢失数据" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/26/viewModel_alloc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ViewModel实例什么时候被回收
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/04/12/wen/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android 让程序更稳定、更灵活 —— 开闭原则</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/26/viewModel_alloc/">ViewModel实例什么时候被回收</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/20/ViewModel/">ViewModel 如何做到 Activity 重启不丢失数据</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/12/wen/">Android 让程序更稳定、更灵活 —— 开闭原则</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/01/targetSdkVersion/">Android14 适配之——targetSdkVersion 升级到 34 需要注意些什么？</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/14/start/">Android性能优化----启动优化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Xu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

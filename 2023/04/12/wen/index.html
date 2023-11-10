@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Android 让程序更稳定、更灵活 —— 开闭原则 | Xu的博客的空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Android 让程序更稳定、更灵活 —— 开闭原则开闭原则开闭原则的英文全称是 Open Close Principle，缩写是 OCP，它是 Java 世界里最基础的设计原则，它指导我们如何建立一个稳定的、灵活的系统。开闭原则的定义是：软件中的对象(类、模块、函数等)应该对于扩展是开放的，但是，对于修改是封闭的。在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 让程序更稳定、更灵活 —— 开闭原则">
+<meta property="og:url" content="http://example.com/2023/04/12/wen/index.html">
+<meta property="og:site_name" content="Xu的博客的空间">
+<meta property="og:description" content="Android 让程序更稳定、更灵活 —— 开闭原则开闭原则开闭原则的英文全称是 Open Close Principle，缩写是 OCP，它是 Java 世界里最基础的设计原则，它指导我们如何建立一个稳定的、灵活的系统。开闭原则的定义是：软件中的对象(类、模块、函数等)应该对于扩展是开放的，但是，对于修改是封闭的。在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ooo.0x0.ooo/2023/11/10/Oen4YN.png">
+<meta property="article:published_time" content="2023-04-11T17:50:35.000Z">
+<meta property="article:modified_time" content="2023-11-09T17:00:10.142Z">
+<meta property="article:author" content="Xu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ooo.0x0.ooo/2023/11/10/Oen4YN.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Xu的博客的空间" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xu的博客的空间</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">欢迎光临</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-wen" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/12/wen/" class="article-date">
+  <time class="dt-published" datetime="2023-04-11T17:50:35.000Z" itemprop="datePublished">2023-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Android 让程序更稳定、更灵活 —— 开闭原则
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Android-让程序更稳定、更灵活-——-开闭原则"><a href="#Android-让程序更稳定、更灵活-——-开闭原则" class="headerlink" title="Android 让程序更稳定、更灵活 —— 开闭原则"></a>Android 让程序更稳定、更灵活 —— 开闭原则</h1><h1 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h1><p>开闭原则的英文全称是 Open Close Principle，缩写是 OCP，它是 Java 世界里最基础的设计原则，它指导我们如何建立一个稳定的、灵活的系统。开闭原则的定义是：软件中的对象(类、模块、函数等)应该对于扩展是开放的，但是，对于修改是封闭的。在软件的生命周期内，因为变化、升级和维护等原因需要对软件原有代码进行修改时，可能会将错误引入原本已经经过测试的旧代码中，破坏原有系统。因此，当软件需要变化时，我们应该尽量通过扩展的方式来实现变化，而不是通过修改已有的代码来实现。当然，在现实开发中，只通过继承的方式来升级、维护原有系统只是一个理想化的愿景，因此，在实际的开发过程中，修改原有代码、扩展代码往往是同时存在的。</p>
+<p>软件开发过程中，最不会变化的就是变化本身。产品需要不断地升级、维护，没有一个产品从第一版本开发完就再没有变化了，除非在下个版本诞生之前它已经被终止。而产品需要升级，修改原来的代码就可能会引发其他的问题。那么，如何确保原有软件模块的正确性，以及尽量少地影响原有模块，答案就是，尽量遵守开闭原则。</p>
+<p>勃兰特•梅耶在1988年出版的《面向对象软件构造》一书中提出这一原则 —— 开闭原则。这一想法认为，程序一旦开发完成，程序中一个类的实现只应该因错误而被修改，新的或者改变的特性应该通过新建不同的类实现，新建的类可以通过继承的方式来重用原类的代码。显然，梅耶的定义提倡实现继承，己存在的实现类对于修改是封闭的，但是新的实现类可以通过覆写父类的接口应对变化。</p>
+<h3 id="优化前"><a href="#优化前" class="headerlink" title="优化前"></a>优化前</h3><p>通过内存缓存解决了每次从网络加载图片的问题，但是，Android 应用的内存很有限，且具有易失性，即当应用重新启动之后，原来已经加载过的图片将会丢失，这样重启之后就需要重新下载。这又会导致加载缓慢、耗费用户流量的问题。于是很自然会引入 SD 卡缓存，这样下载过的图片就会缓存到本地，即使重启应用也不需要重新下载了。</p>
+<p>DiskCache.java 类，将图片缓存到 SD 卡中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DiskCache</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="type">String</span> <span class="variable">cacheDir</span> <span class="operator">=</span> <span class="string">&quot;sdcard/cache/&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从缓存中获取图片</span></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> BitmapFactory.decodeFile(cacheDir + url);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将图片缓存到内存中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span> &#123;</span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fileOutputStream</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            fileOutputStream = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(cacheDir + url);</span><br><span class="line">            bmp.compress(CompressFormat.PNG, <span class="number">100</span>, fileOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            CloseUtils.closeQuietly(fileOutputStream);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 图片加载类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageLoader</span> &#123;</span><br><span class="line">    <span class="comment">// 内存缓存</span></span><br><span class="line">    <span class="type">ImageCache</span> <span class="variable">mImageCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageCache</span>();</span><br><span class="line">    <span class="comment">// sd卡缓存</span></span><br><span class="line">    <span class="type">DiskCache</span> <span class="variable">mDiskCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DiskCache</span>();</span><br><span class="line">    <span class="comment">// 使用sd卡缓存</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">isUseDiskCache</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 线程池,线程数量为CPU的数量</span></span><br><span class="line">    <span class="type">ExecutorService</span> <span class="variable">mExecutorService</span> <span class="operator">=</span> Executors.newFixedThreadPool(Runtime.getRuntime()</span><br><span class="line">            .availableProcessors());</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Handler</span> <span class="variable">mUiHandler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Handler</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">displayImage</span><span class="params">(<span class="keyword">final</span> String url, <span class="keyword">final</span> ImageView imageView)</span> &#123;</span><br><span class="line">        <span class="comment">// 判断使用哪种缓存</span></span><br><span class="line">        <span class="type">Bitmap</span> <span class="variable">bmp</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (isUseDiskCache) &#123;</span><br><span class="line">            bmp = mDiskCache.get(url);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            bmp = mImageCache.get(url);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (bmp != <span class="literal">null</span>) &#123;</span><br><span class="line">            imageView.setImageBitmap(bmp);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没有缓存，则提交给线程池进行异步下载</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">useDiskCache</span><span class="params">(<span class="type">boolean</span> useDiskCache)</span> &#123;</span><br><span class="line">        isUseDiskCache = useDiskCache;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上述的代码中可以看到，仅仅新增了一个 DiskCache 类和往 ImageLoader 类中加入了少量代 码就添加了 SD 卡缓存的功能，用户可以通过 useDiskCache 方法来对使用哪种缓存进行设置，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ImageLoader</span> <span class="variable">imageLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageLoader</span>() ;</span><br><span class="line"><span class="comment">// 使用sd卡缓存</span></span><br><span class="line">imageLoader.useDiskCache(<span class="literal">true</span>);</span><br><span class="line"><span class="comment">// 使用内存缓存</span></span><br><span class="line">imageLoader.useDiskCache(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但是这么做会有一个问题，就是使用内存缓存时用户就不能使用 SD 卡缓存。类似地，使用 SD 卡缓存时用户就不能使用内存缓存。用户需要这两种策略的综合，首先优先使用内存缓存，如果内存缓存没有图片再使用 SD 卡缓存，如果 SD 卡中也没有图片，最后才从网络上获取，这才是最好的缓存策略。</p>
+<p>新建一个双缓存类 DoubleCache，具体代码如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双缓存。获取图片时先从内存缓存中获取，如果内存中没有缓存该图片再从sd卡中获取。 缓存图片也是也是在内存和sd卡中都缓存一份。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DoubleCache</span> &#123;</span><br><span class="line">    <span class="type">MemoryCache</span> <span class="variable">mMemoryCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MemoryCache</span>();</span><br><span class="line">    <span class="type">DiskCache</span> <span class="variable">mDiskCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DiskCache</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先从内存缓存中获取图片，如果没有再从sd卡中获取</span></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> mMemoryCache.get(url);</span><br><span class="line">        <span class="keyword">if</span> (bitmap == <span class="literal">null</span>) &#123;</span><br><span class="line">            bitmap = mDiskCache.get(url);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bitmap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将图片缓存到内存和sd卡中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span> &#123;</span><br><span class="line">        mMemoryCache.put(url, bmp);</span><br><span class="line">        mDiskCache.put(url, bmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们再看看最新的 ImagcLoader 类，代码更新也不多。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 图片加载类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageLoader</span> &#123;</span><br><span class="line">    <span class="comment">// 内存缓存</span></span><br><span class="line">    <span class="type">ImageCache</span> <span class="variable">mImageCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageCache</span>();</span><br><span class="line">    <span class="comment">// sd卡缓存</span></span><br><span class="line">    <span class="type">DiskCache</span> <span class="variable">mDiskCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DiskCache</span>();</span><br><span class="line">    <span class="comment">// 双缓存</span></span><br><span class="line">    <span class="type">DoubleCache</span> <span class="variable">mDoubleCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DoubleCache</span>() ;</span><br><span class="line">    <span class="comment">// 使用sd卡缓存</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">isUseDiskCache</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 使用双缓存</span></span><br><span class="line">    <span class="type">boolean</span> <span class="variable">isUseDoubleCache</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 线程池,线程数量为CPU的数量</span></span><br><span class="line">    <span class="type">ExecutorService</span> <span class="variable">mExecutorService</span> <span class="operator">=</span> Executors.newFixedThreadPool(Runtime.getRuntime()</span><br><span class="line">            .availableProcessors());</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Handler</span> <span class="variable">mUiHandler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Handler</span>() ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">displayImage</span><span class="params">(<span class="keyword">final</span> String url, <span class="keyword">final</span> ImageView imageView)</span> &#123;</span><br><span class="line">        <span class="type">Bitmap</span> <span class="variable">bmp</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (isUseDoubleCache) &#123;</span><br><span class="line">            bmp = mDoubleCache.get(url);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isUseDiskCache) &#123;</span><br><span class="line">            bmp = mDiskCache.get(url);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            bmp = mImageCache.get(url);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( bmp != <span class="literal">null</span> ) &#123;</span><br><span class="line">            imageView.setImageBitmap(bmp);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没有缓存，则提交给线程池进行异步下载</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">useDiskCache</span><span class="params">(<span class="type">boolean</span> useDiskCache)</span> &#123;</span><br><span class="line">        isUseDiskCache = useDiskCache ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">useDoubleCache</span><span class="params">(<span class="type">boolean</span> useDoubleCache)</span> &#123;</span><br><span class="line">        isUseDoubleCache = useDoubleCache ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是每次加入新的缓存方法时都要修改原来的代码，这样很可能会引入 Bug，而且会使原来的代码逻辑变得越来越复杂。按照这样的方法实现，用户也不能自定义缓存实现。</p>
+<p>我们来分析一下上面的程序。每次在程序中加入新的缓存实现时都需要修改 ImageLoader 类，然后通过一个布尔变量来让用户选择使用哪种缓存，因此，就使得在 ImageLoader 中存在各种 if-else 判断语句，通过这些判断来确定使用哪种缓存。随着这些逻辑的引入，代码变得越来越复杂、脆弱，如果一不小心写错了某个 if 条件(条件太多，这是很容易出现的)，那就需要更多的时间来排查，整个 ImageLoader 类也会变得越来越雕肿。最重要的是，用户不能自己实现缓存注入到 ImageLoader 中，可扩展性差，可扩展性可是框架的最重要特性之一。</p>
+<p>软件中的对象(类、模块、函数等)应该对于扩展是开放的，但是对于修改是封闭的，这就是开放一关闭原则。也就是说，当软件需要变化时，我们应该尽量通过扩展的方式来实现变化，而不是通过修改已有的代码来实现。</p>
+<h3 id="优化后"><a href="#优化后" class="headerlink" title="优化后"></a>优化后</h3><p><img src="https://ooo.0x0.ooo/2023/11/10/Oen4YN.png" alt="Oen4YN.png"></p>
+<p>再一次重构该代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 图片加载类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageLoader</span> &#123;</span><br><span class="line">    <span class="comment">// 图片缓存</span></span><br><span class="line">    <span class="type">ImageCache</span> <span class="variable">mImageCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MemoryCache</span>();</span><br><span class="line">    <span class="comment">// 线程池,线程数量为CPU的数量</span></span><br><span class="line">    <span class="type">ExecutorService</span> <span class="variable">mExecutorService</span> <span class="operator">=</span> Executors.newFixedThreadPool(Runtime.getRuntime()</span><br><span class="line">            .availableProcessors());</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Handler</span> <span class="variable">mUiHandler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Handler</span>() ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setImageCache</span><span class="params">(ImageCache cache)</span> &#123;</span><br><span class="line">        mImageCache = cache;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">displayImage</span><span class="params">(String imageUrl, ImageView imageView)</span> &#123;</span><br><span class="line">        <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> mImageCache.get(imageUrl);</span><br><span class="line">        <span class="keyword">if</span> (bitmap != <span class="literal">null</span>) &#123;</span><br><span class="line">            imageView.setImageBitmap(bitmap);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        submitLoadRequest(imageUrl, imageView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">submitLoadRequest</span><span class="params">(<span class="keyword">final</span> String imageUrl, <span class="keyword">final</span> ImageView imageView)</span> &#123;</span><br><span class="line">        imageView.setTag(imageUrl);</span><br><span class="line">        mExecutorService.submit(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> downloadImage(imageUrl);</span><br><span class="line">                <span class="keyword">if</span> (bitmap == <span class="literal">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (imageView.getTag().equals(imageUrl)) &#123;</span><br><span class="line">                    updateImageView(imageView, bitmap);</span><br><span class="line">                &#125;</span><br><span class="line">                mImageCache.put(imageUrl, bitmap);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">updateImageView</span><span class="params">(<span class="keyword">final</span> ImageView imageView, <span class="keyword">final</span> Bitmap bitmap)</span> &#123;</span><br><span class="line">      mUiHandler.post(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line"></span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">         <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">             imageView.setImageBitmap(bitmap); ;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">downloadImage</span><span class="params">(String imageUrl)</span> &#123;</span><br><span class="line">        <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(imageUrl);</span><br><span class="line">            <span class="keyword">final</span> <span class="type">HttpURLConnection</span> <span class="variable">conn</span> <span class="operator">=</span> (HttpURLConnection) url.openConnection();</span><br><span class="line">            bitmap = BitmapFactory.decodeStream(conn.getInputStream());</span><br><span class="line">            conn.disconnect();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> bitmap;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过这次重构，没有了那么多的 if-else 语句，没有了各种各样的缓存实现对象、布尔变量，代码确实清晰、简单了很多。需要注意的是，这里的 ImageCache 类并不是原来的那个 ImageCache，这次重构程序，把它提取成一个图片缓存的接口，用来抽象图片缓存的功能，我们看看该接口的声明：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 图片缓存接口</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mrsimple</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ImageCache</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ImageCache 接口简单定义了获取、缓存图片两个函数，缓存的 key 是图片的 url，值是图片本身。内存缓存、SD 卡缓存、双缓存都实现了该接口，我们看看这几个缓存实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 内存缓存</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MemoryCache</span> <span class="keyword">implements</span> <span class="title class_">ImageCache</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> LruCache&lt;String, Bitmap&gt; mMemeryCache;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MemoryCache</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 计算可使用的最大内存</span></span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> <span class="variable">maxMemory</span> <span class="operator">=</span> (<span class="type">int</span>) (Runtime.getRuntime().maxMemory() / <span class="number">1024</span>);</span><br><span class="line">        <span class="comment">// 取4分之一的可用内存作为缓存</span></span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> <span class="variable">cacheSize</span> <span class="operator">=</span> maxMemory / <span class="number">4</span>;</span><br><span class="line">        mMemeryCache = <span class="keyword">new</span> <span class="title class_">LruCache</span>&lt;String, Bitmap&gt;(cacheSize) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="type">int</span> <span class="title function_">sizeOf</span><span class="params">(String key, Bitmap bitmap)</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> bitmap.getRowBytes() * bitmap.getHeight() / <span class="number">1024</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> mMemeryCache.get(url);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span> &#123;</span><br><span class="line">        mMemeryCache.put(url, bmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 本地(sd卡)图片缓存</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DiskCache</span> <span class="keyword">implements</span> <span class="title class_">ImageCache</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span><span class="comment">/* 从本地文件中获取该图片 */</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String <span class="title function_">imageUrl2MD5</span><span class="params">(String imageUrl)</span> &#123;</span><br><span class="line">        <span class="comment">// 对imgeUrl进行md5运算, 省略</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">md5</span> <span class="operator">=</span> imageUrl;</span><br><span class="line">        <span class="keyword">return</span> md5;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span> &#123;</span><br><span class="line">        <span class="comment">// 将Bitmap写入文件中</span></span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">fos</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 构建图片的存储路径 ( 省略了对url取md5)</span></span><br><span class="line">            fos = <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="string">&quot;sdcard/cache/&quot;</span> + imageUrl2MD5(url));</span><br><span class="line">            bmp.compress(CompressFormat.JPEG, <span class="number">100</span>, fos);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> ( fos != <span class="literal">null</span> ) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    fos.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双缓存。获取图片时先从内存缓存中获取，如果内存中没有缓存该图片再从sd卡中获取。 缓存图片也是也是在内存和sd卡中都缓存一份。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DoubleCache</span> <span class="keyword">implements</span> <span class="title class_">ImageCache</span>&#123;</span><br><span class="line">    <span class="type">ImageCache</span> <span class="variable">mMemoryCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MemoryCache</span>();</span><br><span class="line">    <span class="type">ImageCache</span> <span class="variable">mDiskCache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DiskCache</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 先从内存缓存中获取图片，如果没有再从sd卡中获取</span></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> mMemoryCache.get(url);</span><br><span class="line">        <span class="keyword">if</span> (bitmap == <span class="literal">null</span>) &#123;</span><br><span class="line">            bitmap = mDiskCache.get(url);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bitmap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将图片缓存到内存和sd卡中</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span> &#123;</span><br><span class="line">        mMemoryCache.put(url, bmp);</span><br><span class="line">        mDiskCache.put(url, bmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ImageLoader 类中增加了一个 setImageCache(ImageCachecache) 函数，用户可以通过该函数设置缓存实现，也就是通常说的依赖注入。下面就看看用户是如何设置缓存实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ImageLoader</span> <span class="variable">imageLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageLoader</span>() ;</span><br><span class="line"><span class="comment">// 使用内存缓存</span></span><br><span class="line">imageLoader.setImageCache(<span class="keyword">new</span> <span class="title class_">MemoryCache</span>());</span><br><span class="line"><span class="comment">// 使用sd卡缓存</span></span><br><span class="line">imageLoader.setImageCache(<span class="keyword">new</span> <span class="title class_">DiskCache</span>());</span><br><span class="line"><span class="comment">// 使用双缓存</span></span><br><span class="line">imageLoader.setImageCache(<span class="keyword">new</span> <span class="title class_">DoubleCache</span>());</span><br><span class="line"><span class="comment">// 使用自定义的图片缓存实现</span></span><br><span class="line">imageLoader.setImageCache(<span class="keyword">new</span> <span class="title class_">ImageCache</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(String url, Bitmap bmp)</span> &#123;</span><br><span class="line">        <span class="comment">// 缓存图片</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Bitmap <span class="title function_">get</span><span class="params">(String url)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span> <span class="comment">/*从自定义的缓存实现中获取图片*/</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在上述代码中，通过 setlmageCache(ImageCachecache) 方法注入不同的缓存实现，这样不仅能够使 ImageLoader 更简单、健壮，也使得 ImageLoader 的可扩展性、灵活性更高。MemoryCache、DiskCache、DoubleCache 缓存图片的具体实现完全不一样，但是，它们的一个特点是，都实现了 ImageCache 接口。当用户需要自定义实现缓存策略时，只需要新建一个实现 ImageCache 接口的类，然后构造该类的对象，并且通过 setImageCache(ImageCachecache) 注入到 ImageLoader 中，这样 ImageLoader 就实现了千变万化的缓存策略，且扩展这些缓存策略并不会导致 ImageLoader 类的修改。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>开闭原则指导我们，当软件需要变化时，应该尽量通过扩展的方式来实现变化，而不是通过修改已有的代码来实现。这里的“应该尽量”4个字说明 OCP 原则并不是说绝对不可以修改原始类的代码。当我们嗅到原来的代码“腐化气味”时，应该尽早地重构，以便使代码恢复到正常的“进化”过程，而不是通过继承等方式添加新的实现，这会导致类型的膨胀以及历史遗留代码的冗余。我们的开发过程中也没有那么理想化的状况，完全地不用修改原来的代码，因此，在开发过程中需要自己结合具体情況进行考量，是通过修改旧代码还是通过继承使得软件系统更稳定、更灵活，在保证去除“代码腐化”的同时，也保证原有模块的正确性。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/04/12/wen/" data-id="clorfqbl20006fsfygcrnbc5d" data-title="Android 让程序更稳定、更灵活 —— 开闭原则" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/07/20/ViewModel/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ViewModel 如何做到 Activity 重启不丢失数据
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/01/targetSdkVersion/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android14 适配之——targetSdkVersion 升级到 34 需要注意些什么？</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/07/26/viewModel_alloc/">ViewModel实例什么时候被回收</a>
+          </li>
+        
+          <li>
+            <a href="/2023/07/20/ViewModel/">ViewModel 如何做到 Activity 重启不丢失数据</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/12/wen/">Android 让程序更稳定、更灵活 —— 开闭原则</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/01/targetSdkVersion/">Android14 适配之——targetSdkVersion 升级到 34 需要注意些什么？</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/14/start/">Android性能优化----启动优化</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Xu<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
