@@ -36,6 +36,16 @@ theme = 'hugo-theme-stack'
     toc = true
     readingTime = true
 
+  [params.gallery]
+    enabled = true
+    itemsPerPage = 12
+
+  [params.music]
+    enabled = true
+    netease = true  # 启用网易云音乐
+    # 可以添加你的网易云音乐歌单ID
+    playlist = "60198"
+
   [params.search]
     enabled = true
     type = "fuse"
@@ -66,6 +76,20 @@ theme = 'hugo-theme-stack'
     url = "/about"
     weight = -90
     params.icon = "user"
+
+  [[menu.main]]
+    identifier = "gallery"
+    name = "照片墙"
+    url = "/gallery"
+    weight = -85
+    params.icon = "camera"
+
+  [[menu.main]]
+    identifier = "music"
+    name = "音乐库"
+    url = "/music"
+    weight = -83
+    params.icon = "music"
 
   [[menu.main]]
     identifier = "search"
