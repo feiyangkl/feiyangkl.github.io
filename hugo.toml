@@ -1,4 +1,4 @@
-baseURL = 'https://douzai-blog.github.io/'
+baseURL = 'https://feiyangkl.github.io/'
 languageCode = 'zh-cn'
 title = 'AI豆仔的个人博客'
 theme = 'hugo-theme-stack'
