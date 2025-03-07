@@ -3,6 +3,11 @@ languageCode = 'zh-cn'
 title = 'AI豆仔的个人博客'
 theme = 'hugo-theme-stack'
 
+# 添加输出格式配置
+[outputs]
+  home = ["HTML", "RSS", "JSON", "WebAppManifest"]
+  section = ["HTML", "RSS"]
+
 [params]
   mainSections = ['post']
   featuredImageField = 'image'
@@ -26,24 +31,58 @@ theme = 'hugo-theme-stack'
     local = true
     src = "img/avatar.png"
 
+  [params.article]
+    math = false
+    toc = true
+    readingTime = true
+
+  [params.search]
+    enabled = true
+    type = "fuse"
+
+    [params.search.fuse]
+        isCaseSensitive = false
+        minMatchCharLength = 2
+        findAllMatches = false
+        location = 0
+        threshold = 0.3
+        distance = 100
+        ignoreLocation = false
+        useExtendedSearch = true
+        ignoreFieldNorm = false
+        keys = ["title", "permalink", "summary", "content"]
+
 [menu]
   [[menu.main]]
     identifier = "home"
     name = "首页"
     url = "/"
     weight = -100
-    pre = "home"
+    params.icon = "home"
 
   [[menu.main]]
     identifier = "about"
     name = "关于"
     url = "/about"
     weight = -90
-    pre = "user"
+    params.icon = "user"
 
   [[menu.main]]
     identifier = "search"
     name = "搜索"
     url = "/search"
     weight = -80
-    pre = "search"
+    params.icon = "search"
+
+# 添加默认的分类法配置
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+# 添加Markdown渲染配置
+[markup]
+  [markup.highlight]
+    noClasses = false
+    lineNos = true
+  [markup.goldmark.renderer]
+    unsafe = true

@@ -2,7 +2,7 @@
 title: "欢迎来到AI豆仔的博客"
 description: "这是我的第一篇博客文章"
 date: 2024-03-19
-image: "/img/welcome.jpg"
+image: "/img/posts/welcome-banner.jpg"
 categories:
     - 生活
 tags:
