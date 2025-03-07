@@ -66,8 +66,8 @@ layout: "about"
 ### 联系方式
 
 - 📢 公众号：豆仔AI
-- 📧 Email: your.email@example.com
-- 🌐 GitHub: [douzai-blog](https://github.com/douzai-blog)
+- 📧 Email: feiyangkl@163.com
+- 🌐 GitHub: [douzai-blog](https://feiyangkl.github.io/)
 
 ### 一起成长
 
