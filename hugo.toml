@@ -1,0 +1,49 @@
+baseURL = 'https://douzai-blog.github.io/'
+languageCode = 'zh-cn'
+title = 'AI豆仔的个人博客'
+theme = 'hugo-theme-stack'
+
+[params]
+  mainSections = ['post']
+  featuredImageField = 'image'
+  rssFullContent = true
+  favicon = '/favicon.ico'
+
+  [params.footer]
+    since = 2024
+    customText = '欢迎来到AI豆仔的博客'
+
+  [params.dateFormat]
+    published = "2006-01-02"
+    lastUpdated = "2006-01-02 15:04 MST"
+
+  [params.sidebar]
+    emoji = "🤖"
+    subtitle = "探索AI的无限可能"
+
+  [params.sidebar.avatar]
+    enabled = true
+    local = true
+    src = "img/avatar.png"
+
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "首页"
+    url = "/"
+    weight = -100
+    pre = "home"
+
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about"
+    weight = -90
+    pre = "user"
+
+  [[menu.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "/search"
+    weight = -80
+    pre = "search"
